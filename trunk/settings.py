@@ -1,4 +1,7 @@
 # Django settings for OneOffCast project.
+#
+# $Id$
+#
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
