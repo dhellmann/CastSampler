@@ -22,7 +22,7 @@ class Podcast(models.Model):
     # These fields are only visible in the admin screens
     # and are used to control whether or not the feed
     # should be ignored so users cannot add items from it.
-    contact_name = modesl.CharField()
+    contact_name = models.CharField()
     contact_email = models.EmailField()
     notes = models.CharField()
     ignore = models.BooleanField(default=False)
