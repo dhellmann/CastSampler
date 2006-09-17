@@ -6,11 +6,13 @@
 """
 
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
+
+from django.contrib.auth.models import User	
 
 from oneoffcast.models import Podcast
 
-def main(*args, **nargs):
+def main(request):
     """Main page for the app.
     """
     newest_podcasts = Podcast.objects.all().order_by('-registration_date')[:10]
@@ -19,3 +21,8 @@ def main(*args, **nargs):
                                })
 
 
+def user(request, username):
+    """Show information about the user.
+    """
+    user = get_object_or_404(User, username=username)
+    return HttpResponse('user view for %s' % user.username)

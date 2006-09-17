@@ -16,5 +16,5 @@ urlpatterns = patterns('',
             patterns('OneOffCast.oneoffcast.views',
 
     # User pages
-    (r'^(?P<user_id>.*)$', 'user'),
+    (r'^(?P<username>.*)/$', 'user'),
     )
