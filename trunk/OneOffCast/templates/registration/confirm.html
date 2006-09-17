@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+<!-- $Id$ -->
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+
+<h2>New Account</h2>
+
+{% if success %}
+
+<p>Your registration is now complete.  Please <a href="/accounts/login">login</a> to begin using OneOffCast.
+</p>
+
+{% else %}
+
+<p>That registration key has expired.  Please <a href="/accounts/register">try again</a>.</p>
+
+{% endif %}
+
+
+{% endblock %}

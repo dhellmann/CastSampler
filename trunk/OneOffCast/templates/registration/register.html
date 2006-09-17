@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+<!-- $Id$ -->
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+
+<h2>New Account</h2>
+
+{% if created %}
+
+<p>A confirmation message has been sent to the email address you gave.  
+Please follow the instructions in the message to complete your registration.
+</p>
+
+{% else %}
+
+{% if form.has_errors %}
+<h3>Please correct the following error{{ form.error_dict|pluralize }}:</h2>
+{% endif %}
+
+<form method="post" action="../register/">
+    <p><label for="id_username">Account Name:</label> {{ form.username }}
+     {% if form.username.errors %}*** {{ form.username.errors|join:", " }}{% endif %}
+    </p>
+    <p><label for="id_email">Email:</label> {{ form.email }}
+     {% if form.email.errors %}*** {{ form.email.errors|join:", " }}{% endif %}
+     </p>
+    <p><label for="id_password1">Password:</label> {{ form.password1 }}
+     {% if form.password1.errors %}*** {{ form.password1.errors|join:", " }}{% endif %}
+     </p>
+    <p><label for="id_password2">Repeat Password:</label> {{ form.password2 }}
+     {% if form.password2.errors %}*** {{ form.password2.errors|join:", " }}{% endif %}
+     </p>
+    
+    <input type="submit" value="Register">
+</form>
+
+{% endif %}
+{% endblock %}

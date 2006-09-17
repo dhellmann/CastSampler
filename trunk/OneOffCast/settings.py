@@ -50,6 +50,13 @@ ADMIN_MEDIA_PREFIX = '/media/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#q1-kil!)n+@wy!*a_oef^!&3))0=#sp_fk%u!8837#2v6h%xa'
 
+# Set up user registration profile model
+#AUTH_PROFILE_MODULE = 'OneOffCast.registration.models'
+
+# Outgoing email for user registration
+EMAIL_HOST = 'smtp'
+#EMAIL_PORT = 25
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
@@ -80,4 +87,5 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'OneOffCast.oneoffcast',
+    'OneOffCast.registration',
 )

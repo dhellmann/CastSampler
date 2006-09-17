@@ -8,14 +8,23 @@
 </head>
 
 <body>
+{% block sidebar %}
     <div id="sidebar">
-        {% block sidebar %}
+{% if user.is_authenticated %}
+
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/accounts/logout">Logout</a></li>
         </ul>
-        {% endblock %}
+{% else %}
+    <ul>
+        <li><a href="/">Home</a></li>    
+        <li><a href="/accounts/login">Login</a></li>
+        <li><a href="/accounts/register">Register</a></li>
+    </ul>
+{% endif %}
     </div>
+{% endblock %}
 
     <div id="content">
         {% block content %}{% endblock %}
