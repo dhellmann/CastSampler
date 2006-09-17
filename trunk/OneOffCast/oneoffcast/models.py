@@ -51,17 +51,31 @@ class QueueItem(models.Model):
     podcast = models.ForeignKey(Podcast)
     title = models.CharField(maxlength=512, blank=True)
     description = models.TextField(blank=True)
-    enclosure = models.URLField()
+    link = models.URLField(verify_exists=False)
+    item_enclosure_url = models.URLField(verify_exists=False)
+    item_enclosure_length = models.IntegerField()
+    item_enclosure_mime_type = models.CharField(maxlength=200)
     add_date = models.DateTimeField('date added', auto_now_add=True)
 
     class Admin:
-        fields = ( ('Basics', {'fields':('user', 'podcast', 'title', 'description', 'add_date'),
+        fields = ( ('Owner', {'fields':('user', 'add_date'),
+                              }),
+                    ('Podcast', {'fields':('podcast', ),
                                }),
-                   ('URLs', {'fields':('enclosure',),
+                   ('Item', {'fields':('title', 
+                                       'description', 
+                                       'link',
+                                       'item_enclosure_url',
+                                       'item_enclosure_length', 
+                                       'item_enclosure_mime_type'),
                              }),
                    )
         list_display = ('user', 'add_date', 'podcast', 'title')
         list_filter = ['add_date', 'podcast']
         search_fields = ['title', 'description']
         date_hierarchy = 'add_date'
+    
+    def get_absolute_url(self):
+        "Used in feed generation."
+        return self.link
     
