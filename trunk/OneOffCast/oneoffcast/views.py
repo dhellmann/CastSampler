@@ -5,6 +5,7 @@
 """OneOffCast app views
 """
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 
@@ -21,8 +22,11 @@ def main(request):
                                })
 
 
+@login_required
 def user(request, username):
     """Show information about the user.
     """
-    user = get_object_or_404(User, username=username)
-    return HttpResponse('user view for %s' % user.username)
+    if request.user.username == username:
+        return HttpResponse('user view for %s' % request.user.username)
+    else:
+        raise RuntimeError('You are not allowed to see this page')

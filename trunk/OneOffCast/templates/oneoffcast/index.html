@@ -1,4 +1,10 @@
+{% extends "base.html" %}
+
 <!-- $Id$ -->
+
+{% block title %}OneOffCast{% block title %}
+
+{% block content %}
 
 <h1>Newest Podcasts</h1>
 <ul>
@@ -6,3 +12,5 @@
   <li><a href="{{podcast.home_url}}">{{podcast.name}}</a></li>
 {% endfor %}
 </ul>
+
+(% endblock %}

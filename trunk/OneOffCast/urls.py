@@ -11,6 +11,9 @@ urlpatterns = patterns('',
     # Main page
     (r'^$', 'OneOffCast.oneoffcast.views.main'),
     
+    # User login
+    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    
     # Uncomment this for admin:
      (r'^admin/', include('django.contrib.admin.urls')),
 
