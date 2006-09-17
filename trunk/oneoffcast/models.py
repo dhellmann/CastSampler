@@ -52,3 +52,7 @@ class QueueItem(models.Model):
     title = models.CharField(maxlength=512, blank=True)
     description = models.TextField(blank=True)
     enclosure = models.URLField()
+
+    class Admin:
+        pass
+    
