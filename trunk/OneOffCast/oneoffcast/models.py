@@ -17,7 +17,7 @@ class Podcast(models.Model):
     description = models.TextField(blank=True)
     home_url = models.URLField(blank=True)
     feed_url = models.URLField()
-    registration_date = models.DateTimeField('date registered')
+    registration_date = models.DateTimeField('date registered', auto_now_add=True)
 
     # These fields are only visible in the admin screens
     # and are used to control whether or not the feed
@@ -52,7 +52,16 @@ class QueueItem(models.Model):
     title = models.CharField(maxlength=512, blank=True)
     description = models.TextField(blank=True)
     enclosure = models.URLField()
+    add_date = models.DateTimeField('date added', auto_now_add=True)
 
     class Admin:
-        pass
+        fields = ( ('Basics', {'fields':('user', 'podcast', 'title', 'description', 'add_date'),
+                               }),
+                   ('URLs', {'fields':('enclosure',),
+                             }),
+                   )
+        list_display = ('user', 'add_date', 'podcast', 'title')
+        list_filter = ['add_date', 'podcast']
+        search_fields = ['title', 'description']
+        date_hierarchy = 'add_date'
     
