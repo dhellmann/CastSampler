@@ -2,7 +2,7 @@
 
 <!-- $Id$ -->
 
-{% block title %}OneOffCast{% block title %}
+{% block title %}Home{% endblock %}
 
 {% block content %}
 
@@ -13,4 +13,11 @@
 {% endfor %}
 </ul>
 
-(% endblock %}
+<h1>Popular Podcasts</h1>
+<ul>
+{% for podcast in popular_podcasts %}
+  <li><a href="{{podcast.home_url}}">{{podcast.name}}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

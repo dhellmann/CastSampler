@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+<!-- $Id$ -->
+
+{% block title %}{{user.username}}{% endblock %}
+
+{% block content %}
+
+<h2>Current Queue</h2>
+<dl>
+{% for item in queued_items %}
+  <dt><a href="{{item.podcast.home_url}}">{{ item.podcast.name }}</a> - <a href="{{item.link}}">{{ item.title }}</a></dt>
+  <dd>{{ item.description }}<br><a href="{{item.item_enclosure_url}}">enclosure</a></dd>
+{% endfor %}
+</dl>
+
+{% endblock %}
