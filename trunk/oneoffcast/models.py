@@ -13,19 +13,19 @@ class Podcast(models.Model):
     
     # These are the public fields which we will expose to the
     # end user in some way.
-    name = models.CharField()
-    description = models.CharField()
-    home_url = models.URLField()
+    name = models.CharField(maxlength=256)
+    description = models.TextField(blank=True)
+    home_url = models.URLField(blank=True)
     feed_url = models.URLField()
     registration_date = models.DateTimeField('date registered')
 
     # These fields are only visible in the admin screens
     # and are used to control whether or not the feed
     # should be ignored so users cannot add items from it.
-    contact_name = models.CharField()
-    contact_email = models.EmailField()
-    notes = models.CharField()
-    ignore = models.BooleanField(default=False)
+    contact_name = models.CharField(maxlength=128, blank=True)
+    contact_email = models.EmailField(maxlength=128, blank=True)
+    notes = models.TextField(blank=True)
+    ignore = models.BooleanField(default=False, blank=True)
     
     class Admin:
         fields = ( ('Basics', {'fields':('name', 'description', 'registration_date'),
@@ -33,9 +33,10 @@ class Podcast(models.Model):
                    ('URLs', {'fields':('home_url', 'feed_url'),
                              }),
                    ('Ignore', {'fields':('contact_name', 'contact_email', 'notes', 'ignore'),
+                               'classes':'collapse',
                                }),
                    )
-        list_display = ('name', 'feed_url')
+        list_display = ('name', 'feed_url', 'ignore')
         list_filter = ['registration_date']
         search_fields = ['name', 'description', 'contact_name', 'contact_email', 'notes']
         date_hierarchy = 'registration_date'
@@ -48,6 +49,6 @@ class QueueItem(models.Model):
     """
     user = models.ForeignKey(User)
     podcast = models.ForeignKey(Podcast)
-    title = models.CharField()
-    description = models.CharField()
+    title = models.CharField(maxlength=512, blank=True)
+    description = models.TextField(blank=True)
     enclosure = models.URLField()
