@@ -17,3 +17,8 @@ class UserProfile(models.Model):
     activation_key = models.CharField(maxlength=40) 
     key_expires = models.DateTimeField() 
     
+    class Admin:
+        list_display = ('user', 'key_expires')
+        list_filter = ['key_expires']
+        search_fields = ['user']
+        date_hierarchy = 'key_expires'
