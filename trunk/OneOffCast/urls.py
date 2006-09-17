@@ -16,8 +16,10 @@ urlpatterns = patterns('',
     # Uncomment this for admin:
      (r'^admin/', include('django.contrib.admin.urls')),
     
+    # Main page
+    (r'^$', 'OneOffCast.oneoffcast.views.main'),
     # User pages
-    #(r'^cast/(?P<user_id>.*)$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    (r'^cast/(?P<user_id>.*)$', 'OneOffCast.oneoffcast.views.user'),
     # User feed
     (r'^feed/(?P<url>.*)$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
 )

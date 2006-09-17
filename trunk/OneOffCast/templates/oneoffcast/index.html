@@ -1,0 +1,8 @@
+<!-- $Id$ -->
+
+<h1>Newest Podcasts</h1>
+<ul>
+{% for podcast in newest_podcasts %}
+  <li><a href="{{podcast.home_url}}">{{podcast.name}}</a></li>
+{% endfor %}
+</ul>
