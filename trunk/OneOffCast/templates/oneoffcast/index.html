@@ -13,11 +13,13 @@
 {% endfor %}
 </ul>
 
+{% if popular_podcasts %}
 <h1>Popular Podcasts</h1>
 <ul>
 {% for podcast in popular_podcasts %}
-  <li><a href="{{podcast.home_url}}">{{podcast.name}}</a></li>
+  <li>{{podcast.use_count}} - <a href="{{podcast.home_url}}">{{podcast.name}}</a></li>
 {% endfor %}
 </ul>
+{% endif %}
 
 {% endblock %}

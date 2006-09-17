@@ -16,8 +16,23 @@ from oneoffcast.models import Podcast, QueueItem
 def main(request):
     """Main page for the app.
     """
+    #
+    # The 10 most recently added podcasts.
+    #
     newest_podcasts = Podcast.objects.all().order_by('-registration_date')[:10]
-    popular_podcasts = Podcast.objects.all()[:10]
+    #
+    # Look for how many individual episodes from a given podcast are referenced.
+    # Do we want to change this to count references to a podcast by a user
+    # instead of individual episodes?
+    #
+    popular_podcasts = Podcast.objects.extra(
+        select={'use_count':"""select count(*)
+                               from oneoffcast_queueitem
+                               where oneoffcast_queueitem.podcast_id = oneoffcast_podcast.id
+                               """,
+                },
+        where=['use_count > 0'], # only include podcasts referenced by *someone*
+        ).order_by('-use_count')[:10]
     return render_to_response('oneoffcast/index.html', 
                               {'newest_podcasts':newest_podcasts,
                                'popular_podcasts':popular_podcasts,
