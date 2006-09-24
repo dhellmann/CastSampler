@@ -265,15 +265,37 @@ pre {
   text-decoration: none;
 }
 
-.menu_bar { 
+#menu_bar { 
   background-color: #9EBF8A; /* light olive */
   line-height: 50px;
 }
 
-.menu_bar_l { 
+#menu_bar_l { 
   text-align: left;
   margin-left: 1em;
   font-size: 14px;
+}
+
+#menu_bar_l a:hover { 
+  background-color: #5F7353; /* dark olive */
+}
+
+#menu_bar_r { 
+  text-align: right;
+  margin-right: 1em;
+//  float: right;
+  font-size: 11px;
+  color: white;
+  background-color: #9EBF8A; /* light olive */
+}
+
+#menu_bar_r a { 
+  color: white;
+  text-decoration: none;
+}
+
+#menu_bar_r a:hover { 
+  background-color: #5F7353; /* dark olive */
 }
 
 .menu_item {  /* menu items */
@@ -288,28 +310,6 @@ pre {
   text-decoration: none;
   padding: 0.2em 1em;
   color: white;
-}
-
-.menu_bar_l a:hover { 
-  background-color: #5F7353; /* dark olive */
-}
-
-.menu_bar_r { 
-  text-align: right;
-  margin-right: 1em;
-//  float: right;
-  font-size: 11px;
-  color: white;
-  background-color: #9EBF8A; /* light olive */
-}
-
-.menu_bar_r a { 
-  color: white;
-  text-decoration: none;
-}
-
-.menu_bar_r a:hover { 
-  background-color: #5F7353; /* dark olive */
 }
 
 #sidebar { 
@@ -338,4 +338,14 @@ div.message a {
 
 div.title {
   margin-top: 1em;
+}
+
+.error {
+  /* Class for error indication in forms */
+  background: orange;
+  border: 1px solid black;
+  padding: 1em;
+  margin: 0;
+  width: 68% !important;
+  text-align: center;
 }

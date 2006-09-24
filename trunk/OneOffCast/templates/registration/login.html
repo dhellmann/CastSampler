@@ -2,20 +2,32 @@
 
 {% extends "base.html" %}
 
+{% block sidebar %}
+{% endblock %}
+
 {% block content %}
 
+<h2>Login</h2>
+
 {% if form.has_errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<center><div class="error">Your username and password didn't match. Please try again.</div></center>
 {% endif %}
 
-<form method="post" action=".">
-<table>
-<tr><td><label for="id_username">Username:</label></td><td>{{ form.username }}</td></tr>
-<tr><td><label for="id_password">Password:</label></td><td>{{ form.password }}</td></tr>
-</table>
 
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
+<form method="post" action=".">
+    <center>
+      <fieldset style="width: 50%">
+        <legend>Login</legend>
+
+        <table class="form_table">
+          <tr><td><label for="id_username">Username:</label></td><td>{{ form.username }}</td></tr>
+          <tr><td><label for="id_password">Password:</label></td><td>{{ form.password }}</td></tr>
+        </table>
+      </fieldset>
+      
+      <input type="submit" value="login" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </center>
+  </form>
 
 {% endblock %}

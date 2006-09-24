@@ -12,8 +12,8 @@
 <body>
     <div id="sitename"><a href="/">CastSampler</a></div>
 
-    <div class="menu_bar">
-      <div class="menu_bar_r">
+    <div id="menu_bar">
+      <div id="menu_bar_r">
 {% if user.is_authenticated %}
         <span>{{ user }}</span> |
         <a href="/accounts/logout">Logout</a>
