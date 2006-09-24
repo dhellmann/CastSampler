@@ -1,33 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- $Id$ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <title>OneOffCast - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" media="all"
+      href="/static/css/site.css" />
+</head>
 
-{% extends "base.html" %}
+<body>
+    <div id="sitename"><a href="/">CastSampler</a></div>
+    <div id="menu_bar">
+      <div id="menu_bar_r">
+        <a href="/accounts/register">Register</a>
+      </div>
+    </div>
 
-{% block sidebar %}
-{% endblock %}
+    <h2>Login</h2>
 
-{% block content %}
+    {% if form.has_errors %}
+    <center><div class="error">Your username and password didn't match. Please try again.</div></center>
+    {% endif %}
 
-<h2>Login</h2>
-
-{% if form.has_errors %}
-<center><div class="error">Your username and password didn't match. Please try again.</div></center>
-{% endif %}
-
-
-<form method="post" action=".">
-    <center>
-      <fieldset style="width: 50%">
-        <legend>Login</legend>
-
-        <table class="form_table">
-          <tr><td><label for="id_username">Username:</label></td><td>{{ form.username }}</td></tr>
-          <tr><td><label for="id_password">Password:</label></td><td>{{ form.password }}</td></tr>
-        </table>
-      </fieldset>
-      
-      <input type="submit" value="login" />
-      <input type="hidden" name="next" value="{{ next }}" />
-    </center>
-  </form>
-
-{% endblock %}
+    <form method="post" action=".">
+      <center>
+        <fieldset style="width: 50%">
+          <legend>Login</legend>
+          
+          <table class="form_table">
+            <tr><td><label for="id_username">Username:</label></td><td>{{ form.username }}</td></tr>
+            <tr><td><label for="id_password">Password:</label></td><td>{{ form.password }}</td></tr>
+          </table>
+        </fieldset>
+        
+        <input type="submit" value="login" />
+          <input type="hidden" name="next" value="{{ next }}" />
+      </center>
+    </form>
+    
+  </body>
+</html>
