@@ -312,8 +312,22 @@ pre {
   color: white;
 }
 
-#sidebar { 
-//  float: left;
+#sidebar_l { 
+  background-color: #9EBF8A; /* light olive */
+  float: left;
+  width: 20%;
+  margin-left: 0;
+}
+
+#content { 
+  float: left;
+  width: 60%;
+}
+
+#sidebar_r { 
+  background-color: #9EBF8A; /* light olive */
+  float: left;
+  width: 20%;
 }
 
 div.message {
