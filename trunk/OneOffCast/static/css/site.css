@@ -1,0 +1,341 @@
+/*
+** $Id$
+**
+** Site CSS
+*/
+
+/* COLORS */
+/*  #5F7353; /* dark olive */
+/*  #9EBF8A; /* light olive */
+/*   #737153; /* dark brown */
+
+
+body {
+
+/* from lesscode.org */
+  font-size: 75%; /* Resets 1em to 10px */
+  font-family: 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', Tahoma, Sans-Serif;
+
+  background: white;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  font-size: 100%;
+}
+
+a {
+  text-decoration: underline;
+}
+
+img {
+  border: none;
+  vertical-align: middle;
+}
+
+p {
+  margin: 0.5em 0em 1em 0em;
+/*  text-align: justify;*/
+  line-height: 1.5em;
+}
+
+p a {
+  text-decoration: underline;
+}
+
+p a:visited {
+  color: purple;
+  background-color: transparent;
+}
+
+p a:active {
+  color: red;
+  background-color: transparent;
+}
+
+p img {
+  border: 0;
+  margin: 0;
+}
+
+
+hr {
+  clear: both;
+  height: 1px;
+  color: black;
+  background-color: transparent;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+/*  color: black;*/
+  color: #5F7353; /* dark olive */
+  background-color: white;
+  clear: left;
+  font: 100% Verdana, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding-top: 0.5em;
+}
+
+h1 { 
+  color: white;
+  background-color: #5F7353; /* dark olive */
+/*  text-align: center;*/
+}
+
+h2 { 
+  /*color: #9EBF8A; /* light olive */
+  text-align: center;
+}
+
+h3 { 
+  color: #5F7353; /* dark olive */
+  background-color: white;
+  text-align: center;
+  padding-top: 0;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a { color: black ! important; }
+
+
+h1 {
+  font-size: 160%;
+}
+
+h2 {
+  font-size: 150%;
+}
+
+h3 {
+  font-size: 140%;
+}
+
+h4 {
+  font-size: 120%;
+}
+
+h5 {
+  font-size: 100%;
+}
+
+h6 {
+  font-size: 80%;
+}
+
+ul {
+  line-height: 1.5em;
+  list-style-type: square;
+  margin: 0.5em 0 0 2em;
+  padding:0;
+}
+
+ol {
+  line-height: 1.5em;
+  margin: 0.5em 0 0 2em;
+  padding:0;
+}
+
+ul a, ol a {
+  text-decoration: underline;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+dl {
+}
+
+dt {
+  font-weight: bold;
+}
+
+dt a {
+  text-decoration: underline;
+}
+
+
+dd {
+  line-height: 1.5em;
+  margin-bottom: 1em;
+}
+
+d a {
+  text-decoration: underline;
+}
+
+
+fieldset {
+  border: 1px solid #737153; /* dark brown */
+  margin: 0 1em 0 1em;
+  background-color: #eeeeee;
+}
+
+legend {
+  color: #737153; /* dark brown */
+  background: transparent;
+  padding: 0.5em;
+}
+
+
+form {
+  border: none;
+  margin: 0;
+}
+
+textarea {
+  border: 1px solid black;
+  color: black;
+  background-color: white;
+  width: 88%;
+  padding: 0.1em;
+}
+
+input {
+  font: 100% Verdana, Helvetica, Arial, sans-serif;
+  border: 1px solid black;
+  color: black;
+  background-color: white;
+  vertical-align: middle;
+  margin-bottom: 1px; /* IE bug fix */
+  padding: 0.1em;
+}
+
+select {
+  font: 100% Verdana, Helvetica, Arial, sans-serif;
+  border: 1px solid black;
+  vertical-align: top;
+}
+
+abbr, acronym, .explain {
+  border-bottom: 1px dotted black;
+  color: black;
+  background-color: transparent;
+  cursor: help;
+}
+
+q {
+  font-family: Times, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 120%;
+}
+
+blockquote {
+  font-family: Times, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 120%;
+}
+
+code {
+  font-size: 120%;
+  color: black;
+  background-color: white;
+}
+
+pre {
+  font-size: 120%;
+  padding: 1em;
+  border: 1px dotted green;
+  color: black;
+  background-color: white;
+}
+/*
+** Structural Elements
+*/
+
+#sitename { 
+  color: white;
+  background-color: #5F7353; /* dark olive */
+  clear: left;
+  font: 180% Verdana, Helvetica, Arial, sans-serif;
+  margin: 0 0.5em 0 0;
+  padding: 0 1em 0 1em;
+  float: left;
+  line-height: 50px;
+}
+#sitename a { 
+  color: white;
+  text-decoration: none;
+}
+
+.menu_bar { 
+  background-color: #9EBF8A; /* light olive */
+  line-height: 50px;
+}
+
+.menu_bar_l { 
+  text-align: left;
+  margin-left: 1em;
+  font-size: 14px;
+}
+
+.menu_item {  /* menu items */
+  border-right: 1px solid white;
+  text-decoration: none;
+  padding: 0.2em 1em;
+  color: white;
+}
+
+.last_menu_item { 
+  background-color: #9EBF8A; /* light olive */
+  text-decoration: none;
+  padding: 0.2em 1em;
+  color: white;
+}
+
+.menu_bar_l a:hover { 
+  background-color: #5F7353; /* dark olive */
+}
+
+.menu_bar_r { 
+  text-align: right;
+  margin-right: 1em;
+//  float: right;
+  font-size: 11px;
+  color: white;
+  background-color: #9EBF8A; /* light olive */
+}
+
+.menu_bar_r a { 
+  color: white;
+  text-decoration: none;
+}
+
+.menu_bar_r a:hover { 
+  background-color: #5F7353; /* dark olive */
+}
+
+#sidebar { 
+//  float: left;
+}
+
+div.message {
+  background: orange;
+  border: 1px solid black;
+  color: black;
+  font: bold 80% Verdana, Helvetica, Arial, sans-serif;
+  margin: 2em 0em 1em 0em;
+  padding: 0.5em 1em;
+  vertical-align: middle;
+}
+
+.footer { 
+  background-color: #9EBF8A; /* light olive */
+  line-height: 40px;
+}
+
+div.message a {
+  color: black;
+  text-decoration: underline;
+}
+
+div.title {
+  margin-top: 1em;
+}
