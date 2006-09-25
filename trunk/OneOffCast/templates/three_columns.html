@@ -1,0 +1,30 @@
+<!-- $Id$ -->
+{% extends "base.html" %}
+
+{% block body %}
+
+{% block sidebar_l_wrapper %}
+    <div id="sidebar_l">
+      {% block sidebar_l %}
+        <ul>
+            <li><a href="/">Home</a></li>
+        </ul>
+      {% endblock %}
+    </div>
+{% endblock %}
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+{% block sidebar_r_wrapper %}
+    <div id="sidebar_r">
+      {% block sidebar_r %}
+      {% endblock %}
+    </div>
+{% endblock %}
+
+{% endblock %}
+
+</body>
+</html>

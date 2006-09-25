@@ -10,38 +10,36 @@
 </head>
 
 <body>
-    <div id="sitename"><a href="/">CastSampler</a></div>
 
+{% block menu_bar %}
     <div id="menu_bar">
-      <div id="menu_bar_r">
+      <span id="sitename"><a href="/">CastSampler</a></span>
+
 {% if user.is_authenticated %}
+      <div id="menu_bar_r">
         <span>{{ user }}</span> |
         <a href="/accounts/logout">Logout</a>
+      </div>
+      <div id="menu_bar_l">
+        <a class="menu_item" href="/">Home</a>
+        <a class="last_menu_item" href="/cast/{{ user }}">My Queue</a>
+      </div>
 {% else %}
+      <div id="menu_bar_r">
         <a href="/accounts/login">Login</a> | 
         <a href="/accounts/register">Register</a>
-{% endif %}
       </div>
-    </div>
+      <div id="menu_bar_l">
+        <a class="last_menu_item" href="/">Home</a>
+      </div>
+{% endif %}
 
-{% block sidebar_l_wrapper %}
-    <div id="sidebar_l">
-      {% block sidebar_l %}
-        <ul>
-            <li><a href="/">Home</a></li>
-        </ul>
-      {% endblock %}
     </div>
 {% endblock %}
 
+{% block body %}
     <div id="content">
         {% block content %}{% endblock %}
-    </div>
-
-{% block sidebar_r_wrapper %}
-    <div id="sidebar_r">
-      {% block sidebar_r %}
-      {% endblock %}
     </div>
 {% endblock %}
 

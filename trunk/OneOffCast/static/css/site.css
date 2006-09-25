@@ -184,7 +184,6 @@ legend {
   padding: 0.5em;
 }
 
-
 form {
   border: none;
   margin: 0;
@@ -283,7 +282,7 @@ pre {
 #menu_bar_r { 
   text-align: right;
   margin-right: 1em;
-//  float: right;
+  float: right;
   font-size: 11px;
   color: white;
   background-color: #9EBF8A; /* light olive */
@@ -320,6 +319,10 @@ pre {
 }
 
 #content { 
+  padding: 1em;
+}
+
+#center_column { 
   float: left;
   width: 60%;
   padding-top: 1em;
@@ -356,10 +359,22 @@ div.title {
   margin-top: 1em;
 }
 
-.error {
+.major_error {
   /* Class for error indication in forms */
   background: orange;
   border: 1px solid black;
+  padding: 0.5em;
+  margin: 0;
+  width: 68% !important;
+  text-align: center;
+}
+
+.error {
+  /* Class for error indication in forms */
+  color: orange;
+  background-color: transparent;
+  font-weight: bold;
+//  border: 1px solid black;
   padding: 0.5em;
   margin: 0;
   width: 68% !important;
