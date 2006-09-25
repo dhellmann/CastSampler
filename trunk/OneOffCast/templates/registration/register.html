@@ -1,41 +1,73 @@
-{% extends "base.html" %}
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- $Id$ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <title>OneOffCast - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" media="all"
+      href="/static/css/site.css" />
+</head>
 
-{% block title %}Registration{% endblock %}
+<body>
+    <div id="sitename"><a href="/">CastSampler</a></div>
+    <div id="menu_bar">
+      <div id="menu_bar_r">
+        <a href="/accounts/register">Register</a>
+      </div>
+    </div>
 
-{% block content %}
-
-<h2>New Account</h2>
+    <h2>New Account</h2>
 
 {% if created %}
 
-<p>A confirmation message has been sent to the email address you gave.  
-Please follow the instructions in the message to complete your registration.
-</p>
+    <div id="content" style="margin-left: 20%">
+      <p>A confirmation message has been sent to the email address you gave.  
+        Please follow the instructions in the message to complete your registration.
+      </p>
+    </div>
 
 {% else %}
 
-{% if form.has_errors %}
-<h3>Please correct the following error{{ form.error_dict|pluralize }}:</h2>
-{% endif %}
-
-<form method="post" action="../register/">
-    <p><label for="id_username">Account Name:</label> {{ form.username }}
-     {% if form.username.errors %}*** {{ form.username.errors|join:", " }}{% endif %}
-    </p>
-    <p><label for="id_email">Email:</label> {{ form.email }}
-     {% if form.email.errors %}*** {{ form.email.errors|join:", " }}{% endif %}
-     </p>
-    <p><label for="id_password1">Password:</label> {{ form.password1 }}
-     {% if form.password1.errors %}*** {{ form.password1.errors|join:", " }}{% endif %}
-     </p>
-    <p><label for="id_password2">Repeat Password:</label> {{ form.password2 }}
-     {% if form.password2.errors %}*** {{ form.password2.errors|join:", " }}{% endif %}
-     </p>
+    <form method="post" action="../register/">
+      <center>
+        <fieldset>
+          <legend>Register</legend>
+          
+          <table class="form_table">
+            <tr>
+              <td><label for="id_username">Account Name:</label></td>
+              <td> {{ form.username }}
+                {% if form.username.errors %}<span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td><label for="id_email">Email:</label></td>
+              <td>{{ form.email }}
+                {% if form.email.errors %}<span class="error">{{ form.email.errors|join:", " }}</span>{% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td><label for="id_password1">Password:</label></td>
+              <td>{{ form.password1 }}
+                {% if form.password1.errors %}<span class="error"> {{ form.password1.errors|join:", " }}</span>{% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td><label for="id_password2">Repeat
+                  Password:</label></td>
+              <td>{{ form.password2 }}
+                {% if form.password2.errors %}<span class="error"> {{ form.password2.errors|join:", " }}</span>{% endif %}
+              </td>
+            </tr>
+          </table>
+          
+          <input type="submit" value="Register">
+        </fieldset>
+      </center>
+    </form>
     
-    <input type="submit" value="Register">
-</form>
-
 {% endif %}
-{% endblock %}
+    
+  </body>
+</html>
