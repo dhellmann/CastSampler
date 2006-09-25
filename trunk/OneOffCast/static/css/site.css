@@ -322,6 +322,8 @@ pre {
 #content { 
   float: left;
   width: 60%;
+  padding-top: 1em;
+  padding-left: 1em;
 }
 
 #sidebar_r { 
@@ -358,7 +360,7 @@ div.title {
   /* Class for error indication in forms */
   background: orange;
   border: 1px solid black;
-  padding: 1em;
+  padding: 0.5em;
   margin: 0;
   width: 68% !important;
   text-align: center;
