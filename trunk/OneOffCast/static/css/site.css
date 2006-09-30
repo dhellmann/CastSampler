@@ -311,28 +311,33 @@ pre {
   color: white;
 }
 
+/*
+** Layout for 3 columns
+*/
 #sidebar_l { 
   background-color: #9EBF8A; /* light olive */
-  float: left;
   width: 20%;
-  margin-left: 0;
-}
-
-#content { 
-  padding: 1em;
-}
+  float: left;
+ }
 
 #center_column { 
-  float: left;
   width: 60%;
-  padding-top: 1em;
-  padding-left: 1em;
+  padding: 1em;
+  margin-left: 20%;
 }
 
 #sidebar_r { 
   background-color: #9EBF8A; /* light olive */
-  float: left;
   width: 20%;
+  float: right;
+ }
+/*
+** End 3 column styles
+*/
+
+#content { 
+  padding: 1em;
+  border: 1px solid #737153; /* dark brown */
 }
 
 div.message {

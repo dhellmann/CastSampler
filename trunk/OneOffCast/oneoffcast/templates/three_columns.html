@@ -15,16 +15,16 @@
     </div>
 {% endblock %}
 
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
-
 {% block sidebar_r_wrapper %}
     <div id="sidebar_r">
       {% block sidebar_r %}
       {% endblock %}
     </div>
 {% endblock %}
+
+    <div id="center_column">
+        {% block content %}{% endblock %}
+    </div>
 
 {% endblock %}
 
