@@ -9,10 +9,16 @@
 {% block sidebar_r %}
 
 <h2>Current Queue</h2>
-<dl>
+<dl class="queue">
 {% for item in queued_items %}
-  <dt><a href="{{item.podcast.home_url}}">{{ item.podcast.name }}</a> - <a href="{{item.link}}">{{ item.title }}</a></dt>
-  <dd>{{ item.description }}<br><a href="{{item.item_enclosure_url}}">enclosure</a></dd>
+  <dt><a class="podcast_title" href="{{item.link}}">{{item.title}}</a>
+      - 
+      <a class="podcast_home" href="{{item.podcast.home_url}}">{{ item.podcast.name }}</a>
+    </dt>
+
+  <dd><div class="item_description">{{ item.description }}</div><a class="item_enclosure"
+          href="{{item.item_enclosure_url}}">enclosure</a></dd>
+
 {% endfor %}
 </dl>
 

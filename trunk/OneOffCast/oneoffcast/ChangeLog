@@ -1,5 +1,7 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/user.html: Add classes to the parts of the queue listing.
+
 	* templates/index.html: Switch to 2 columns.
 
 	* templates/three_columns.html: Move global template into this app.

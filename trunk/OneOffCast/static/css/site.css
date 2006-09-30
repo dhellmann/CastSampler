@@ -245,6 +245,7 @@ pre {
   color: black;
   background-color: white;
 }
+
 /*
 ** Structural Elements
 */
@@ -263,6 +264,8 @@ pre {
   color: white;
   text-decoration: none;
 }
+
+/* MEMU */
 
 #menu_bar { 
   background-color: #9EBF8A; /* light olive */
@@ -311,9 +314,7 @@ pre {
   color: white;
 }
 
-/*
-** Layout for 2 columns
-*/
+/* LAYOUT FOR 2 COLUMNS */
 
 #center_column { 
   width: 80%;
@@ -325,9 +326,6 @@ pre {
   width: 20%;
   float: right;
  }
-/*
-** End 2 column styles
-*/
 
 #content { 
   padding: 1em;
@@ -372,9 +370,36 @@ div.title {
   color: orange;
   background-color: transparent;
   font-weight: bold;
-//  border: 1px solid black;
+/*  border: 1px solid black;*/
   padding: 0.5em;
   margin: 0;
   width: 68% !important;
   text-align: center;
+}
+
+/*
+** Styles for queue
+*/
+.queue {
+  margin-left: 0.5em;
+}
+
+.queue .podcast_home { 
+  font-size: 90%;
+  text-decoration: none;
+}
+
+.queue .podcast_title { 
+  text-decoration: none;
+}
+
+.queue .item_description { 
+  margin: 0;
+  text-decoration: none;
+}
+
+.queue .item_enclosure { 
+  font-size: 80%;
+  margin: 0;
+  text-decoration: none;
 }
