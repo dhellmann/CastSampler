@@ -1,5 +1,21 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* urls.py (feeds): Add rss feed info and update class for atom feeds.
+
+	* templates/user.html: Add links for atom and rss feeds.
+
+	* feeds.py (UserFeed): Add title and description templates.
+	(UserFeed.title): Tweak formatting of feed title.
+	(AtomFeed): New class to produce an ATOM feed, since we will
+	support multiple formats.
+	(UserFeed.items): New class to produce the RSS feed.
+
+	* templates/feed_title.html: New template to show the title of a
+	queue item in a feed.
+
+	* templates/feed_description.html: New template to show the
+	description of a queue item in a feed.
+
 	* views.py (user): Sort by add_date order, not reversed.
 
 	* templates/user.html: Use user instead of user.username.

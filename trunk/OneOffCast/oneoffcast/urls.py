@@ -46,7 +46,8 @@ from oneoffcast import feeds
 #
 
 feeds = {
-    'atom':feeds.UserFeed,
+    'atom':feeds.AtomFeed,
+    'rss':feeds.RSSFeed,
     }
 
 urlpatterns = patterns('',

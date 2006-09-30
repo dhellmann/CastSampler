@@ -34,7 +34,7 @@
 #
 from django.contrib.auth.models import User
 from django.contrib.syndication.feeds import Feed
-from django.utils.feedgenerator import Atom1Feed
+from django.utils.feedgenerator import Atom1Feed, Rss201rev2Feed
 
 
 #
@@ -48,13 +48,15 @@ from oneoffcast import models
 #
 
 class UserFeed(Feed):
-    feed_type = Atom1Feed
+
+    title_template = 'feed_title.html'
+    description_template = 'feed_description.html'
 
     def get_object(self, bits):
         return User.objects.get(username=bits[0])
     
     def title(self, obj):
-        return '%s OneOffCast' % obj.username
+        return "%s's OneOffCast" % obj.username
     
     def link(self, obj):
         return obj.get_absolute_url()
@@ -73,3 +75,9 @@ class UserFeed(Feed):
 
     def items(self, obj):
         return models.QueueItem.objects.filter(user=obj).order_by('-add_date')
+
+class RSSFeed(UserFeed):
+    feed_type = Rss201rev2Feed
+
+class AtomFeed(UserFeed):
+    feed_type = Atom1Feed
