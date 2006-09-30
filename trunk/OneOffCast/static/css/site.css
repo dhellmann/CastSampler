@@ -314,16 +314,10 @@ pre {
 /*
 ** Layout for 3 columns
 */
-#sidebar_l { 
-  background-color: #9EBF8A; /* light olive */
-  width: 20%;
-  float: left;
- }
 
 #center_column { 
-  width: 60%;
+  width: 80%;
   padding: 1em;
-  margin-left: 20%;
 }
 
 #sidebar_r { 
