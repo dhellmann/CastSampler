@@ -1,5 +1,7 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/css/site.css: Remove border from content element.
+
 	* templates/three_columns.html: Add a title block so templates
 	which override this one can override it.
 

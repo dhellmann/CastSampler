@@ -312,7 +312,7 @@ pre {
 }
 
 /*
-** Layout for 3 columns
+** Layout for 2 columns
 */
 
 #center_column { 
@@ -326,12 +326,11 @@ pre {
   float: right;
  }
 /*
-** End 3 column styles
+** End 2 column styles
 */
 
 #content { 
   padding: 1em;
-  border: 1px solid #737153; /* dark brown */
 }
 
 div.message {
