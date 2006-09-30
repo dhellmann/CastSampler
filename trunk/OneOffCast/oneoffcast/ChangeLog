@@ -1,5 +1,7 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/three_columns.html: Move global template into this app.
+
 	* urls.py (feeds): Add rss feed info and update class for atom feeds.
 
 	* templates/user.html: Add links for atom and rss feeds.
