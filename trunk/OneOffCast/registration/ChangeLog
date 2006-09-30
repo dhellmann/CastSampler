@@ -1,0 +1,8 @@
+2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
+
+	* urls.py (urlpatterns): Pass template names to login and logout
+	so they use our local templates.
+
+	* templates/*.html: Move templates here from the project templates
+	directory.
+

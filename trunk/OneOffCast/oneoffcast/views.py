@@ -69,7 +69,7 @@ def main(request):
                 },
         where=['use_count > 0'], # only include podcasts referenced by *someone*
         ).order_by('-use_count')[:10]
-    return render_to_response('oneoffcast/index.html', 
+    return render_to_response('index.html', 
                               {'newest_podcasts':newest_podcasts,
                                'popular_podcasts':popular_podcasts,
                                'user':request.user,
@@ -87,7 +87,7 @@ def user(request, username):
     """
     if request.user.username == username:
         queued_items = QueueItem.objects.filter(user=request.user).order_by('-add_date')
-        return render_to_response('oneoffcast/user.html',
+        return render_to_response('user.html',
                                   {'queued_items':queued_items,
                                    'user':request.user,
                                    })

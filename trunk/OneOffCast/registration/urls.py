@@ -55,6 +55,6 @@ urlpatterns = patterns('OneOffCast.registration.views',
 
 ) + patterns('django.contrib.auth.views',
     # User login and logout
-    (r'^login/$', 'login'),
-    (r'^logout/$', 'logout'),
+    (r'^login/$', 'login', {'template_name':'login.html'}),
+    (r'^logout/$', 'logout', {'template_name':'logged_out.html'}),
     )

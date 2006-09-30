@@ -86,11 +86,11 @@ def register(request):
                       email_body,
                       'oneoffcast@gmail.com',
                       [new_user.email])
-            return render_to_response('registration/register.html', {'created': True})
+            return render_to_response('register.html', {'created': True})
     else:
         errors = new_data = {}
     form = forms.FormWrapper(manipulator, new_data, errors)
-    return render_to_response('registration/register.html', {'form': form})
+    return render_to_response('register.html', {'form': form})
 
 def confirm(request, activation_key):
     """User is visiting the URL to confirm a new registration.
@@ -98,8 +98,8 @@ def confirm(request, activation_key):
     user_profile = get_object_or_404(UserProfile,
                                      activation_key=activation_key)
     if user_profile.key_expires < datetime.datetime.today():
-        return render_to_response('registration/confirm.html', {'expired': True})
+        return render_to_response('confirm.html', {'expired': True})
     user_account = user_profile.user
     user_account.is_active = True
     user_account.save()
-    return render_to_response('registration/confirm.html', {'success': True})
+    return render_to_response('confirm.html', {'success': True})

@@ -1,0 +1,8 @@
+2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py: Update the template references so they match now that
+	they are in the app templates directory.
+
+	* templates/*.html: Move templates here from the project templates
+	directory.
+
