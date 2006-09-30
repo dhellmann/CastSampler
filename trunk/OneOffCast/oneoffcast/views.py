@@ -86,7 +86,7 @@ def user(request, username):
     """Show information about the user.
     """
     if request.user.username == username:
-        queued_items = QueueItem.objects.filter(user=request.user).order_by('-add_date')
+        queued_items = QueueItem.objects.filter(user=request.user).order_by('add_date')
         return render_to_response('user.html',
                                   {'queued_items':queued_items,
                                    'user':request.user,

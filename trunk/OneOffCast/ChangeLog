@@ -1,5 +1,8 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/three_columns.html: Add a title block so templates
+	which override this one can override it.
+
 	* urls.py (urlpatterns): Do not include the project name in
 	imports or view names.  Use the generic view for handling logins
 	that do not have a "next" value.

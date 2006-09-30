@@ -1,5 +1,9 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (user): Sort by add_date order, not reversed.
+
+	* templates/user.html: Use user instead of user.username.
+
 	* views.py (user_redirect): Rename login_redirect.  Add a
 	urlBase argument.
 
