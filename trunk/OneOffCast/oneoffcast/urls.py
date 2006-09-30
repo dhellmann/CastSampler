@@ -53,7 +53,7 @@ urlpatterns = patterns('',
     # User feed
     (r'^feed/(?P<url>.*)$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
 ) + \
-            patterns('OneOffCast.oneoffcast.views',
+            patterns('oneoffcast.views',
 
     # User pages
     (r'^(?P<username>.*)/$', 'user'),

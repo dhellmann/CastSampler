@@ -43,8 +43,8 @@ from django import forms
 #
 # Import Local modules
 #
-from OneOffCast.registration.models import UserProfile
-from OneOffCast.registration.forms import RegistrationForm
+from registration.models import UserProfile
+from registration.forms import RegistrationForm
 
 
 #

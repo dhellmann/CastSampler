@@ -1,7 +1,10 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py: Remove project name from imports.
+
 	* urls.py (urlpatterns): Pass template names to login and logout
 	so they use our local templates.
+	(urlpatterns): Remove project name from pattern prefix.
 
 	* templates/*.html: Move templates here from the project templates
 	directory.

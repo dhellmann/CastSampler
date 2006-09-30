@@ -47,7 +47,7 @@ from django.conf.urls.defaults import *
 #
 
 
-urlpatterns = patterns('OneOffCast.registration.views',
+urlpatterns = patterns('registration.views',
 
     # User registration
     (r'^register/$', 'register'),

@@ -1,5 +1,7 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* urls.py (urlpatterns): Remove project name from pattern prefix.
+
 	* views.py: Update the template references so they match now that
 	they are in the app templates directory.
 
