@@ -76,10 +76,10 @@ def main(request):
                                })
 
 @login_required
-def login_redirect(request):
+def user_redirect(request, urlBase='/cast'):
     """Redirect the user to their user page.
     """
-    return HttpResponseRedirect('/cast/%s' % request.user.username)
+    return HttpResponseRedirect('%s/%s' % (urlBase, request.user.username))
 
 @login_required
 def user(request, username):

@@ -57,4 +57,7 @@ urlpatterns = patterns('',
 
     # User pages
     (r'^(?P<username>.*)/$', 'user'),
+
+    # No user specified, try to determine from the session
+    (r'^$', 'user_redirect'),
     )

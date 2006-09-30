@@ -10,18 +10,18 @@ urlpatterns = patterns(
     # (r'^OneOffCast/', include('OneOffCast.apps.foo.urls.foo')),
     
     # Main page
-    (r'^$', 'OneOffCast.oneoffcast.views.main'),
+    (r'^$', 'oneoffcast.views.main'),
     
     # Override the URL for blind logins to take the user to their home page
-    (r'^accounts/profile/$', 'OneOffCast.oneoffcast.views.login_redirect'),
+    (r'^accounts/profile/$', 'django.views.generic.simple.redirect_to', {'url':'/cast/'}),
     # Account registration, login, etc.
-    (r'^accounts/', include('OneOffCast.registration.urls')),
+    (r'^accounts/', include('registration.urls')),
     
     # Uncomment this for admin:
     (r'^admin/', include('django.contrib.admin.urls')),
 
     # The oneoffcast app
-    (r'^cast/', include('OneOffCast.oneoffcast.urls')),
+    (r'^cast/', include('oneoffcast.urls')),
 
     # Static content (CSS, images, etc.)
     (r'^static/(.*)$', 'django.views.static.serve',

@@ -1,5 +1,14 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (user_redirect): Rename login_redirect.  Add a
+	urlBase argument.
+
+	* urls.py (urlpatterns): Add a URL pattern for when the input URL
+	does not include the user name.
+
+	* views.py (user_redirect): Allow callers to specify where the
+	cast URL should go.
+
 	* urls.py (urlpatterns): Remove project name from pattern prefix.
 
 	* views.py: Update the template references so they match now that
