@@ -99,7 +99,14 @@ def confirm(request, activation_key):
                                      activation_key=activation_key)
     if user_profile.key_expires < datetime.datetime.today():
         return render_to_response('confirm.html', {'expired': True})
+    #
+    # Activate the user
+    #
     user_account = user_profile.user
     user_account.is_active = True
     user_account.save()
+    #
+    # Delete the profile
+    #
+    user_profile.delete()
     return render_to_response('confirm.html', {'success': True})

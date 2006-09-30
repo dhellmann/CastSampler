@@ -1,6 +1,8 @@
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py: Remove project name from imports.
+	(confirm): After activating the user, delete the registration
+	profile.
 
 	* urls.py (urlpatterns): Pass template names to login and logout
 	so they use our local templates.
