@@ -1,5 +1,9 @@
 2006-10-01  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/base.html: Add status message display and handling.
+
+	* static/css/site.css: Change margins on message class.
+
 	* static/js: Add directory for JavaScript.
 
 	* templates/base.html: Add dojo references.

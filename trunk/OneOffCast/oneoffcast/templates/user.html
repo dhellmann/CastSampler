@@ -17,23 +17,26 @@ dojo.io.bind({
 */
 
   /*
-  ** Handle the add_by_feed form.
+  ** SHOW FEED CONTENTS form
   */
   function do_show_feed_contents() {
+    show_status("Loading feed...");
+    dojo.byId('result').innerHTML = "";
+
     dojo.io.bind({ 
       url: "show_feed_contents/",
-      handler: callBack,
+      handler: show_feed_contents_callback,
       formNode: document.getElementById("show_feed_contents")
     });
     return false;
   }
-
-   function callBack(type, data, evt) {
+  function show_feed_contents_callback(type, data, evt) {
+    clear_status();
     if (type == "load") {
       dojo.byId('result').innerHTML = data;
     } else if (type == "error") {
     //alert('got an error, need to do something with it:' + data);
-    dojo.debugShallow(data);
+      dojo.debugShallow(data);
       dojo.byId('result').innerHTML = "";
     }
    }

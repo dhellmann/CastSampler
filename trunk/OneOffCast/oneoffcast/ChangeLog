@@ -1,5 +1,12 @@
 2006-10-01  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (show_feed_contents): Log any errors from the form
+	validation and return error text containing those error messages.
+
+	* templates/user.html: Rename callback to make the name unique.
+
+	* templates/two_columns.html: Add a status message div.
+
 	* forms.py (ShowFeedContentsForm): New class to manage input
 	fields in the show_feed_contents form.
 

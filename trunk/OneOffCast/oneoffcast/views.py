@@ -156,6 +156,8 @@ def show_feed_contents(request, username=None):
 
             return HttpResponse('<div>%s</div>' % new_data['url'])
         else:
-            return HttpResponse('<div class="error">%s</div>' % ', '.join(errors['url']))
+            logging.debug(errors)
+            error_text = ', '.join([str(e) for e in errors['url']])
+            return HttpResponse('<div class="error">%s</div>' % error_text)
     return HttpResponse('')
     

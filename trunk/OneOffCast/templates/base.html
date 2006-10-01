@@ -18,7 +18,36 @@
             dojo.require("dojo.event.*");
             dojo.require("dojo.io.*");
             dojo.require("dojo.widget.*");
+            dojo.require("dojo.lfx.*");
+            dojo.require("dojo.style.*");
    </script>
+
+  <script type="text/javascript">
+    /*
+    ** STATUS MESSAGE
+    **
+    ** Handle a status message display.  We highlight the new message
+    ** if it is not empty on first display.  When clearing the
+    ** message, we fade it out then hide it entirely.
+    */
+    function show_status(message) {
+      node = dojo.byId("status_message");
+      node.innerHTML = message;
+      if (message != "") {
+/*
+        dojo.style.show(node);
+*/
+        dojo.lfx.html.fadeShow(node, 1).play();
+      }
+    }
+    function clear_status() {
+      node = dojo.byId("status_message");
+/*
+      dojo.style.hide(node);
+*/
+      dojo.lfx.html.fadeHide(node, 200).play();
+    }
+  </script>
 
 </head>
 
@@ -51,10 +80,16 @@
 {% endblock %}
 
 {% block body %}
+    {% block status %}<div id="status_message" class="message"></div>{% endblock %}
+
     <div id="content">
-        {% block content %}{% endblock %}
+      {% block content %}{% endblock %}
     </div>
 {% endblock %}
 
+  <script type="text/javascript">
+      node = dojo.byId("status_message");
+      dojo.style.hide(node);
+  </script>
 </body>
 </html>
