@@ -56,8 +56,11 @@ urlpatterns = patterns('',
 ) + \
             patterns('oneoffcast.views',
 
+    # Forms on the user page
+    (r'^(?P<username>[^/]+)/show_feed_contents/$', 'show_feed_contents'),
+
     # User pages
-    (r'^(?P<username>.*)/$', 'user'),
+    (r'^(?P<username>[^/]+)/$', 'user'),
 
     # No user specified, try to determine from the session
     (r'^$', 'user_redirect'),

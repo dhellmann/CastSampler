@@ -33,16 +33,21 @@
 # Import system modules
 #
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
-
 from django.contrib.auth.models import User	
 
+from django import forms
+
+from django.http import HttpResponse, HttpResponseRedirect
+
+from django.shortcuts import render_to_response, get_object_or_404
+
+import logging
 
 #
 # Import Local modules
 #
 from oneoffcast.models import Podcast, QueueItem
+from oneoffcast.forms import ShowFeedContentsForm
 
 
 #
@@ -85,11 +90,72 @@ def user_redirect(request, urlBase='/cast'):
 def user(request, username):
     """Show information about the user.
     """
-    if request.user.username == username:
-        queued_items = QueueItem.objects.filter(user=request.user).order_by('add_date')
-        return render_to_response('user.html',
-                                  {'queued_items':queued_items,
-                                   'user':request.user,
-                                   })
-    else:
+    if request.user.username != username:
         raise RuntimeError('You are not allowed to see this page')
+
+    #
+    # The items already in their queue
+    #
+    queued_items = QueueItem.objects.filter(user=request.user).order_by('add_date')
+
+    #
+    # Build up a form for adding by the feed
+    #
+    if request.POST:
+        manipulator = ShowFeedContentsForm()
+        new_data = request.POST.copy()
+        errors = manipulator.get_validation_errors(new_data)
+        show_feed_contents_form = forms.FormWrapper(manipulator, new_data, errors)
+    else:
+        show_feed_contents_form = ShowFeedContentsForm()
+    
+    return render_to_response('user.html',
+                              {'queued_items':queued_items,
+                               'user':request.user,
+                               'show_feed_contents':show_feed_contents_form,
+                               })
+
+
+def ajaxErrorHandling():
+    """Simple decorator to log and return error messages.
+    """
+    def decorator(func):
+
+        def newfunc(self, *args, **kw):
+            try:
+                output = func(self, *args, **kw)
+            except Exception, err:
+                logging.exception(err)
+                return HttpResponse('<div class="error">%s</div>' % err)
+            return output
+        
+        newfunc.func_name = func.func_name
+        newfunc.exposed = True
+        return newfunc
+
+    return decorator
+
+@ajaxErrorHandling()
+def show_feed_contents(request, username=None):
+    """The user wants to add items from a feed they are giving us.
+    """
+    logging.debug('calling show_feed_contents')
+    if request.user.username != username:
+        raise RuntimeError('You are not allowed to see this page')
+
+    if request.POST:
+        #
+        # Process the form input and check for errors
+        #
+        manipulator = ShowFeedContentsForm()
+        new_data = request.POST.copy()
+        errors = manipulator.get_validation_errors(new_data)
+        if not errors:
+            manipulator.do_html2python(new_data)
+            new_feed = manipulator.save(new_data)
+
+            return HttpResponse('<div>%s</div>' % new_data['url'])
+        else:
+            return HttpResponse('<div class="error">%s</div>' % ', '.join(errors['url']))
+    return HttpResponse('')
+    

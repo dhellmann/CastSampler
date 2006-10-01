@@ -6,6 +6,17 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+import logging
+if DEBUG:
+    level = logging.DEBUG
+else:
+    level = logging.INFO
+logging.basicConfig(filename='/tmp/oneoffcast.log',
+                    filemode='w',
+                    level=level,
+                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    )
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )

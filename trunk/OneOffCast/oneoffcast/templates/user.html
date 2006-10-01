@@ -4,6 +4,60 @@
 {% block title %}{{ user }}{% endblock %}
 
 {% block content %}
+
+  <script type="text/javascript">
+/*
+dojo.io.bind({
+    url: "http://foo.bar.com/processForm.cgi",
+
+  load: function(type, evaldObj){ /* do something * },
+    formNode:
+  document.getElementById("formToSubmit")
+});
+*/
+
+  /*
+  ** Handle the add_by_feed form.
+  */
+  function do_show_feed_contents() {
+    dojo.io.bind({ 
+      url: "show_feed_contents/",
+      handler: callBack,
+      formNode: document.getElementById("show_feed_contents")
+    });
+    return false;
+  }
+
+   function callBack(type, data, evt) {
+    if (type == "load") {
+      dojo.byId('result').innerHTML = data;
+    } else if (type == "error") {
+    //alert('got an error, need to do something with it:' + data);
+    dojo.debugShallow(data);
+      dojo.byId('result').innerHTML = "";
+    }
+   }
+
+  </script>
+
+
+  <form id="show_feed_contents" method="post" name="show_feed_contents">
+    <fieldset>
+      <legend>Add from feed</legend>
+
+      <table class="form_table">
+        <tr>
+          <td><label for="url">Feed URL:</label></td>
+          <td>{{ show_feed_contents.url }} </td>
+          <td><input type="submit" value="show feed" onclick="return do_show_feed_contents()" /></td>
+        </tr>
+      </table>
+
+      <div id="result"></div>
+    </fieldset>
+  </form>
+
+
 {% endblock %}
 
 {% block sidebar_r %}
