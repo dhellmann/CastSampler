@@ -1,5 +1,8 @@
 2006-10-01  Doug Hellmann  <dhellmann@racemi.com>
 
+	* forms.py (ShowFeedContentsForm): New class to manage input
+	fields in the show_feed_contents form.
+
 	* views.py (user): Add some form handling for the
 	show_feed_contents form.
 	(newfunc): Simplistic decorator to trap exceptions and convert
