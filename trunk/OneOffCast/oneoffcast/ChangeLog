@@ -1,5 +1,8 @@
 2006-10-01  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/user.html: Use wipeIn/wipeOut instead of just setting
+	the inner html.
+
 	* views.py (show_feed_contents): Log any errors from the form
 	validation and return error text containing those error messages.
 

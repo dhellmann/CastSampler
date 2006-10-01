@@ -21,7 +21,10 @@ dojo.io.bind({
   */
   function do_show_feed_contents() {
     show_status("Loading feed...");
-    dojo.byId('result').innerHTML = "";
+
+    var node = dojo.byId('result');
+    dojo.lfx.html.wipeOut(node, 1).play();
+    node.innerHTML = "";
 
     dojo.io.bind({ 
       url: "show_feed_contents/",
@@ -33,7 +36,9 @@ dojo.io.bind({
   function show_feed_contents_callback(type, data, evt) {
     clear_status();
     if (type == "load") {
-      dojo.byId('result').innerHTML = data;
+      var node = dojo.byId('result');
+      node.innerHTML = data;
+      dojo.lfx.html.wipeIn(node, 1).play();
     } else if (type == "error") {
     //alert('got an error, need to do something with it:' + data);
       dojo.debugShallow(data);
