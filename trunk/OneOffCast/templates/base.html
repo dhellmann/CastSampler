@@ -79,11 +79,11 @@
 {% endblock %}
 
 {% block body %}
-    {% block status %}<div id="status_message" class="message"></div>{% endblock %}
-
     <div id="content">
       {% block content %}{% endblock %}
     </div>
+
+    {% block status %}<div id="status_message" class="message"></div>{% endblock %}
 {% endblock %}
 
   <script type="text/javascript">
