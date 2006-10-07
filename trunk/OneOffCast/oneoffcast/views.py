@@ -147,7 +147,7 @@ def show_feed_contents(request, username=None):
         #
         # Process the form input and check for errors
         #
-        manipulator = ShowFeedContentsForm()
+        manipulator = ShowFeedContentsForm(request.user)
         new_data = request.POST.copy()
         errors = manipulator.get_validation_errors(new_data)
         if not errors:

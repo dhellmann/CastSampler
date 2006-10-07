@@ -1,7 +1,21 @@
 2006-10-07  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (show_feed_contents): Provide a user for
+	ShowFeedContentsForm.
+
+	* templates/user.html: Show the podcasts associated with the user.
+
+	* models.py (Podcast): Add many-to-many relationship between
+	podcasts and users.
+	(find_or_create_podcast): Make sure there is a relationship
+	between the user and podcast.
+
 	* forms.py (ShowFeedContentsForm.save): Move the real logic into
 	find_or_create_podcast in the models module.
+	(ShowFeedContentsForm.__init__): We may need a user to save the
+	new podcast.
+	(ShowFeedContentsForm.save): Pass our user to
+	find_or_create_podcast.
 
 	* models.py (find_or_create_podcast): New function with logic
 	moved from the forms module.

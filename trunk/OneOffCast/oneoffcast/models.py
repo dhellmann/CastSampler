@@ -59,6 +59,8 @@ class Podcast(models.Model):
     feed_url = models.URLField()
     registration_date = models.DateTimeField('date registered', auto_now_add=True)
 
+    # Associate podcasts with users
+    users = models.ManyToManyField(User)
 
     # These fields are only visible in the admin screens
     # and are used to control whether or not the feed
@@ -78,6 +80,9 @@ class Podcast(models.Model):
                                          ),
                                'classes':'collapse',
                                }),
+                   #('Users', {'fields':('users',),
+                   #           'classes':'collapse',
+                   #           }),
                    )
         list_display = ('name', 'feed_url', 'ignore')
         list_filter = ['registration_date']
@@ -88,7 +93,7 @@ class Podcast(models.Model):
         return self.name
 
 
-def find_or_create_podcast(feed_url):
+def find_or_create_podcast(feed_url, user=None):
     """Look for an existing Podcast with the given
     feed_url.  If not found create it.  Return the
     Podcast and a feedparser version of the parsed
@@ -119,6 +124,13 @@ def find_or_create_podcast(feed_url):
                           feed_url=feed_url,
                           )
         podcast.save()
+
+    #
+    # Make sure the feed is assciated with the user
+    #
+    if user is not None:
+        podcast.users.add(user)
+
     return podcast, data
     
 

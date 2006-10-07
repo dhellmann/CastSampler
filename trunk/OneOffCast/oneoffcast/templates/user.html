@@ -46,12 +46,19 @@ dojo.io.bind({
     }
    }
 
+  /*
+  ** SHOW FEEDS form
+  */
+  function do_show_feeds() {
+    return false;
+  }
+
   </script>
 
 
   <form id="show_feed_contents" method="post" name="show_feed_contents">
     <fieldset>
-      <legend>Add from feed</legend>
+      <legend>Add feed</legend>
 
       <table class="form_table">
         <tr>
@@ -61,10 +68,16 @@ dojo.io.bind({
         </tr>
       </table>
 
-      <div id="result"></div>
     </fieldset>
   </form>
 
+  <ul>
+{% for podcast in user.podcast_set.all %}
+  <li>{{ podcast }}</li>
+{% endfor %}
+  </ul>
+
+  <div id="result"></div>
 
 {% endblock %}
 

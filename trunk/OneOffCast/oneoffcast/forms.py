@@ -27,7 +27,8 @@ class ShowFeedContentsForm(forms.Manipulator):
     show the contents of a feed (user submits URL).
     """
 
-    def __init__(self):
+    def __init__(self, user=None):
+        self.user = user
         self.fields = (
             forms.URLField(field_name='url',
                            is_required=True,
@@ -37,4 +38,4 @@ class ShowFeedContentsForm(forms.Manipulator):
 
     def save(self, new_data):
         url = new_data['url']
-        return find_or_create_podcast(url)        
+        return find_or_create_podcast(url, user=self.user)
