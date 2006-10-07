@@ -47,7 +47,7 @@ import logging
 # Import Local modules
 #
 from oneoffcast.models import Podcast, QueueItem
-from oneoffcast.forms import ShowFeedContentsForm
+from oneoffcast.forms import AddFeedForm
 
 
 #
@@ -102,17 +102,17 @@ def user(request, username):
     # Build up a form for adding by the feed
     #
     if request.POST:
-        manipulator = ShowFeedContentsForm()
+        manipulator = AddFeedForm()
         new_data = request.POST.copy()
         errors = manipulator.get_validation_errors(new_data)
-        show_feed_contents_form = forms.FormWrapper(manipulator, new_data, errors)
+        add_feed_form = forms.FormWrapper(manipulator, new_data, errors)
     else:
-        show_feed_contents_form = ShowFeedContentsForm()
+        add_feed_form = AddFeedForm()
     
     return render_to_response('user.html',
                               {'queued_items':queued_items,
                                'user':request.user,
-                               'show_feed_contents':show_feed_contents_form,
+                               'add_feed':add_feed_form,
                                })
 
 
@@ -136,10 +136,10 @@ def ajaxErrorHandling():
     return decorator
 
 @ajaxErrorHandling()
-def show_feed_contents(request, username=None):
+def add_feed(request, username=None):
     """The user wants to add items from a feed they are giving us.
     """
-    logging.debug('calling show_feed_contents')
+    logging.debug('calling add_feed')
     if request.user.username != username:
         raise RuntimeError('You are not allowed to see this page')
 
@@ -147,7 +147,7 @@ def show_feed_contents(request, username=None):
         #
         # Process the form input and check for errors
         #
-        manipulator = ShowFeedContentsForm(request.user)
+        manipulator = AddFeedForm(request.user)
         new_data = request.POST.copy()
         errors = manipulator.get_validation_errors(new_data)
         if not errors:

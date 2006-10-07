@@ -22,7 +22,7 @@ from oneoffcast.models import find_or_create_podcast
 # Module
 #
 
-class ShowFeedContentsForm(forms.Manipulator):
+class AddFeedForm(forms.Manipulator):
     """Define the elements of the form we use to
     show the contents of a feed (user submits URL).
     """

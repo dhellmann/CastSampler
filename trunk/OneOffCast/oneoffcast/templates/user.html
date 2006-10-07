@@ -17,9 +17,9 @@ dojo.io.bind({
 */
 
   /*
-  ** SHOW FEED CONTENTS form
+  ** ADD FEED form
   */
-  function do_show_feed_contents() {
+  function do_add_feed() {
     show_status("Loading feed...");
 
     var node = dojo.byId('result');
@@ -27,13 +27,13 @@ dojo.io.bind({
     node.innerHTML = "";
 
     dojo.io.bind({ 
-      url: "show_feed_contents/",
-      handler: show_feed_contents_callback,
-      formNode: document.getElementById("show_feed_contents")
+      url: "add_feed/",
+      handler: add_feed_callback,
+      formNode: document.getElementById("add_feed")
     });
     return false;
   }
-  function show_feed_contents_callback(type, data, evt) {
+  function add_feed_callback(type, data, evt) {
     clear_status();
     if (type == "load") {
       var node = dojo.byId('result');
@@ -56,26 +56,29 @@ dojo.io.bind({
   </script>
 
 
-  <form id="show_feed_contents" method="post" name="show_feed_contents">
+  <form id="add_feed" method="post" name="add_feed">
     <fieldset>
       <legend>Add feed</legend>
 
       <table class="form_table">
         <tr>
           <td><label for="url">Feed URL:</label></td>
-          <td>{{ show_feed_contents.url }} </td>
-          <td><input type="submit" value="show feed" onclick="return do_show_feed_contents()" /></td>
+          <td>{{ add_feed.url }} </td>
+          <td><input type="submit" value="add" onclick="return do_add_feed()" /></td>
         </tr>
       </table>
 
     </fieldset>
   </form>
 
-  <ul>
-{% for podcast in user.podcast_set.all %}
-  <li>{{ podcast }}</li>
-{% endfor %}
-  </ul>
+  <fieldset>
+    <legend>My Podcasts</legend>
+    <ul>
+      {% for podcast in user.podcast_set.all %}
+      <li>{{ podcast }}</li>
+      {% endfor %}
+    </ul>
+  </fieldset>
 
   <div id="result"></div>
 
