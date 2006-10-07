@@ -152,9 +152,9 @@ def show_feed_contents(request, username=None):
         errors = manipulator.get_validation_errors(new_data)
         if not errors:
             manipulator.do_html2python(new_data)
-            new_feed = manipulator.save(new_data)
+            podcast, parsed_feed = manipulator.save(new_data)
 
-            return HttpResponse('<div>%s</div>' % new_data['url'])
+            return HttpResponse('<div>%s</div>' % podcast.name)
         else:
             logging.debug(errors)
             error_text = ', '.join([str(e) for e in errors['url']])

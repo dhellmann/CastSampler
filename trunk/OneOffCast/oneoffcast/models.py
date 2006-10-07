@@ -57,6 +57,7 @@ class Podcast(models.Model):
     feed_url = models.URLField()
     registration_date = models.DateTimeField('date registered', auto_now_add=True)
 
+
     # These fields are only visible in the admin screens
     # and are used to control whether or not the feed
     # should be ignored so users cannot add items from it.
@@ -70,7 +71,9 @@ class Podcast(models.Model):
                                }),
                    ('URLs', {'fields':('home_url', 'feed_url'),
                              }),
-                   ('Ignore', {'fields':('contact_name', 'contact_email', 'notes', 'ignore'),
+                   ('Ignore', {'fields':('notes', 'ignore',
+                                         'contact_name', 'contact_email',
+                                         ),
                                'classes':'collapse',
                                }),
                    )
@@ -94,18 +97,23 @@ class QueueItem(models.Model):
     item_enclosure_length = models.IntegerField()
     item_enclosure_mime_type = models.CharField(maxlength=200)
     add_date = models.DateTimeField('date added', auto_now_add=True)
+    author_name = models.CharField(maxlength=128, blank=True)
+    author_email = models.EmailField(maxlength=128, blank=True)
 
     class Admin:
         fields = ( ('Owner', {'fields':('user', 'add_date'),
                               }),
                     ('Podcast', {'fields':('podcast', ),
                                }),
-                   ('Item', {'fields':('title', 
+                   ('Item', {'fields':('author_name',
+                                       'author_email',
+                                       'title', 
                                        'description', 
                                        'link',
                                        'item_enclosure_url',
                                        'item_enclosure_length', 
-                                       'item_enclosure_mime_type'),
+                                       'item_enclosure_mime_type',
+                                       ),
                              }),
                    )
         list_display = ('user', 'add_date', 'podcast', 'title')

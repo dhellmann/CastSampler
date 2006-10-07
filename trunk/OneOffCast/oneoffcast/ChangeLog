@@ -1,3 +1,14 @@
+2006-10-07  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (show_feed_contents): The manipulator save method
+	returns the Podcast and the parsed data from the feed.
+
+	* models.py (QueueItem): Add author_name and author_email fields.
+
+	* forms.py (ShowFeedContentsForm.save): Use feedparser to pull
+	data from the feed and store it in the db.  Return the Podcast
+	instance and the parsed data.
+
 2006-10-01  Doug Hellmann  <dhellmann@racemi.com>
 
 	* templates/user.html: Use wipeIn/wipeOut instead of just setting
