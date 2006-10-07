@@ -19,6 +19,7 @@ logging.basicConfig(filename='/tmp/oneoffcast.log',
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
+    ('Doug Hellmann', 'doug@hellfly.net'),
 )
 
 MANAGERS = ADMINS
