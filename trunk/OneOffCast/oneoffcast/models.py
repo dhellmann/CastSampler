@@ -34,6 +34,8 @@
 #
 from django.db import models
 from django.contrib.auth.models import User
+import feedparser
+import logging
 
 
 #
@@ -84,6 +86,41 @@ class Podcast(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def find_or_create_podcast(feed_url):
+    """Look for an existing Podcast with the given
+    feed_url.  If not found create it.  Return the
+    Podcast and a feedparser version of the parsed
+    feed.
+    """
+    #
+    # Do we already know about the feed?
+    #
+    logging.debug('checking for existing podcast')
+    existing_casts = Podcast.objects.filter(feed_url=feed_url)
+    if existing_casts.count() > 0:
+        podcast = existing_casts[0]
+        logging.debug('found existing podcast')
+
+        data = feedparser.parse(feed_url)
+
+    else:
+        logging.debug('parsing %s' % feed_url)
+        data = feedparser.parse(feed_url)
+
+        name = data.feed.title
+        description = data.feed.description
+        home_url = data.feed.link
+
+        podcast = Podcast(name=name,
+                          description=description,
+                          home_url=home_url,
+                          feed_url=feed_url,
+                          )
+        podcast.save()
+    return podcast, data
+    
 
 class QueueItem(models.Model):
     """Items in a user's queue.

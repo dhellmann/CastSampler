@@ -1,5 +1,11 @@
 2006-10-07  Doug Hellmann  <dhellmann@racemi.com>
 
+	* forms.py (ShowFeedContentsForm.save): Move the real logic into
+	find_or_create_podcast in the models module.
+
+	* models.py (find_or_create_podcast): New function with logic
+	moved from the forms module.
+
 	* views.py (show_feed_contents): The manipulator save method
 	returns the Podcast and the parsed data from the feed.
 
