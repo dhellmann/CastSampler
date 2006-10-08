@@ -1,5 +1,8 @@
 2006-10-08  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/user.html: Move error message handling into the
+	base.html template.
+
 	* views.py (newfunc): Decorator for view functions which use JSON.
 	(add_feed): Use the jsonView decorator.
 

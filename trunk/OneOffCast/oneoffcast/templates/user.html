@@ -22,9 +22,7 @@ dojo.io.bind({
   function do_add_feed() {
     show_status("Loading feed...");
 
-    var node = dojo.byId('result');
-    dojo.lfx.html.wipeOut(node, 1).play();
-    node.innerHTML = "";
+    clear_feed_viewer();
 
     dojo.io.bind({ 
       url: "add_feed/",
@@ -36,24 +34,25 @@ dojo.io.bind({
 
   function add_feed_callback(type, data, evt) {
     clear_status();
+    clear_feed_viewer();
+    clear_error("add_feed_results");
+
     dojo.debug(data);
 
     if (type == "load") {
-      var result_node = dojo.byId('result');
 
       payload = dojo.json.evalJson(data);
+
       if (payload["error"] != "") {
-        dojo.debug("found an error");
-        /*result_node.innerHTML = '<div class="error">' + payload['error'] + '</div>';*/
-        alert(payload['error']);
+        show_error("add_feed_results", payload["error"]);
       }
       else {
-        result_node.innerHTML = data;
+        /* need to show the feed contents here */
       }
-      dojo.lfx.html.wipeIn(result_node, 1).play();
+
     } else if (type == "error") {
       dojo.debugShallow(data);
-      dojo.byId('result').innerHTML = "";
+      clear_feed_viewer();
     }
    }
 
@@ -61,6 +60,13 @@ dojo.io.bind({
   ** SHOW FEEDS form
   */
   function do_show_feeds() {
+    return false;
+  }
+
+  function clear_feed_viewer() {
+    var node = dojo.byId("feed_viewer");
+    dojo.lfx.html.wipeOut(node, 1).play();
+    node.innerHTML = "";
     return false;
   }
 
@@ -79,6 +85,8 @@ dojo.io.bind({
         </tr>
       </table>
 
+      <div id="add_feed_results"></div>
+
     </fieldset>
   </form>
 
@@ -91,7 +99,7 @@ dojo.io.bind({
     </ul>
   </fieldset>
 
-  <div id="result"></div>
+  <div id="feed_viewer"></div>
 
 {% endblock %}
 

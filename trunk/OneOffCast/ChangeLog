@@ -1,6 +1,7 @@
 2006-10-08  Doug Hellmann  <dhellmann@racemi.com>
 
 	* templates/base.html: Add more dojo.require calls.
+	Add functions for showing error messages.
 
 2006-10-05  Doug Hellmann  <dhellmann@racemi.com>
 

@@ -36,18 +36,30 @@
       var node = dojo.byId("status_message");
       node.innerHTML = message;
       if (message != "") {
-/*
-        dojo.style.show(node);
-*/
         dojo.lfx.html.fadeShow(node, 1).play();
       }
     }
+
     function clear_status() {
       var node = dojo.byId("status_message");
-/*
-      dojo.style.hide(node);
-*/
       dojo.lfx.html.fadeHide(node, 200).play();
+    }
+
+    function show_error(parent_node_name, message) {
+        var parent_node = dojo.byId(parent_node_name);
+
+        var new_node = document.createElement("div");
+        new_node.setAttribute("class", "error");
+        new_node.appendChild(document.createTextNode(payload["error"]));
+
+        parent_node.appendChild(new_node);
+        dojo.lfx.html.wipeIn(parent_node, 1).play();
+    }
+
+    function clear_error(parent_node_name) {
+      var parent_node = dojo.byId(parent_node_name);
+      parent_node.innerHTML = "";
+      dojo.lfx.html.wipeOut(parent_node, 1).play();
     }
   </script>
 
