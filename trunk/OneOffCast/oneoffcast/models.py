@@ -114,10 +114,19 @@ def find_or_create_podcast(feed_url, user=None):
         logging.debug('parsing %s' % feed_url)
         data = feedparser.parse(feed_url)
 
-        name = data.feed.title
-        description = data.feed.description
-        home_url = data.feed.link
-
+        try:
+            name = data.feed.title
+        except AttributeError, err:
+            raise RuntimeError('Could not parse %s: %s' % (feed_url, 'no title'))
+        try:
+            description = data.feed.description
+        except AttributeError, err:
+            description = ''
+        try:
+            home_url = data.feed.link
+        except AttributeError, err:
+            raise RuntimeError('Could not parse %s: %s' % (feed_url, 'no site URL'))
+        
         podcast = Podcast(name=name,
                           description=description,
                           home_url=home_url,

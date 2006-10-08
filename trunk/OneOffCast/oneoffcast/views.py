@@ -34,12 +34,10 @@
 #
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User	
-
 from django import forms
-
 from django.http import HttpResponse, HttpResponseRedirect
-
 from django.shortcuts import render_to_response, get_object_or_404
+from django.utils import simplejson
 
 import logging
 
@@ -135,7 +133,31 @@ def ajaxErrorHandling():
 
     return decorator
 
-@ajaxErrorHandling()
+def jsonView():
+    """Simple decorator to convert the response to a json message.
+    """
+    def decorator(func):
+
+        def newfunc(self, *args, **kw):
+            try:
+                output = func(self, *args, **kw)
+                if not 'error' in output:
+                    output['error'] = None
+            except Exception, err:
+                logging.exception(err)
+                output = { 'error':str(err) }
+
+            json_response = simplejson.dumps(output)
+            return HttpResponse(json_response)
+        
+        newfunc.func_name = func.func_name
+        newfunc.exposed = True
+        return newfunc
+
+    return decorator
+
+
+@jsonView()
 def add_feed(request, username=None):
     """The user wants to add items from a feed they are giving us.
     """
@@ -143,21 +165,25 @@ def add_feed(request, username=None):
     if request.user.username != username:
         raise RuntimeError('You are not allowed to see this page')
 
+    response = {}
+    
     if request.POST:
         #
         # Process the form input and check for errors
         #
         manipulator = AddFeedForm(request.user)
         new_data = request.POST.copy()
-        errors = manipulator.get_validation_errors(new_data)
-        if not errors:
-            manipulator.do_html2python(new_data)
-            podcast, parsed_feed = manipulator.save(new_data)
 
-            return HttpResponse('<div>%s</div>' % podcast.name)
-        else:
-            logging.debug(errors)
-            error_text = ', '.join([str(e) for e in errors['url']])
-            return HttpResponse('<div class="error">%s</div>' % error_text)
-    return HttpResponse('')
+        errors = manipulator.get_validation_errors(new_data)
+        if errors:
+            error_text = ', '.join([str(e) for e in errors.get('url', [])])
+            raise RuntimeError(error_text)
+            
+        manipulator.do_html2python(new_data)
+        podcast, parsed_feed = manipulator.save(new_data)
+        
+        response['podcast_name'] = podcast.name
+        response['podcast_id'] = podcast.id
+
+    return response
     

@@ -1,3 +1,14 @@
+2006-10-08  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (newfunc): Decorator for view functions which use JSON.
+	(add_feed): Use the jsonView decorator.
+
+	* templates/user.html: Evaluate the return value as a JSON payload
+	and alert the user to errors.
+
+	* models.py (find_or_create_podcast): Raise more specific errors
+	when we do not find information we expect.
+
 2006-10-07  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (add_feed): Change show_feed_contents to add_feed.

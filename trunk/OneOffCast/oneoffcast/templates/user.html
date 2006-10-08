@@ -33,14 +33,25 @@ dojo.io.bind({
     });
     return false;
   }
+
   function add_feed_callback(type, data, evt) {
     clear_status();
+    dojo.debug(data);
+
     if (type == "load") {
-      var node = dojo.byId('result');
-      node.innerHTML = data;
-      dojo.lfx.html.wipeIn(node, 1).play();
+      var result_node = dojo.byId('result');
+
+      payload = dojo.json.evalJson(data);
+      if (payload["error"] != "") {
+        dojo.debug("found an error");
+        /*result_node.innerHTML = '<div class="error">' + payload['error'] + '</div>';*/
+        alert(payload['error']);
+      }
+      else {
+        result_node.innerHTML = data;
+      }
+      dojo.lfx.html.wipeIn(result_node, 1).play();
     } else if (type == "error") {
-    //alert('got an error, need to do something with it:' + data);
       dojo.debugShallow(data);
       dojo.byId('result').innerHTML = "";
     }
