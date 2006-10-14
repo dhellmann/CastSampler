@@ -163,19 +163,19 @@ class QueueItem(models.Model):
                               }),
                     ('Podcast', {'fields':('podcast', ),
                                }),
-                   ('Item', {'fields':('author_name',
-                                       'author_email',
-                                       'title', 
+                   ('Item', {'fields':('title', 
                                        'description', 
                                        'link',
+                                       'author_name',
+                                       'author_email',
                                        'item_enclosure_url',
                                        'item_enclosure_length', 
                                        'item_enclosure_mime_type',
                                        ),
                              }),
                    )
-        list_display = ('user', 'add_date', 'podcast', 'title')
-        list_filter = ['add_date', 'podcast']
+        list_display = ('title', 'link', 'user', 'add_date', 'podcast')
+        list_filter = ['add_date', 'podcast', 'user']
         search_fields = ['title', 'description']
         date_hierarchy = 'add_date'
     

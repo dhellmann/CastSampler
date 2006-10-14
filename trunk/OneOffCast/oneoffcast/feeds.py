@@ -73,6 +73,15 @@ class UserFeed(Feed):
     def item_enclosure_mime_type(self, obj):
         return obj.item_enclosure_mime_type
 
+    def item_author_name(self, obj):
+        return obj.author_name
+
+    def item_author_email(self, obj):
+        return obj.author_email
+
+    def item_pubdate(self, obj):
+        return obj.add_date
+
     def items(self, obj):
         return models.QueueItem.objects.filter(user=obj).order_by('-add_date')
 
