@@ -1,5 +1,7 @@
 2006-10-15  Doug Hellmann  <dhellmann@racemi.com>
 
+	* models.py (Podcast): Change ignore to allowed.
+
 	* templates/feed_title.html: Prefix the title for each entry with
 	the original podcast name.
 
