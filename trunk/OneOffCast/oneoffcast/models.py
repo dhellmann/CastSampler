@@ -68,23 +68,23 @@ class Podcast(models.Model):
     contact_name = models.CharField(maxlength=128, blank=True)
     contact_email = models.EmailField(maxlength=128, blank=True)
     notes = models.TextField(blank=True)
-    ignore = models.BooleanField(default=False, blank=True)
+    allowed = models.BooleanField(default=True, blank=True)
     
     class Admin:
         fields = ( ('Basics', {'fields':('name', 'description', 'registration_date'),
                                }),
                    ('URLs', {'fields':('home_url', 'feed_url'),
                              }),
-                   ('Ignore', {'fields':('notes', 'ignore',
-                                         'contact_name', 'contact_email',
-                                         ),
+                   ('Allowed', {'fields':('notes', 'allowed',
+                                          'contact_name', 'contact_email',
+                                          ),
                                'classes':'collapse',
                                }),
                    #('Users', {'fields':('users',),
                    #           'classes':'collapse',
                    #           }),
                    )
-        list_display = ('name', 'feed_url', 'ignore')
+        list_display = ('name', 'feed_url', 'allowed')
         list_filter = ['registration_date']
         search_fields = ['name', 'description', 'contact_name', 'contact_email', 'notes']
         date_hierarchy = 'registration_date'
