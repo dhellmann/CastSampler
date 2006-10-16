@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# $Id: run_etags 13152 2004-08-20 01:03:14Z dhellmann $
+#
+# Script to run etags against the source tree.
+#
+
+DJANGO_SRC=~/Devel/OneOffCast/django_src/django
+
+rm -f TAGS
+
+echo -n "Running etags..."
+find . $DJANGO_SRC  \( -type f \( -name '*.py' \
+			-o -name '*.[ch]' \
+			-o -name '*.sql' \
+	\) \) \
+	-print \
+	\
+		| etags -l auto \
+ 		--regex='/[ \t]*\(create\|CREATE\)[ \t]+\(table\|TABLE\)[ \t]+\([^ (\t]+\)/\3/' \
+  	    --regex='/[ \t]*self\.[a-z]+mgr[ \t]+=/\2/' \
+		--regex='/[ \t]*\def[ \t]+\([^ :(\t]+\)/\1/' \
+		--regex='/\([^ :(\t]+\)[ \t]*=/\1/' \
+		--regex='/\(#\|--\| *\*+\) \$Id:[ \t]\(.*\),v[ \t]*/\2/' \
+		-
+echo "Done"
