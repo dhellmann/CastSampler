@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# $Id: run_etags 13152 2004-08-20 01:03:14Z dhellmann $
+# $Id$
 #
 # Script to run etags against the source tree.
 #
