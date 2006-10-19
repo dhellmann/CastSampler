@@ -11,7 +11,7 @@ if DEBUG:
     level = logging.DEBUG
 else:
     level = logging.INFO
-logging.basicConfig(filename='/tmp/oneoffcast.log',
+logging.basicConfig(filename='/tmp/castsampler.log',
                     filemode='w',
                     level=level,
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -89,7 +89,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/dhellmann/Devel/CastSampler/src/trunk/templates',
+    '/Users/dhellmann/Devel/CastSampler/src/trunk/CastSampler/templates',
 )
 
 INSTALLED_APPS = (

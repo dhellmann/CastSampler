@@ -7,7 +7,7 @@ BASE_URL=http://localhost:7000/cast/feed
 ATOM_URL=$BASE_URL/atom/dhellmann/
 RSS_URL=$BASE_URL/rss/dhellmann/
 
-VALIDATOR_HOME=~/Devel/OneOffCast/feedvalidator
+VALIDATOR_HOME=~/Devel/CastSampler/feedvalidator
 
 for URL in $ATOM_URL $RSS_URL
 do
