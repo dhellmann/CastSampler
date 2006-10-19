@@ -1,4 +1,4 @@
-# Django settings for OneOffCast project.
+# Django settings for CastSampler project.
 #
 # $Id$
 #
@@ -25,7 +25,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = '/Users/dhellmann/Devel/OneOffCast/src/trunk/OneOffCast/db/oneoffcast.db' # Or path to database file if using sqlite3.
+DATABASE_NAME = '/Users/dhellmann/Devel/CastSampler/src/trunk/db/oneoffcast.db' # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
@@ -63,7 +63,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 SECRET_KEY = '#q1-kil!)n+@wy!*a_oef^!&3))0=#sp_fk%u!8837#2v6h%xa'
 
 # Set up user registration profile model
-#AUTH_PROFILE_MODULE = 'OneOffCast.registration.models'
+#AUTH_PROFILE_MODULE = 'CastSampler.registration.models'
 
 # Outgoing email for user registration
 EMAIL_HOST = 'smtp'
@@ -83,13 +83,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.doc.XViewMiddleware',
 )
 
-ROOT_URLCONF = 'OneOffCast.urls'
+ROOT_URLCONF = 'CastSampler.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/dhellmann/Devel/OneOffCast/src/trunk/OneOffCast/templates',
+    '/Users/dhellmann/Devel/CastSampler/src/trunk/templates',
 )
 
 INSTALLED_APPS = (
@@ -98,6 +98,6 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'OneOffCast.oneoffcast',
-    'OneOffCast.registration',
+    'CastSampler.oneoffcast',
+    'CastSampler.registration',
 )
