@@ -25,7 +25,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = '/Users/dhellmann/Devel/CastSampler/src/trunk/db/oneoffcast.db' # Or path to database file if using sqlite3.
+DATABASE_NAME = '/Users/dhellmann/Devel/CastSampler/src/trunk/CastSampler/db/oneoffcast.db' # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
