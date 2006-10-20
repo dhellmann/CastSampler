@@ -11,7 +11,7 @@
           djConfig = { isDebug: true };
    </script>
 
-   <script type="text/javascript" src="/static/js/dojo/dojo.js" />
+   <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
 
    <script type="text/javascript">
             dojo.require("dojo.dom.*");
@@ -61,6 +61,9 @@
       dojo.lfx.html.wipeOut(parent_node, 1).play();
     }
   </script>
+
+{% block javascript %}
+{% endblock %}
 
 </head>
 
