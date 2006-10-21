@@ -65,8 +65,14 @@ SECRET_KEY = '#q1-kil!)n+@wy!*a_oef^!&3))0=#sp_fk%u!8837#2v6h%xa'
 # Set up user registration profile model
 #AUTH_PROFILE_MODULE = 'CastSampler.registration.models'
 
+SITE_NAME = 'CastSampler'
+
 # Outgoing email for user registration
 EMAIL_HOST = 'smtp'
+EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
+DEFAULT_FROM_EMAIL = 'castsampler@gmail.com'
+SERVER_EMAIL = 'doug-castsampler@hellfly.net'
+
 #EMAIL_PORT = 25
 
 # List of callables that know how to import templates from various sources.

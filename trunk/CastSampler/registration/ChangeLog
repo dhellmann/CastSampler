@@ -1,3 +1,11 @@
+2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (register): Use settings to control parameters to the email.
+	(confirm): Send notification to site managers when a new user registers.
+
+	* templates/confirm.html: Take the site name out of the
+	confirmation page.
+
 2006-09-30  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py: Remove project name from imports.

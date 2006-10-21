@@ -36,9 +36,11 @@ based on http://www.b-list.org/weblog/2006/09/02/django-tips-user-registration
 #
 import datetime, random, sha
 from django.shortcuts import render_to_response, get_object_or_404
-from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import send_mail, mail_managers
 from django import forms
 
+import logging
 
 #
 # Import Local modules
@@ -73,18 +75,19 @@ def register(request):
                                       activation_key=activation_key,
                                       key_expires=key_expires)
             new_profile.save()
-            
+
             # Send an email with the confirmation link                                                                                                                      
-            email_subject = 'Your new OneOffCast account confirmation'
+            email_subject = 'Your new %s account confirmation' % settings.SITE_NAME
             email_body = ('Hello, %s, and thanks for signing up for an '
-                          'account with OneOffCast!\n\n'
+                          'account with %s!\n\n'
                           'To activate your account, click this link within 48 hours:\n\n'
-                          'http://hellfly.net/accounts/confirm/%s') % (
+                          'http://www.castsampler.com/accounts/confirm/%s') % (
                               new_user.username,
+                              settings.SITE_NAME,
                               new_profile.activation_key)
             send_mail(email_subject,
                       email_body,
-                      'oneoffcast@gmail.com',
+                      settings.DEFAULT_FROM_EMAIL,
                       [new_user.email])
             return render_to_response('register.html', {'created': True})
     else:
@@ -103,6 +106,11 @@ def confirm(request, activation_key):
     # Activate the user
     #
     user_account = user_profile.user
+    mail_managers('New registration',
+                  ('Username: %s\n'
+                   'Email   : %s'
+                   ) % (user_account.username, user_account.email)
+                  )
     user_account.is_active = True
     user_account.save()
     #

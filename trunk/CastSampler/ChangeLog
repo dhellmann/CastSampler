@@ -1,5 +1,8 @@
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
 
+	* settings.py: Add some settings used for email in the
+	registration code.
+
 	* templates/base.html: Add a head block.
 
 	* static/js/oneoffcast/user.js: Add functions to deal with the queue.
