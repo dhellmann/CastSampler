@@ -56,13 +56,13 @@ class UserFeed(Feed):
         return User.objects.get(username=bits[0])
     
     def title(self, obj):
-        return "%s's OneOffCast" % obj.username
+        return "%s's CastSampler Feed" % obj.username
     
     def link(self, obj):
         return obj.get_absolute_url()
     
     def description(self, obj):
-        return 'OneOffCast assembled for %s' % obj.username
+        return 'CastSampler feed assembled for %s' % obj.username
     
     def item_enclosure_url(self, obj):
         return obj.item_enclosure_url

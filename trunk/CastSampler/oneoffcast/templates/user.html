@@ -3,6 +3,12 @@
 
 {% block title %}{{ user }}{% endblock %}
 
+{% block head %}
+  <link rel="alternate" type="application/rss+xml"
+    title="{{user.name}}'s CastSampler Feed"
+    href="../feed/rss/{{user}}" />
+{% endblock %}
+
 {% block javascript %}
    <script type="text/javascript"
     src="/static/js/oneoffcast/user.js"></script>

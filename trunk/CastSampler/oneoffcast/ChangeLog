@@ -1,5 +1,13 @@
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/user.html: Add a link to the rss feed so
+	auto-detection works.
+
+	* templates/two_columns.html: Add a head block.
+
+	* feeds.py (UserFeed): Change OneOffCast to CastSampler in a few
+	places.
+
 	* views.py (queue): New view to show the contents of a user's queue.
 
 	* util.py: Move decorators and other utitlies out of the views module.
