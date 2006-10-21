@@ -131,10 +131,12 @@ def add_feed(request, username=None):
         manipulator.do_html2python(new_data)
         podcast, parsed_feed = manipulator.save(new_data)
         
-        response['podcast_name'] = podcast.name
-        response['podcast_id'] = podcast.id
+        response['name'] = podcast.name
+        response['id'] = podcast.id
+        response['home_url'] = podcast.home_url
 
     return response
+
 
 @jsonView()
 @same_user_only()
@@ -159,5 +161,21 @@ def queue(request, username):
                             for qi in queued_items
                             ],
                  }
+    return response
+
+
+@jsonView()
+@same_user_only()
+@login_required
+def feedlist(request, username):
+    """Returns JSON package of podcasts for the user.
+    """
+    l = []
+    response = { 'list': l }
+    for p in request.user.podcast_set.filter(allowed=True):
+        l.append({ 'name':p.name,
+                   'home_url':p.home_url,
+                   'id':p.id,
+                   })
     return response
 

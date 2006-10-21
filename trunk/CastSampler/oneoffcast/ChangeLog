@@ -1,7 +1,15 @@
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (feedlist): New view to provide json data about the
+	list of feeds for a user.
+	(add_feed): Include podcast_home in the response.
+
+	* urls.py (urlpatterns): Add the /feedlist/ url for seeing the list of
+	feeds for a user.
+
 	* templates/user.html: Add a link to the rss feed so
-	auto-detection works.
+	auto-detection works.  Show the list of feeds for the user on load
+	instead of as part of the template.
 
 	* templates/two_columns.html: Add a head block.
 

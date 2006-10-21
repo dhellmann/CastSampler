@@ -58,6 +58,7 @@ urlpatterns = patterns('',
 
     # AJAX calls for user page
     (r'^(?P<username>[^/]+)/queue/$', 'queue'),
+    (r'^(?P<username>[^/]+)/feedlist/$', 'feedlist'),
 
     # Forms on the user page
     (r'^(?P<username>[^/]+)/add_feed/$', 'add_feed'),

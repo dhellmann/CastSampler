@@ -14,7 +14,7 @@
     src="/static/js/oneoffcast/user.js"></script>
 
   <script type="text/javascript">
-    dojo.event.connect(window, "onload", show_queue);
+    dojo.event.connect(window, "onload", user_onload);
   </script>
 
 {% endblock %}
@@ -40,10 +40,7 @@
 
   <fieldset>
     <legend>My Podcasts</legend>
-    <ul>
-      {% for podcast in user.podcast_set.all %}
-      <li><a onclick="return show_feed_by_id({{podcast.id}})">{{ podcast }}</a></li>
-      {% endfor %}
+    <ul id="my_podcasts">
     </ul>
   </fieldset>
 

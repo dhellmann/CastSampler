@@ -1,5 +1,8 @@
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/js/oneoffcast/user.js: If the queue is empty, show that.
+	Break out the code to display a feed in the list.
+
 	* settings.py: Add some settings used for email in the
 	registration code.
 
