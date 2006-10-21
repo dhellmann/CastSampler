@@ -53,12 +53,9 @@
 
 {% block sidebar_r %}
 
-<h2>Current Queue</h2>
-<div id="queue">
-</div>
-
-  <div style="margin: 1em;">
-    <a href="../feed/rss/{{user}}"><img alt="RSS feed"
-        src="/static/images/feed-icon-14x14.png" /></a>
-  </div>
+    <h2>Current Queue <a href="../feed/rss/{{user}}"><img alt="RSS feed"
+          src="/static/images/feed-icon-14x14.png" /></a></h2>
+    <div id="queue">
+    </div>
+    
 {% endblock %}
