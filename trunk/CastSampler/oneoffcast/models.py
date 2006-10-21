@@ -183,3 +183,9 @@ class QueueItem(models.Model):
         "Used in feed generation."
         return self.link
     
+    def get_truncated_description(self, maxLen=30):
+        "Return a shorter version of the text in the description."
+        desc = self.description
+        if len(desc) > maxLen:
+            desc = desc[:maxLen] + ' ...'
+        return desc

@@ -1,3 +1,18 @@
+2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (queue): New view to show the contents of a user's queue.
+
+	* util.py: Move decorators and other utitlies out of the views module.
+
+	* urls.py (urlpatterns): Add /queue/.
+
+	* templates/user.html: Load the queue contents in an onload
+	callback.  Use the feed icon instead of saying RSS or ATOM.
+
+	* models.py (QueueItem.get_truncated_description): Add a method to
+	produce a truncated version of the description.  This should
+	eventually strip HTML, too.
+
 2006-10-15  Doug Hellmann  <dhellmann@racemi.com>
 
 	* models.py (Podcast): Change ignore to allowed.

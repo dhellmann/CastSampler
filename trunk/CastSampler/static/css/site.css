@@ -323,7 +323,7 @@ pre {
 
 #sidebar_r { 
   background-color: #9EBF8A; /* light olive */
-  width: 20%;
+  width: 30%;
   float: right;
   margin-right: 1em;
  }
@@ -385,22 +385,26 @@ div.title {
   margin-left: 0.5em;
 }
 
-.queue .podcast_home { 
-  font-size: 90%;
+.queue_item { 
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+  padding-bottom: 1em;
+ }
+
+.queue_item a { 
   text-decoration: none;
 }
 
-.queue .podcast_title { 
+.queue_item .item_title { 
   text-decoration: none;
 }
 
-.queue .item_description { 
-  margin: 0;
-  text-decoration: none;
+.queue_item .item_description { 
+  margin-left: 5%;
 }
 
-.queue .item_enclosure { 
+.queue_item .enclosure_link { 
   font-size: 80%;
-  margin: 0;
+  margin-left: 5%;
   text-decoration: none;
 }

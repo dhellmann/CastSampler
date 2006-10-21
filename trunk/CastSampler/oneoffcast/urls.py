@@ -56,6 +56,9 @@ urlpatterns = patterns('',
 ) + \
             patterns('oneoffcast.views',
 
+    # AJAX calls for user page
+    (r'^(?P<username>[^/]+)/queue/$', 'queue'),
+
     # Forms on the user page
     (r'^(?P<username>[^/]+)/add_feed/$', 'add_feed'),
 

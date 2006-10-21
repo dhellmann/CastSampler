@@ -1,3 +1,9 @@
+2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
+
+	* static/js/oneoffcast/user.js: Add functions to deal with the queue.
+
+	* static/css/site.css: Update the queue class styles.
+
 2006-10-08  Doug Hellmann  <dhellmann@racemi.com>
 
 	* templates/base.html: Add more dojo.require calls.

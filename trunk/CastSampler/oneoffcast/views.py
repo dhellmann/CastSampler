@@ -33,11 +33,11 @@
 # Import system modules
 #
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User	
+from django.contrib.auth.models import User
+from django.core import serializers
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
-from django.utils import simplejson
 
 import logging
 
@@ -46,7 +46,7 @@ import logging
 #
 from oneoffcast.models import Podcast, QueueItem
 from oneoffcast.forms import AddFeedForm
-
+from oneoffcast.util import *
 
 #
 # Module
@@ -84,18 +84,12 @@ def user_redirect(request, urlBase='/cast'):
     """
     return HttpResponseRedirect('%s/%s' % (urlBase, request.user.username))
 
+
 @login_required
+@same_user_only()
 def user(request, username):
     """Show information about the user.
     """
-    if request.user.username != username:
-        raise RuntimeError('You are not allowed to see this page')
-
-    #
-    # The items already in their queue
-    #
-    queued_items = QueueItem.objects.filter(user=request.user).order_by('add_date')
-
     #
     # Build up a form for adding by the feed
     #
@@ -108,63 +102,18 @@ def user(request, username):
         add_feed_form = AddFeedForm()
     
     return render_to_response('user.html',
-                              {'queued_items':queued_items,
-                               'user':request.user,
+                              {'user':request.user,
                                'add_feed':add_feed_form,
                                })
 
 
-def ajaxErrorHandling():
-    """Simple decorator to log and return error messages.
-    """
-    def decorator(func):
-
-        def newfunc(self, *args, **kw):
-            try:
-                output = func(self, *args, **kw)
-            except Exception, err:
-                logging.exception(err)
-                return HttpResponse('<div class="error">%s</div>' % err)
-            return output
-        
-        newfunc.func_name = func.func_name
-        newfunc.exposed = True
-        return newfunc
-
-    return decorator
-
-def jsonView():
-    """Simple decorator to convert the response to a json message.
-    """
-    def decorator(func):
-
-        def newfunc(self, *args, **kw):
-            try:
-                output = func(self, *args, **kw)
-                if not 'error' in output:
-                    output['error'] = None
-            except Exception, err:
-                logging.exception(err)
-                output = { 'error':str(err) }
-
-            json_response = simplejson.dumps(output)
-            return HttpResponse(json_response)
-        
-        newfunc.func_name = func.func_name
-        newfunc.exposed = True
-        return newfunc
-
-    return decorator
-
 
 @jsonView()
+@login_required
+@same_user_only()
 def add_feed(request, username=None):
     """The user wants to add items from a feed they are giving us.
     """
-    logging.debug('calling add_feed')
-    if request.user.username != username:
-        raise RuntimeError('You are not allowed to see this page')
-
     response = {}
     
     if request.POST:
@@ -186,4 +135,29 @@ def add_feed(request, username=None):
         response['podcast_id'] = podcast.id
 
     return response
-    
+
+@jsonView()
+@same_user_only()
+@login_required
+def queue(request, username):
+    """Returns JSON package of current queue contents for the user.
+    """
+    logging.debug('looking for queue for %s' % username)
+    #
+    # The items already in their queue
+    #
+    queued_items = QueueItem.objects.filter(user=request.user).order_by('add_date')
+    response = { 'queue': [ { 'podcast_name':qi.podcast.name,
+                              'podcast_home':qi.podcast.home_url,
+                              'title':qi.title,
+                              'link':qi.link,
+                              'description':qi.get_truncated_description(),
+                              'enclosure_url':qi.item_enclosure_url,
+                              'enclosure_mimetype':qi.item_enclosure_mime_type,
+                              #'pubdate':qi.add_date,
+                              }
+                            for qi in queued_items
+                            ],
+                 }
+    return response
+
