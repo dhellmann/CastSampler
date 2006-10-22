@@ -116,6 +116,7 @@ function insert_feed_into_list(feed_info) {
 */
 function do_add_feed() {
   show_status("Loading feed...");
+  clear_feed_viewer();
   
   dojo.io.bind({ 
 	url: "add_feed/",
@@ -129,7 +130,6 @@ function do_add_feed() {
 /* called when we get the json response from the server when a feed is added */
 function add_feed_callback(type, data, evt) {
   clear_status();
-  clear_error("add_feed_results");
 
   if (type == "load") {
 	
@@ -141,10 +141,12 @@ function add_feed_callback(type, data, evt) {
 	else {
 	  insert_feed_into_list(payload);
 	  populate_feed_viewer(payload["entries"]);
+	  clear_error("add_feed_results");
 	}
 	
   } else if (type == "error") {
-	show_error("feed_viewer", data);
+	clear_error("add_feed_results");
+	show_error("add_feed_results", data);
   }
 }
 
@@ -173,6 +175,9 @@ function show_user_feeds_callback(type, data, evt) {
 	  }
 	}
   }
+  else if (type == "error") {
+	show_error("add_feed_results", data);
+  }
 }
 
 /*
@@ -191,16 +196,18 @@ function show_feed_by_id(id) {
 /* called when server responds to show_feed_by_id */
 function show_feed_by_id_callback(type, data, evt) {
   clear_status();
+
   if (type == "load") {
-
 	payload = dojo.json.evalJson(data);
-
 	if (payload["error"] != "") {
 	  show_error("feed_viewer", payload["error"]);
 	}
 	else {
 	  populate_feed_viewer(payload["entries"]);
 	}
+  }
+  else if (type == "error") {
+	show_error("feed_viewer", data);
   }
 }
 
