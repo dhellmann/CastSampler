@@ -134,6 +134,7 @@ def add_feed(request, username=None):
         response['name'] = podcast.name
         response['id'] = podcast.id
         response['home_url'] = podcast.home_url
+        response['feed_url'] = podcast.feed_url
         response['entries'] = convert_feed_to_entries(parsed_feed)
 
     return response
@@ -176,6 +177,7 @@ def feed_list(request, username):
     for p in request.user.podcast_set.filter(allowed=True):
         l.append({ 'name':p.name,
                    'home_url':p.home_url,
+                   'feed_url':p.feed_url,
                    'id':p.id,
                    })
     return response

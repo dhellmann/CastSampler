@@ -379,6 +379,32 @@ div.title {
 }
 
 /*
+** Feed list
+*/
+
+#my_podcasts { 
+}
+
+#my_podcasts img { 
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
+
+#my_podcasts a {
+  text-decoration: none;
+}
+
+#my_podcasts a:visited {
+  color: black;
+  background-color: transparent;
+}
+
+#my_podcasts a:active {
+  color: black;
+  background-color: transparent;
+}
+
+/*
 ** Styles for queue
 */
 .queue {
@@ -420,6 +446,10 @@ div.title {
 
 .podcast_entry { 
   padding-top: 0.5em;
+}
+
+.podcast_entry img { 
+  padding-right: 0.5em;
 }
 
 .podcast_entry_title { 

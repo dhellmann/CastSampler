@@ -1,5 +1,10 @@
 2006-10-22  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/js/oneoffcast/user.js: Add icons to list of feeds and
+	feed_viewer.
+
+	* static/css/site.css: Add styles for the list of podcasts.
+
 	* static/js/oneoffcast/user.js (insert_feed_into_list): Do not
 	insert the item if it already exists in the list.
 	(populate_feed_viewer): New function to show the contents of a

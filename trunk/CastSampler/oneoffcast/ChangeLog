@@ -2,6 +2,8 @@
 
 	* views.py (external): Add a view to fetch and parse the feed
 	contents.
+	(feed_list): Add the feed url to the response.
+	(external): Add the feed url to the response.
 
 	* urls.py (urlpatterns): Add /external/ URL for "proxying" to get
 	the feed contents.

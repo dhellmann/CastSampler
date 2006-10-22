@@ -105,7 +105,29 @@ function insert_feed_into_list(feed_info) {
 	new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_info["id"] + ")");
 	new_link.setAttribute("href", "");
 	new_link.appendChild(document.createTextNode(feed_info["name"]));
+	show_icon = document.createElement('img');
+	show_icon.setAttribute('src', '/static/images/arrow_down.png');
+	show_icon.setAttribute('alt', 'Show Feed Below');
+	show_icon.setAttribute('title', 'Show Feed Below');
+	new_link.appendChild(show_icon);
 	new_item.appendChild(new_link);
+
+	home_icon = document.createElement('a');
+	home_icon.setAttribute('href', feed_info['home_url']);
+	home_icon.setAttribute('target', '_blank');
+	home_icon.setAttribute('alt', 'Visit home page');
+	home_icon.setAttribute('title', 'Visit home page');
+	home_icon.innerHTML = '<img src="/static/images/house.png" />';
+	new_item.appendChild(home_icon);
+
+	feed_icon = document.createElement('a');
+	feed_icon.setAttribute('href', feed_info['feed_url']);
+	feed_icon.setAttribute('target', '_blank');
+	feed_icon.setAttribute('alt', 'Visit podcast feed');
+	feed_icon.setAttribute('title', 'Visit podcast feed');
+	feed_icon.innerHTML = '<img src="/static/images/feed-icon-14x14.png" />';
+	new_item.appendChild(feed_icon);
+
 	list_node.appendChild(new_item);
   }
   return false;
@@ -234,7 +256,22 @@ function populate_feed_viewer(entries) {
 
 	  title_node = document.createElement('div');
 	  title_node.setAttribute('class', 'podcast_entry_title');
-	  title_node.appendChild(document.createTextNode(entry['title']));
+
+	  /* an icon to add the item to the queue */
+	  add_icon = document.createElement('a');
+	  add_icon.setAttribute('href', '');
+	  add_icon.setAttribute('onclick', 'return false;');
+	  add_icon.setAttribute('alt', 'Add to my queue');
+	  add_icon.setAttribute('title', 'Add to my queue');
+	  add_icon.innerHTML = '<img src="/static/images/add.png" />';
+	  title_node.appendChild(add_icon);
+
+	  /* a link to see the original item */
+	  title_link = document.createElement('a');
+	  title_link.setAttribute('href', entry['link']);
+	  title_link.setAttribute('target', '_blank');
+	  title_link.appendChild(document.createTextNode(entry['title']));
+	  title_node.appendChild(title_link);
 	  entry_node.appendChild(title_node);
 
 	  summary_node = document.createElement('div');
