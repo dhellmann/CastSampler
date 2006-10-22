@@ -414,13 +414,12 @@ div.title {
 */
 
 #feed_viewer { 
-  border: 1px solid #737153; /* dark brown */
   margin: 1em;
   padding: 1em;
-  background-color: #eeeeee;
 }
 
 .podcast_entry { 
+  padding-top: 0.5em;
 }
 
 .podcast_entry_title { 
