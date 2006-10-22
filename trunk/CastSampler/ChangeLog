@@ -4,6 +4,9 @@
 	insert the item if it already exists in the list.
 	(populate_feed_viewer): New function to show the contents of a
 	feed in the feed_viewer node.
+	(show_feed_by_id): Request the feed contents.
+	(show_feed_by_id_callback): Display the feed contents.
+	Fiddle around with calls to hide/show the feed_viewer.
 
 	* static/css/site.css: Add styles for the feed_viewer section of
 	the user page.

@@ -89,17 +89,15 @@ function show_queue_callback(type, data, evt) {
 	
   } else if (type == "error") {
 	dojo.debugShallow(data);
-	clear_feed_viewer('show_queue_callback error');
+	clear_feed_viewer();
   }
 }
 
 /* Insert a feed element into the list of feeds of the user. */
 function insert_feed_into_list(feed_info) {
   var feed_node_id = 'feed_' + feed_info['id'];
-  dojo.debug('insert_feed_into_list '  + feed_node_id);
   var feed_node = dojo.byId(feed_node_id);
   if (! feed_node) {
-	dojo.debug('adding');
 	var list_node = dojo.byId("my_podcasts");
 	var new_item = document.createElement("li");
 	new_item.setAttribute('id', feed_node_id);
@@ -109,9 +107,6 @@ function insert_feed_into_list(feed_info) {
 	new_link.appendChild(document.createTextNode(feed_info["name"]));
 	new_item.appendChild(new_link);
 	list_node.appendChild(new_item);
-  }
-  else {
-	dojo.debug('already have that one');
   }
   return false;
 }
@@ -136,9 +131,6 @@ function add_feed_callback(type, data, evt) {
   clear_status();
   clear_error("add_feed_results");
 
-  dojo.debug('add_feed_callback ' + type);
-  /*dojo.debug(data);*/
-  
   if (type == "load") {
 	
 	payload = dojo.json.evalJson(data);
@@ -171,8 +163,6 @@ function show_user_feeds_callback(type, data, evt) {
 
 	payload = dojo.json.evalJson(data);
 
-	/*dojo.debug(payload);*/
-
 	if (payload["error"] != "") {
 	  show_error("add_feed_results", payload["error"]);
 	}
@@ -188,30 +178,43 @@ function show_user_feeds_callback(type, data, evt) {
 /*
 ** SHOW FEEDS form
 */
-function do_show_feeds() {
-  return false;
-}
-
 function show_feed_by_id(id) {
-  dojo.debug("show feed " + id);
+  show_status("Loading feed...");
+  dojo.io.bind({ 
+	url: "/cast/external/" + id + "/",
+		handler: show_feed_by_id_callback,
+		});
   return false;
 }
 
-function clear_feed_viewer(caller) {
-  dojo.debug('clear_feed_viewer ' + caller);
+/* called when server responds to show_feed_by_id */
+function show_feed_by_id_callback(type, data, evt) {
+  clear_status();
+  if (type == "load") {
+
+	payload = dojo.json.evalJson(data);
+
+	if (payload["error"] != "") {
+	  show_error("feed_viewer", payload["error"]);
+	}
+	else {
+	  populate_feed_viewer(payload["entries"]);
+	}
+  }
+}
+
+/* emtpy and hide the feed_viewer */
+function clear_feed_viewer() {
   var node = dojo.byId("feed_viewer");
-  dojo.lfx.html.wipeOut(node, 1).play();
+  /*  dojo.lfx.html.wipeOut(node, 1).play();*/
   node.innerHTML = "";
-  return false;
+  return node;
 }
 
+/* given a list of entries from the parsed feed, show them */
 function populate_feed_viewer(entries) {
-  dojo.debug('populate_feed_viewer');
+  var viewer_node = clear_feed_viewer();
 
-  clear_feed_viewer('populate_feed_viewer');
-  var viewer_node = dojo.byId("feed_viewer");
-
-  dojo.debug(entries.length + ' entries');
   if (entries.length == 0) {
 	viewer_node.innerHTML = '<div class="message">No entries</div>';
   }
@@ -232,7 +235,6 @@ function populate_feed_viewer(entries) {
 	  entry_node.appendChild(summary_node);
 
 	  viewer_node.appendChild(entry_node);
-	  /*dojo.debug(entry['title']);*/
 	}
   }
 
@@ -246,5 +248,5 @@ function populate_feed_viewer(entries) {
 function user_onload() {
   show_queue();
   show_user_feeds();
-  clear_feed_viewer('onload');
+  clear_feed_viewer();
 }

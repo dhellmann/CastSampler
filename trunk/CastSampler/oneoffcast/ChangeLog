@@ -1,5 +1,14 @@
 2006-10-22  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (external): Add a view to fetch and parse the feed
+	contents.
+
+	* urls.py (urlpatterns): Add /external/ URL for "proxying" to get
+	the feed contents.
+
+	* models.py (Podcast.get_current_feed_contents): New method to
+	fetch and parse the podcast feed.
+
 	* views.py (add_feed): Add the parsed entries to the response.
 
 	* util.py (convert_feed_to_entries): Utility function to drop some

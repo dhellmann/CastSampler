@@ -56,6 +56,9 @@ urlpatterns = patterns('',
 ) + \
             patterns('oneoffcast.views',
 
+    # Process access to external feeds
+    (r'^external/(?P<id>\d+)', 'external'),
+
     # AJAX calls for user page
     (r'^(?P<username>[^/]+)/queue/$', 'queue'),
     (r'^(?P<username>[^/]+)/feed_list/$', 'feed_list'),

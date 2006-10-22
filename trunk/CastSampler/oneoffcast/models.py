@@ -92,6 +92,12 @@ class Podcast(models.Model):
     def __str__(self):
         return self.name
 
+    def get_current_feed_contents(self):
+        """Return the parsed feed data.
+        """
+        logging.debug('Fetching %s' % self.feed_url)
+        return feedparser.parse(self.feed_url)
+
 
 def find_or_create_podcast(feed_url, user=None):
     """Look for an existing Podcast with the given
@@ -107,8 +113,7 @@ def find_or_create_podcast(feed_url, user=None):
     if existing_casts.count() > 0:
         podcast = existing_casts[0]
         logging.debug('found existing podcast')
-
-        data = feedparser.parse(feed_url)
+        data = podcast.get_current_feed_contents()
 
     else:
         logging.debug('parsing %s' % feed_url)
