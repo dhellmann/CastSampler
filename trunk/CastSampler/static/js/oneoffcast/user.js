@@ -180,6 +180,7 @@ function show_user_feeds_callback(type, data, evt) {
 */
 function show_feed_by_id(id) {
   show_status("Loading feed...");
+  clear_feed_viewer();
   dojo.io.bind({ 
 	url: "/cast/external/" + id + "/",
 		handler: show_feed_by_id_callback,

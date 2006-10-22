@@ -207,6 +207,7 @@ INSERT INTO "oneoffcast_podcast" VALUES(3, 'Agile Toolkit Podcast', 'Talk for th
 INSERT INTO "oneoffcast_podcast" VALUES(4, 'Distributing the Future', '"Distributing the Future" is O''Reilly Media''s weekly podcast featuring the technology and the people behind what you use now and what you''ll use next.
 
 This half hour program includes interviews and commentary on science, technology, related social issues, and just plain fun.', 'http://www.oreillynet.com/future/', 'http://www.oreillynet.com/pub/feed/37?format=rss2', '2006-10-22 10:31:27.898193', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(5, 'FOO Casts: Podcasts from O''Reilly and Friends', 'Podcasts from O''Reilly and Friends', 'http://www.oreillynet.com/podcasts/', 'http://www.oreillynet.com/pub/feed/32?format=rss2', '2006-10-22 10:41:42.330963', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -216,4 +217,5 @@ CREATE TABLE "oneoffcast_podcast_users" (
 INSERT INTO "oneoffcast_podcast_users" VALUES(2, 2, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(3, 3, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(4, 4, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(5, 5, 1);
 COMMIT;
