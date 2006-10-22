@@ -150,7 +150,7 @@ function add_feed_callback(type, data, evt) {
 /* Ask the server what feeds this user has. */
 function show_user_feeds() {
   dojo.io.bind({ 
-	url: "feedlist/",
+	url: "feed_list/",
 		handler: show_user_feeds_callback,
 		});
   return false;

@@ -167,7 +167,7 @@ def queue(request, username):
 @jsonView()
 @same_user_only()
 @login_required
-def feedlist(request, username):
+def feed_list(request, username):
     """Returns JSON package of podcasts for the user.
     """
     l = []

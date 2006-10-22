@@ -1,3 +1,7 @@
+2006-10-22  Doug Hellmann  <dhellmann@racemi.com>
+
+	* static/js/oneoffcast/user.js: Change feedlist to feed_list.
+
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
 
 	* static/js/oneoffcast/user.js: If the queue is empty, show that.

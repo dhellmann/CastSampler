@@ -1,3 +1,9 @@
+2006-10-22  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (feed_): Change feedlist to feed_list.
+
+	* urls.py (urlpatterns): Change /feedlist/ to /feed_list/.
+
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (feedlist): New view to provide json data about the
