@@ -1,5 +1,13 @@
 2006-10-22  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (add_feed): Add the parsed entries to the response.
+
+	* util.py (convert_feed_to_entries): Utility function to drop some
+	of the data from the parsed feed, and strip HTML from strings
+	before returning to be encoded via JSON.
+	(strip_html): Imported from
+	http://effbot.org/zone/re-sub.htm#strip-html.
+
 	* views.py (feed_): Change feedlist to feed_list.
 
 	* urls.py (urlpatterns): Change /feedlist/ to /feed_list/.

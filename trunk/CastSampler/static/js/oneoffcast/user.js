@@ -89,20 +89,30 @@ function show_queue_callback(type, data, evt) {
 	
   } else if (type == "error") {
 	dojo.debugShallow(data);
-	clear_feed_viewer();
+	clear_feed_viewer('show_queue_callback error');
   }
 }
 
 /* Insert a feed element into the list of feeds of the user. */
 function insert_feed_into_list(feed_info) {
-  var list_node = dojo.byId("my_podcasts");
-  var new_item = document.createElement("li");
-  var new_link = document.createElement("a");
-  new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_info["id"] + ")");
-  new_link.setAttribute("href", "");
-  new_link.appendChild(document.createTextNode(feed_info["name"]));
-  new_item.appendChild(new_link);
-  list_node.appendChild(new_item);
+  var feed_node_id = 'feed_' + feed_info['id'];
+  dojo.debug('insert_feed_into_list '  + feed_node_id);
+  var feed_node = dojo.byId(feed_node_id);
+  if (! feed_node) {
+	dojo.debug('adding');
+	var list_node = dojo.byId("my_podcasts");
+	var new_item = document.createElement("li");
+	new_item.setAttribute('id', feed_node_id);
+	var new_link = document.createElement("a");
+	new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_info["id"] + ")");
+	new_link.setAttribute("href", "");
+	new_link.appendChild(document.createTextNode(feed_info["name"]));
+	new_item.appendChild(new_link);
+	list_node.appendChild(new_item);
+  }
+  else {
+	dojo.debug('already have that one');
+  }
   return false;
 }
 
@@ -111,8 +121,6 @@ function insert_feed_into_list(feed_info) {
 */
 function do_add_feed() {
   show_status("Loading feed...");
-  
-  clear_feed_viewer();
   
   dojo.io.bind({ 
 	url: "add_feed/",
@@ -126,10 +134,10 @@ function do_add_feed() {
 /* called when we get the json response from the server when a feed is added */
 function add_feed_callback(type, data, evt) {
   clear_status();
-  clear_feed_viewer();
   clear_error("add_feed_results");
-  
-  dojo.debug(data);
+
+  dojo.debug('add_feed_callback ' + type);
+  /*dojo.debug(data);*/
   
   if (type == "load") {
 	
@@ -140,10 +148,11 @@ function add_feed_callback(type, data, evt) {
 	}
 	else {
 	  insert_feed_into_list(payload);
+	  populate_feed_viewer(payload["entries"]);
 	}
 	
   } else if (type == "error") {
-	clear_feed_viewer();
+	show_error("feed_viewer", data);
   }
 }
 
@@ -188,10 +197,46 @@ function show_feed_by_id(id) {
   return false;
 }
 
-function clear_feed_viewer() {
+function clear_feed_viewer(caller) {
+  dojo.debug('clear_feed_viewer ' + caller);
   var node = dojo.byId("feed_viewer");
   dojo.lfx.html.wipeOut(node, 1).play();
   node.innerHTML = "";
+  return false;
+}
+
+function populate_feed_viewer(entries) {
+  dojo.debug('populate_feed_viewer');
+
+  clear_feed_viewer('populate_feed_viewer');
+  var viewer_node = dojo.byId("feed_viewer");
+
+  dojo.debug(entries.length + ' entries');
+  if (entries.length == 0) {
+	viewer_node.innerHTML = '<div class="message">No entries</div>';
+  }
+  else {
+	for (i=0; i < entries.length; i++) {
+	  var entry = entries[i];
+	  var entry_node = document.createElement('div');
+	  entry_node.setAttribute('class', 'podcast_entry');
+
+	  title_node = document.createElement('div');
+	  title_node.setAttribute('class', 'podcast_entry_title');
+	  title_node.appendChild(document.createTextNode(entry['title']));
+	  entry_node.appendChild(title_node);
+
+	  summary_node = document.createElement('div');
+	  summary_node.setAttribute('class', 'podcast_entry_summary');
+	  summary_node.appendChild(document.createTextNode(entry['summary']));
+	  entry_node.appendChild(summary_node);
+
+	  viewer_node.appendChild(entry_node);
+	  /*dojo.debug(entry['title']);*/
+	}
+  }
+
+  dojo.lfx.html.wipeIn(viewer_node, 200).play();
   return false;
 }
 
@@ -201,4 +246,5 @@ function clear_feed_viewer() {
 function user_onload() {
   show_queue();
   show_user_feeds();
+  clear_feed_viewer('onload');
 }

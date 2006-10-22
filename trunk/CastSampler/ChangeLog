@@ -1,5 +1,13 @@
 2006-10-22  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/js/oneoffcast/user.js (insert_feed_into_list): Do not
+	insert the item if it already exists in the list.
+	(populate_feed_viewer): New function to show the contents of a
+	feed in the feed_viewer node.
+
+	* static/css/site.css: Add styles for the feed_viewer section of
+	the user page.
+
 	* static/js/oneoffcast/user.js: Change feedlist to feed_list.
 
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
