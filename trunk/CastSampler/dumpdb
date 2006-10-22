@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sqlite3 ./db/castsampler.db ".dump" > ./db/castsampler.sql
