@@ -204,6 +204,9 @@ CREATE TABLE "oneoffcast_podcast" (
 );
 INSERT INTO "oneoffcast_podcast" VALUES(2, 'hackoff.com - podcast version', 'hackoff.com: An historic murder mystery set in the internet bubble and rubble, by Tom Evslin', 'http://www.hackoff.com/blook/', 'http://localhost/~dhellmann/OneOffCast/hackoff.xml', '2006-10-21 12:26:45.396620', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(3, 'Agile Toolkit Podcast', 'Talk for the Agile crowd.', 'http://agiletoolkit.libsyn.com', 'http://localhost/~dhellmann/OneOffCast/agile.xml', '2006-10-21 12:29:15.705540', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(4, 'Distributing the Future', '"Distributing the Future" is O''Reilly Media''s weekly podcast featuring the technology and the people behind what you use now and what you''ll use next.
+
+This half hour program includes interviews and commentary on science, technology, related social issues, and just plain fun.', 'http://www.oreillynet.com/future/', 'http://www.oreillynet.com/pub/feed/37?format=rss2', '2006-10-22 10:31:27.898193', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -212,4 +215,5 @@ CREATE TABLE "oneoffcast_podcast_users" (
 );
 INSERT INTO "oneoffcast_podcast_users" VALUES(2, 2, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(3, 3, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(4, 4, 1);
 COMMIT;
