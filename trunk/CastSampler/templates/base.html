@@ -49,6 +49,7 @@
 
     function show_error(parent_node_name, message) {
         var parent_node = dojo.byId(parent_node_name);
+        parent_node.innerHTML = "";
 
         var new_node = document.createElement("div");
         new_node.setAttribute("class", "error");
