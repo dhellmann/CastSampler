@@ -7,6 +7,7 @@
 	(show_feed_by_id): Request the feed contents.
 	(show_feed_by_id_callback): Display the feed contents.
 	Fiddle around with calls to hide/show the feed_viewer.
+	More error handling changes.
 
 	* static/css/site.css: Add styles for the feed_viewer section of
 	the user page.
