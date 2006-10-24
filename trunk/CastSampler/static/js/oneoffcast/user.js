@@ -93,6 +93,34 @@ function show_queue_callback(type, data, evt) {
   }
 }
 
+function do_add_to_queue(form_node_name) {
+  show_status("Adding ...");
+  
+  dojo.io.bind({ 
+	url: "add_to_queue/",
+		handler: add_to_queue_callback,
+		formNode: document.getElementById(form_node_name),
+		});
+
+  return false;
+}
+
+/* called when we get the json response from the server when an item is added to the queue */
+function add_to_queue_callback(type, data, evt) {
+  if (type == "load") {
+	
+	payload = dojo.json.evalJson(data);
+
+	if (payload["error"] != "") {
+	  show_error("queue", payload["error"]);
+	}
+  } else if (type == "error") {
+	dojo.debugShallow(data);
+  }
+  clear_status();
+
+}
+
 /* Insert a feed element into the list of feeds of the user. */
 function insert_feed_into_list(feed_info) {
   var feed_node_id = 'feed_' + feed_info['id'];
@@ -162,7 +190,7 @@ function add_feed_callback(type, data, evt) {
 	}
 	else {
 	  insert_feed_into_list(payload);
-	  populate_feed_viewer(payload["entries"]);
+	  populate_feed_viewer(payload['id'], payload["entries"]);
 	  clear_error("add_feed_results");
 	}
 	
@@ -225,7 +253,7 @@ function show_feed_by_id_callback(type, data, evt) {
 	  show_error("feed_viewer", payload["error"]);
 	}
 	else {
-	  populate_feed_viewer(payload["entries"]);
+	  populate_feed_viewer(payload['id'], payload["entries"]);
 	}
   }
   else if (type == "error") {
@@ -242,7 +270,7 @@ function clear_feed_viewer() {
 }
 
 /* given a list of entries from the parsed feed, show them */
-function populate_feed_viewer(entries) {
+function populate_feed_viewer(podcast_id, entries) {
   var viewer_node = clear_feed_viewer();
 
   if (entries.length == 0) {
@@ -254,19 +282,26 @@ function populate_feed_viewer(entries) {
 	  var entry_node = document.createElement('div');
 	  entry_node.setAttribute('class', 'podcast_entry');
 
-	  title_node = document.createElement('div');
-	  title_node.setAttribute('class', 'podcast_entry_title');
-
 	  /* an icon to add the item to the queue */
-	  add_icon = document.createElement('a');
-	  add_icon.setAttribute('href', '');
-	  add_icon.setAttribute('onclick', 'return false;');
-	  add_icon.setAttribute('alt', 'Add to my queue');
-	  add_icon.setAttribute('title', 'Add to my queue');
-	  add_icon.innerHTML = '<img src="/static/images/add.png" />';
-	  title_node.appendChild(add_icon);
+	  form = document.createElement('form');
+	  var form_id = 'add_item_' + i;
+	  form.setAttribute('id', form_id);
+	  form.setAttribute('method', 'post');
+	  form.innerHTML = '<input type="hidden" name="title" value="' + entry['title'] + '"/>' +
+		'<input type="hidden" name="podcast" value="' + podcast_id + '"\>' +
+		'<input type="hidden" name="description" value="' + entry['summary'] + '"/>' +
+		'<div class="podcast_entry_title">' + 
+		'<a href="" onclick="return do_add_to_queue(\'' + form_id + '\');" alt="Add to my queue" title="Add to my queue">' +
+		'<img src="/static/images/add.png"/>' + entry['title'] + '</a>' +
+		'<a href="' + entry['link'] + '" target="_blank" title="Open link">' + 
+		'<img src="/static/images/link_go.png"/></a>' +
+		'</a></div>' +
+		'<div class="podcast_entry_summary">' + entry['summary'] + '</div>';
+
+	  entry_node.appendChild(form);
 
 	  /* a link to see the original item */
+	  /*
 	  title_link = document.createElement('a');
 	  title_link.setAttribute('href', entry['link']);
 	  title_link.setAttribute('target', '_blank');
@@ -278,6 +313,7 @@ function populate_feed_viewer(entries) {
 	  summary_node.setAttribute('class', 'podcast_entry_summary');
 	  summary_node.appendChild(document.createTextNode(entry['summary']));
 	  entry_node.appendChild(summary_node);
+	  */
 
 	  viewer_node.appendChild(entry_node);
 	}
@@ -286,6 +322,7 @@ function populate_feed_viewer(entries) {
   dojo.lfx.html.wipeIn(viewer_node, 200).play();
   return false;
 }
+
 
 /*
 ** ONLOAD

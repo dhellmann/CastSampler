@@ -450,7 +450,13 @@ div.title {
 
 .podcast_entry img { 
   padding-right: 0.5em;
+  padding-left: 0.5em;
+  text-decoration: none;
 }
+
+.podcast_entry a { 
+  text-decoration: none;
+ }
 
 .podcast_entry_title { 
   font-weight: bold;

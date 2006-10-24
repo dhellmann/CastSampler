@@ -193,4 +193,5 @@ def external(request, id):
     parsed_feed = podcast.get_current_feed_contents()
     response = {}
     response['entries'] = convert_feed_to_entries(parsed_feed)
+    response['id'] = id
     return response
