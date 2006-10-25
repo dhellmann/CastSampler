@@ -11,17 +11,17 @@
 
 {% block body %}
 
+    <div id="center_column">
+        {% block content %}{% endblock %}
+        {% block status %}<div id="status_message" class="message"></div>{% endblock %}
+    </div>
+
 {% block sidebar_r_wrapper %}
     <div id="sidebar_r">
       {% block sidebar_r %}
       {% endblock %}
     </div>
 {% endblock %}
-
-    <div id="center_column">
-        {% block content %}{% endblock %}
-        {% block status %}<div id="status_message" class="message"></div>{% endblock %}
-    </div>
 
 {% endblock %}
 

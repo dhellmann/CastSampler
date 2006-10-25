@@ -317,15 +317,14 @@ pre {
 /* LAYOUT FOR 2 COLUMNS */
 
 #center_column { 
-  width: 80%;
-  padding: 1em;
+  width: 75%;
+  float: left;
 }
 
 #sidebar_r { 
   background-color: #9EBF8A; /* light olive */
-  width: 30%;
-  float: right;
-  margin-right: 1em;
+  width: 20%;
+  float: left;
  }
 
 #content { 
@@ -385,9 +384,19 @@ div.title {
 #my_podcasts { 
 }
 
+#my_podcasts_wrapper { 
+}
+
+#my_podcasts li { 
+  padding: 0;
+  margin: 0;
+}
+
 #my_podcasts img { 
   padding-left: 0.25em;
   padding-right: 0.25em;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 #my_podcasts a {
@@ -440,7 +449,6 @@ div.title {
 */
 
 #feed_viewer { 
-  margin: 1em;
   padding: 1em;
 }
 
