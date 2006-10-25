@@ -174,7 +174,7 @@ def feed_list(request, username):
     """
     l = []
     response = { 'list': l }
-    for p in request.user.podcast_set.filter(allowed=True):
+    for p in request.user.podcast_set.filter(allowed=True).order_by('name'):
         l.append({ 'name':p.name,
                    'home_url':p.home_url,
                    'feed_url':p.feed_url,
