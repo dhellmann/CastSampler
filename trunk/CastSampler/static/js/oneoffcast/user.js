@@ -21,6 +21,7 @@ function show_queue() {
   dojo.io.bind({ 
 	url: "queue/",
 		handler: show_queue_callback,
+		method:"GET",
 		});
     return false;
 }
@@ -97,9 +98,10 @@ function do_add_to_queue(form_node_name) {
   show_status("Adding ...");
   
   dojo.io.bind({ 
-	url: "add_to_queue/",
+	url: "queue/",
 		handler: add_to_queue_callback,
 		formNode: document.getElementById(form_node_name),
+		method: "POST",
 		});
 
   return false;
@@ -171,7 +173,8 @@ function do_add_feed() {
   dojo.io.bind({ 
 	url: "add_feed/",
 		handler: add_feed_callback,
-		formNode: document.getElementById("add_feed")
+		formNode: document.getElementById("add_feed"),
+		method:"POST",
 		});
 
   return false;
@@ -205,6 +208,7 @@ function show_user_feeds() {
   dojo.io.bind({ 
 	url: "feed_list/",
 		handler: show_user_feeds_callback,
+		method: "GET",
 		});
   return false;
 }
@@ -239,6 +243,7 @@ function show_feed_by_id(id) {
   dojo.io.bind({ 
 	url: "/cast/external/" + id + "/",
 		handler: show_feed_by_id_callback,
+		method: "GET",
 		});
   return false;
 }
