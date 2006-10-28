@@ -152,10 +152,10 @@ def queue(request, username):
         #
         # Process the form input and check for errors
         #
-        manipulator = QueueItem.AddManipulator()
         new_data = request.POST.copy()
         new_data['user'] = request.user.id
 
+        manipulator = QueueItem.AddManipulator()
         manipulator.do_html2python(new_data)
         new_item = manipulator.save(new_data)
 
@@ -166,7 +166,7 @@ def queue(request, username):
         #
         # The items already in their queue
         #
-        queued_items = QueueItem.objects.filter(user=request.user).order_by('add_date')
+        queued_items = QueueItem.objects.filter(user=request.user).order_by('-add_date')
         response['queue'] = [ qi.as_dict()
                               for qi in queued_items
                               ]

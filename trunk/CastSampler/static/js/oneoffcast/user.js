@@ -26,6 +26,52 @@ function show_queue() {
     return false;
 }
 
+/* called to add a new entry to the display of the queue */
+function insert_entry_into_queue(entry, atFront) {
+  var queue_node = dojo.byId("queue");
+  
+  var new_item = document.createElement("div");
+  new_item.setAttribute("class", "queue_item");
+  
+  /* title */
+  var item_title = document.createElement("div");
+  item_title.setAttribute("class", "item_title");
+  
+  var podcast_link = document.createElement('a');
+  podcast_link.setAttribute('href', entry['podcast_home']);
+  podcast_link.appendChild(document.createTextNode(entry['podcast_name']));
+  item_title.appendChild(podcast_link);
+  item_title.appendChild(document.createTextNode(' - '));
+  var item_link = document.createElement('a');
+  item_link.setAttribute('href', entry['link']);
+  item_link.appendChild(document.createTextNode(entry['title']));
+  item_title.appendChild(item_link);
+  new_item.appendChild(item_title);
+  
+  /* summary / body */
+  var item_summary = document.createElement('div');
+  item_summary.setAttribute('class', 'item_summary');
+  item_summary.appendChild(document.createTextNode(entry['summary']));
+  new_item.appendChild(item_summary);
+  
+  /* enclosure */
+  var enclosure_link = document.createElement('a');
+  enclosure_link.setAttribute('class', 'enclosure_link');
+  enclosure_link.setAttribute('href', entry['enclosure_url']);
+  enclosure_link.appendChild(document.createTextNode(entry['enclosure_mimetype']));
+  new_item.appendChild(enclosure_link);
+  
+  /* add action buttons to remove queue items */
+  
+  if (atFront) {
+	first_child = queue_node.childNodes[0];
+	queue_node.insertBefore(new_item, first_child);
+  }
+  else {
+	queue_node.appendChild(new_item);
+  }
+}
+
 /* called when we get the json response from the server with the queue contents */
 function show_queue_callback(type, data, evt) {
   if (type == "load") {
@@ -49,42 +95,7 @@ function show_queue_callback(type, data, evt) {
 	  else {
 		for (var i=0; i < queue_contents.length; i++) {
 		  item = queue_contents[i];
-		  dojo.debugShallow(item);
-		  
-		  var new_item = document.createElement("div");
-		  new_item.setAttribute("class", "queue_item");
-		  
-		  /* title */
-		  var item_title = document.createElement("div");
-		  item_title.setAttribute("class", "item_title");
-		  
-		  var podcast_link = document.createElement('a');
-		  podcast_link.setAttribute('href', item['podcast_home']);
-		  podcast_link.appendChild(document.createTextNode(item['podcast_name']));
-		  item_title.appendChild(podcast_link);
-		  item_title.appendChild(document.createTextNode(' - '));
-		  var item_link = document.createElement('a');
-		  item_link.setAttribute('href', item['link']);
-		  item_link.appendChild(document.createTextNode(item['title']));
-		  item_title.appendChild(item_link);
-		  new_item.appendChild(item_title);
-		  
-		  /* summary / body */
-		  var item_summary = document.createElement('div');
-		  item_summary.setAttribute('class', 'item_summary');
-		  item_summary.appendChild(document.createTextNode(item['summary']));
-		  new_item.appendChild(item_summary);
-		  
-		  /* enclosure */
-		  var enclosure_link = document.createElement('a');
-		  enclosure_link.setAttribute('class', 'enclosure_link');
-		  enclosure_link.setAttribute('href', item['enclosure_url']);
-		  enclosure_link.appendChild(document.createTextNode(item['enclosure_mimetype']));
-		  new_item.appendChild(enclosure_link);
-		  
-		  /* add action buttons to remove queue items */
-		  
-		  queue_node.appendChild(new_item);
+		  insert_entry_into_queue(item, 0);
 		}
 	  }
 	}
@@ -98,9 +109,7 @@ function show_queue_callback(type, data, evt) {
 
 var podcast_entries = {};
 function do_add_to_queue(podcast_id, entry_id) {
-  dojo.debug('Adding ' + podcast_id + ', ' + entry_id);
   var entry = podcast_entries[entry_id];
-  dojo.debugShallow(entry);
 
   show_status("Adding " + entry['title'] + " ...");
 
@@ -143,8 +152,12 @@ function add_to_queue_callback(type, data, evt) {
 	if (payload["error"] != "") {
 	  show_error("queue", payload["error"]);
 	}
-	dojo.debug('add_to_queue_callback');
-	dojo.debugShallow(payload);
+
+	queue_contents = payload['add_to_queue'];
+	for (var i=0; i < queue_contents.length; i++) {
+	  item = queue_contents[i];
+	  insert_entry_into_queue(item, 1);
+	}
 
   } else if (type == "error") {
 	dojo.debugShallow(data);

@@ -144,8 +144,10 @@ def convert_feed_to_entries(parsed_feed):
         del new_entry['title_detail']
         del new_entry['updated_parsed']
         for attr in [ 'title', 'summary' ]:
-            new_entry[attr] = strip_html(new_entry[attr])
-
+             stripped = strip_html(new_entry[attr])
+             encoded = stripped.encode('utf-8', 'replace')
+             new_entry[attr] = encoded
+             
         if new_entry.get('enclosures'):
             entries.append(new_entry)
         logging.debug(new_entry)

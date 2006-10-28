@@ -1,5 +1,15 @@
 2006-10-28  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (queue): Sort items by reverse order so the most recent
+	appears at the top of the queue.
+
+	* util.py (convert_feed_to_entries): Force utf-8 encoding for the
+	strings, replacing invalid characters, so we know we can pull the
+	data base out of the database again.
+
+	* feeds.py (UserFeed.items): Sort items by the date they were
+	added to the queue.
+
 	* views.py (queue): If they post to the queue, they are trying to
 	add something to it.
 

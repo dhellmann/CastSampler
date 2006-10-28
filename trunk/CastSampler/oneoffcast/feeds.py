@@ -83,7 +83,7 @@ class UserFeed(Feed):
         return obj.add_date
 
     def items(self, obj):
-        return models.QueueItem.objects.filter(user=obj).order_by('-add_date')
+        return models.QueueItem.objects.filter(user=obj).order_by('add_date')
 
 class RSSFeed(UserFeed):
     feed_type = Rss201rev2Feed

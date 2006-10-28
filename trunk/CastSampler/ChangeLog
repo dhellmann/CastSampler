@@ -6,6 +6,10 @@
 	and post it to the queue to add an item.
 	(populate_feed_viewer): Instead of using a form, just refer to a
 	global array of feed entries.
+	(insert_entry_into_queue): New function to add something to the
+	queue display.
+	(add_to_queue_callback): After we get the response, add the
+	display value to the front of the queue.
 
 2006-10-24  Doug Hellmann  <dhellmann@racemi.com>
 
