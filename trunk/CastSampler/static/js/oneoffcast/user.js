@@ -49,6 +49,7 @@ function show_queue_callback(type, data, evt) {
 	  else {
 		for (var i=0; i < queue_contents.length; i++) {
 		  item = queue_contents[i];
+		  dojo.debugShallow(item);
 		  
 		  var new_item = document.createElement("div");
 		  new_item.setAttribute("class", "queue_item");
@@ -68,11 +69,11 @@ function show_queue_callback(type, data, evt) {
 		  item_title.appendChild(item_link);
 		  new_item.appendChild(item_title);
 		  
-		  /* description / body */
-		  var item_description = document.createElement('div');
-		  item_description.setAttribute('class', 'item_description');
-		  item_description.appendChild(document.createTextNode(item['description']));
-		  new_item.appendChild(item_description);
+		  /* summary / body */
+		  var item_summary = document.createElement('div');
+		  item_summary.setAttribute('class', 'item_summary');
+		  item_summary.appendChild(document.createTextNode(item['summary']));
+		  new_item.appendChild(item_summary);
 		  
 		  /* enclosure */
 		  var enclosure_link = document.createElement('a');
@@ -94,14 +95,40 @@ function show_queue_callback(type, data, evt) {
   }
 }
 
-function do_add_to_queue(form_node_name) {
-  show_status("Adding ...");
-  
+
+var podcast_entries = {};
+function do_add_to_queue(podcast_id, entry_id) {
+  dojo.debug('Adding ' + podcast_id + ', ' + entry_id);
+  var entry = podcast_entries[entry_id];
+  dojo.debugShallow(entry);
+
+  show_status("Adding " + entry['title'] + " ...");
+
+  enclosure = entry['enclosures'][0];
+  author_detail = entry['author_detail'];
+  if (author_detail) {
+	author_name = author_detail['name'];
+	author_email = author_detail['email'];
+  } else {
+	author_name = entry['author'];
+	author_email = 'n/a';
+  }
+
   dojo.io.bind({ 
 	url: "queue/",
-		handler: add_to_queue_callback,
-		formNode: document.getElementById(form_node_name),
-		method: "POST",
+	handler: add_to_queue_callback,
+	method: "POST",
+
+		content:{podcast:podcast_id,
+		  title:entry['title'],
+		  summary:entry['summary'],
+		  link:entry['link'],
+		  author_name:author_name,
+		  author_email:author_email,
+		  item_enclosure_url:enclosure['href'],
+		  item_enclosure_mime_type:enclosure['type'],
+		  item_enclosure_length:enclosure['length'],
+		  },
 		});
 
   return false;
@@ -116,6 +143,9 @@ function add_to_queue_callback(type, data, evt) {
 	if (payload["error"] != "") {
 	  show_error("queue", payload["error"]);
 	}
+	dojo.debug('add_to_queue_callback');
+	dojo.debugShallow(payload);
+
   } else if (type == "error") {
 	dojo.debugShallow(data);
   }
@@ -282,43 +312,40 @@ function populate_feed_viewer(podcast_id, entries) {
 	viewer_node.innerHTML = '<div class="message">No entries</div>';
   }
   else {
+	/* update our global variable so the code to add to the queue can find the entries */
+	podcast_entries = entries;
+
 	for (i=0; i < entries.length; i++) {
 	  var entry = entries[i];
 	  var entry_node = document.createElement('div');
+	  var div_id = 'add_item_' + i;
 	  entry_node.setAttribute('class', 'podcast_entry');
+	  entry_node.setAttribute('id', div_id);
 
-	  /* an icon to add the item to the queue */
-	  form = document.createElement('form');
-	  var form_id = 'add_item_' + i;
-	  form.setAttribute('id', form_id);
-	  form.setAttribute('method', 'post');
-	  form.innerHTML = '<input type="hidden" name="title" value="' + entry['title'] + '"/>' +
-		'<input type="hidden" name="podcast" value="' + podcast_id + '"\>' +
-		'<input type="hidden" name="description" value="' + entry['summary'] + '"/>' +
-		'<div class="podcast_entry_title">' + 
-		'<a href="" onclick="return do_add_to_queue(\'' + form_id + '\');" alt="Add to my queue" title="Add to my queue">' +
-		'<img src="/static/images/add.png"/>' + entry['title'] + '</a>' +
-		'<a href="' + entry['link'] + '" target="_blank" title="Open link">' + 
-		'<img src="/static/images/link_go.png"/></a>' +
-		'</a></div>' +
-		'<div class="podcast_entry_summary">' + entry['summary'] + '</div>';
+	  title_node = document.createElement('div');
+	  title_node.setAttribute('class', 'podcast_entry_title');
 
-	  entry_node.appendChild(form);
+	  add_link = document.createElement('a');
+	  add_link.setAttribute('href', '');
+	  add_link.setAttribute('onclick', "return do_add_to_queue(" + podcast_id + ", " + i + ")");
+	  add_link.setAttribute('alt', 'Add to my queue');
+	  add_link.setAttribute('title', 'Add to my queue');
+	  add_link.innerHTML = '<img src="/static/images/add.png"/>' + entry['title'] + '</a>';
+	  title_node.appendChild(add_link);
 
-	  /* a link to see the original item */
-	  /*
-	  title_link = document.createElement('a');
-	  title_link.setAttribute('href', entry['link']);
-	  title_link.setAttribute('target', '_blank');
-	  title_link.appendChild(document.createTextNode(entry['title']));
-	  title_node.appendChild(title_link);
+	  open_link = document.createElement('a');
+	  open_link.setAttribute('href', entry['link']);
+	  open_link.setAttribute('target', '_blank');
+	  open_link.setAttribute('alt', 'Open');
+	  open_link.setAttribute('title', 'Open');
+	  open_link.innerHTML = '<img src="/static/images/link_go.png"/></a>';
+	  title_node.appendChild(open_link);
 	  entry_node.appendChild(title_node);
 
 	  summary_node = document.createElement('div');
 	  summary_node.setAttribute('class', 'podcast_entry_summary');
 	  summary_node.appendChild(document.createTextNode(entry['summary']));
 	  entry_node.appendChild(summary_node);
-	  */
 
 	  viewer_node.appendChild(entry_node);
 	}

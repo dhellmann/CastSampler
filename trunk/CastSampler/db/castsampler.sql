@@ -105,10 +105,10 @@ CREATE TABLE "django_session" (
     "session_data" text NOT NULL,
     "expire_date" datetime NOT NULL
 );
-INSERT INTO "django_session" VALUES('32b61f225cb17bc7e027541916d4f99c', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
-bmRzLk1vZGVsQmFja2VuZCcKcDMKc1MnX2F1dGhfdXNlcl9pZCcKcDQKSTEKcy5kYjI2ODY1ZjFh
-MGNiNDA0YjJkNDhiODVhOGFlZWZmMQ==
-', '2006-11-07 19:00:06.817761');
+INSERT INTO "django_session" VALUES('32b61f225cb17bc7e027541916d4f99c', 'KGRwMQpTJ3Rlc3Rjb29raWUnCnAyClMnd29ya2VkJwpwMwpzUydfYXV0aF91c2VyX2lkJwpwNApJ
+MQpzUydfYXV0aF91c2VyX2JhY2tlbmQnCnA1ClMnZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k
+cy5Nb2RlbEJhY2tlbmQnCnA2CnMuNzI1ZWZhMTE3MDI0OGE3NTMzZTBkNjdhZWJiZGNlZmI=
+', '2006-11-11 07:56:12.012047');
 CREATE TABLE "django_site" (
     "id" integer NOT NULL PRIMARY KEY,
     "domain" varchar(100) NOT NULL,
@@ -176,20 +176,6 @@ CREATE TABLE "registration_userprofile" (
     "activation_key" varchar(40) NOT NULL,
     "key_expires" datetime NOT NULL
 );
-CREATE TABLE "oneoffcast_queueitem" (
-    "id" integer NOT NULL PRIMARY KEY,
-    "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
-    "podcast_id" integer NOT NULL,
-    "title" varchar(512) NOT NULL,
-    "description" text NOT NULL,
-    "link" varchar(200) NOT NULL,
-    "item_enclosure_url" varchar(200) NOT NULL,
-    "item_enclosure_length" integer NOT NULL,
-    "item_enclosure_mime_type" varchar(200) NOT NULL,
-    "add_date" datetime NOT NULL,
-    "author_name" varchar(128) NOT NULL,
-    "author_email" varchar(75) NOT NULL
-);
 CREATE TABLE "oneoffcast_podcast" (
     "id" integer NOT NULL PRIMARY KEY,
     "name" varchar(256) NOT NULL,
@@ -208,6 +194,9 @@ INSERT INTO "oneoffcast_podcast" VALUES(4, 'Distributing the Future', '"Distribu
 
 This half hour program includes interviews and commentary on science, technology, related social issues, and just plain fun.', 'http://www.oreillynet.com/future/', 'http://www.oreillynet.com/pub/feed/37?format=rss2', '2006-10-22 10:31:27.898193', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(5, 'FOO Casts: Podcasts from O''Reilly and Friends', 'Podcasts from O''Reilly and Friends', 'http://www.oreillynet.com/podcasts/', 'http://www.oreillynet.com/pub/feed/32?format=rss2', '2006-10-22 10:41:42.330963', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(6, 'BusinessWeek - The Cutting Edge', 'Blogging and Podcasting', 'http://www.blogspotting.net/', 'http://www.businessweek.com/search/podcasts/podcasting.rss', '2006-10-25 19:10:05.169670', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(7, 'The it@cork Blog', 'The IT@Cork podcast - Tom Raftery interviews luminaries from the membership of IT@Cork', 'http://blog.itcork.ie', 'http://blog.itcork.ie/feed/', '2006-10-26 07:25:43.218234', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(8, 'PodTech News - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/PodTech+News', 'http://www.podtech.net/home/PodTech+News/feed', '2006-10-26 20:34:29.726580', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -218,4 +207,21 @@ INSERT INTO "oneoffcast_podcast_users" VALUES(2, 2, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(3, 3, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(4, 4, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(5, 5, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(6, 6, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(7, 7, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(8, 8, 1);
+CREATE TABLE "oneoffcast_queueitem" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
+    "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
+    "title" varchar(512) NOT NULL,
+    "summary" text NOT NULL,
+    "link" varchar(200) NOT NULL,
+    "item_enclosure_url" varchar(200) NOT NULL,
+    "item_enclosure_length" integer NOT NULL,
+    "item_enclosure_mime_type" varchar(200) NOT NULL,
+    "add_date" datetime NOT NULL,
+    "author_name" varchar(128) NOT NULL,
+    "author_email" varchar(75) NOT NULL
+);
 COMMIT;

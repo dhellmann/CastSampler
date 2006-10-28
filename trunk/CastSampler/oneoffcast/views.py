@@ -78,6 +78,7 @@ def main(request):
                                'user':request.user,
                                })
 
+
 @login_required
 def user_redirect(request, urlBase='/cast'):
     """Redirect the user to their user page.
@@ -130,11 +131,8 @@ def add_feed(request, username=None):
             
         manipulator.do_html2python(new_data)
         podcast, parsed_feed = manipulator.save(new_data)
-        
-        response['name'] = podcast.name
-        response['id'] = podcast.id
-        response['home_url'] = podcast.home_url
-        response['feed_url'] = podcast.feed_url
+
+        response.update(podcast.as_dict())
         response['entries'] = convert_feed_to_entries(parsed_feed)
 
     return response
@@ -146,23 +144,33 @@ def add_feed(request, username=None):
 def queue(request, username):
     """Returns JSON package of current queue contents for the user.
     """
-    logging.debug('looking for queue for %s' % username)
-    #
-    # The items already in their queue
-    #
-    queued_items = QueueItem.objects.filter(user=request.user).order_by('add_date')
-    response = { 'queue': [ { 'podcast_name':qi.podcast.name,
-                              'podcast_home':qi.podcast.home_url,
-                              'title':qi.title,
-                              'link':qi.link,
-                              'description':qi.get_truncated_description(),
-                              'enclosure_url':qi.item_enclosure_url,
-                              'enclosure_mimetype':qi.item_enclosure_mime_type,
-                              #'pubdate':qi.add_date,
-                              }
-                            for qi in queued_items
-                            ],
-                 }
+    logging.debug('queue(%s) %s' % (username, request.method))
+
+    response = {}
+    
+    if request.method == 'POST':
+        #
+        # Process the form input and check for errors
+        #
+        manipulator = QueueItem.AddManipulator()
+        new_data = request.POST.copy()
+        new_data['user'] = request.user.id
+
+        manipulator.do_html2python(new_data)
+        new_item = manipulator.save(new_data)
+
+        # FIXME - Need to add values to the response
+        response['add_to_queue'] = [ new_item.as_dict() ]
+        
+    elif request.method == 'GET':
+        #
+        # The items already in their queue
+        #
+        queued_items = QueueItem.objects.filter(user=request.user).order_by('add_date')
+        response['queue'] = [ qi.as_dict()
+                              for qi in queued_items
+                              ]
+    logging.debug(response)
     return response
 
 
@@ -175,11 +183,7 @@ def feed_list(request, username):
     l = []
     response = { 'list': l }
     for p in request.user.podcast_set.filter(allowed=True).order_by('name'):
-        l.append({ 'name':p.name,
-                   'home_url':p.home_url,
-                   'feed_url':p.feed_url,
-                   'id':p.id,
-                   })
+        l.append(p.as_dict())
     return response
 
 @jsonView()

@@ -98,6 +98,16 @@ class Podcast(models.Model):
         logging.debug('Fetching %s' % self.feed_url)
         return feedparser.parse(self.feed_url)
 
+    def as_dict(self):
+        """Return a dictionary of interesting values that the view
+        wants, in a form suitable for serializing via JSON.
+        """
+        d = { 'name':self.name,
+              'home_url':self.home_url,
+              'feed_url':self.feed_url,
+              'id':self.id,
+              }
+        return d
 
 def find_or_create_podcast(feed_url, user=None):
     """Look for an existing Podcast with the given
@@ -154,7 +164,7 @@ class QueueItem(models.Model):
     user = models.ForeignKey(User)
     podcast = models.ForeignKey(Podcast)
     title = models.CharField(maxlength=512, blank=True)
-    description = models.TextField(blank=True)
+    summary = models.TextField(blank=True)
     link = models.URLField(verify_exists=False)
     item_enclosure_url = models.URLField(verify_exists=False)
     item_enclosure_length = models.IntegerField()
@@ -169,7 +179,7 @@ class QueueItem(models.Model):
                     ('Podcast', {'fields':('podcast', ),
                                }),
                    ('Item', {'fields':('title', 
-                                       'description', 
+                                       'summary', 
                                        'link',
                                        'author_name',
                                        'author_email',
@@ -181,16 +191,31 @@ class QueueItem(models.Model):
                    )
         list_display = ('title', 'link', 'user', 'add_date', 'podcast')
         list_filter = ['add_date', 'podcast', 'user']
-        search_fields = ['title', 'description']
+        search_fields = ['title', 'summary']
         date_hierarchy = 'add_date'
     
     def get_absolute_url(self):
         "Used in feed generation."
         return self.link
     
-    def get_truncated_description(self, maxLen=30):
-        "Return a shorter version of the text in the description."
-        desc = self.description
+    def get_truncated_summary(self, maxLen=30):
+        "Return a shorter version of the text in the summary."
+        desc = self.summary
         if len(desc) > maxLen:
             desc = desc[:maxLen] + ' ...'
         return desc
+
+    def as_dict(self):
+        """Return a dictionary of interesting values that the view
+        wants, in a form suitable for serializing via JSON.
+        """
+        d = { 'podcast_name':self.podcast.name,
+              'podcast_home':self.podcast.home_url,
+              'title':self.title,
+              'link':self.link,
+              'summary':self.get_truncated_summary(),
+              'enclosure_url':self.item_enclosure_url,
+              'enclosure_mimetype':self.item_enclosure_mime_type,
+              #'pubdate':self.add_date,
+              }
+        return d
