@@ -1,0 +1,182 @@
+#!/usr/bin/env python
+#
+# $Id: cl2svn 20824 2006-10-19 15:43:44Z dhellmann $
+#
+# Copyright (c) 2006 Racemi, Inc.  All rights reserved.
+#
+
+"""Merge the changes in all new or modified ChangeLog files
+together to create a commit message for svn.
+
+"""
+
+_module_id_ = '$Id: cl2svn 20824 2006-10-19 15:43:44Z dhellmann $'
+
+#
+# Import system modules
+#
+import os
+import sys
+import textwrap
+
+#
+# Import Local modules
+#
+from CommandLineApp import CommandLineApp
+
+#
+# Module
+#
+
+class cl2svn(CommandLineApp):
+    """Merge the changes in all new or modified ChangeLog files
+    together to create a commit message for svn.
+    """
+
+    def _flushCurrentMessage(self):
+        if not self._current_message:
+            return
+
+        self.file_messages.setdefault(self._current_file, []).append(self._current_message)
+        self._current_message = ''
+        return
+
+    _current_message = ''
+    _current_file = ''
+    def _processChangeLogLine(self, pathPrefix, line):
+        if line.startswith('\t*'):
+            if self._current_message:
+                self._flushCurrentMessage()
+                
+            #
+            # Beginning of an entry with a filename
+            #
+            line_parts = line[3:].split(' ')
+
+            changed_filename = line_parts[0]
+            if changed_filename[-1] == ':':
+                changed_filename = changed_filename[:-1]
+                colon = ':'
+            else:
+                colon = ''
+
+            remainder = ' '.join(line_parts[1:])
+            #print "\n * `%s/%s`%s\n" % (pathPrefix,
+            #                            changed_filename,
+            #                            colon,
+            #                            )
+            self._current_file = os.path.join(pathPrefix, changed_filename)
+            if remainder:
+                self._current_message = remainder + '\n'
+
+        elif line and line[0] != '\t':
+            #
+            # Skip lines with date info in them
+            #
+            pass
+
+        elif line and line[1] == '(':
+            #
+            # This line starts with a function name in parens,
+            # so we do not want it to wrap with any previous info
+            # for this file.
+            #
+            if self._current_message:
+                self._flushCurrentMessage()
+            self._current_message += line.lstrip() # remove tab
+            self._current_message += '\n'
+
+        elif line:
+            #
+            # This is just part of the body of the change log,
+            # so stick it on the end of our current message
+            # for later.
+            #
+            self._current_message += line.lstrip() # remove tab
+            self._current_message += '\n'
+
+        return
+
+    def main(self, *args):
+        self.file_messages = {} # keys are changed filenames
+        
+        p = os.popen("svn status | grep ChangeLog | grep -v '^D'", 'r')
+        try:
+            for status_line in p.readlines():
+                status_line = status_line.rstrip()
+                if not status_line:
+                    continue
+
+                self.statusMessage("STATUS LINE: %s" % status_line, 3)
+
+                change_type = status_line[0]
+                line_parts = status_line.split(' ')
+                filename = line_parts[-1]
+
+                self.statusMessage("FILENAME: %s" % filename, 2)
+
+                path_prefix = os.path.dirname(filename)
+                
+                if change_type == 'M':
+                    #
+                    # Need the difference
+                    #
+                    diff = os.popen("svn diff %s | egrep '^(\\+|-)' | egrep -v '^(\\+\\+\\+|---)'" % filename, 'r')
+                    try:
+                        for diff_line in diff.readlines():
+                            diff_line = diff_line.rstrip()
+                            if diff_line and diff_line[0] in '+-':
+                                diff_line = diff_line[1:]
+                            self._processChangeLogLine(path_prefix, diff_line)
+                    finally:
+                        diff.close()
+                
+                elif change_type == 'A':
+                    #
+                    # Need the whole file, but convert
+                    # the paths in file references.
+                    #
+                    
+                    f = open(filename, 'r')
+                    try:
+                        for body_line in f.readlines():
+                            body_line = body_line.rstrip()
+                            self._processChangeLogLine(path_prefix, body_line)
+                    finally:
+                        f.close()
+
+                elif change_type == '?':
+                    #
+                    # Forgot to add a new ChangeLog file
+                    #
+                    sys.stderr.write('ERROR: New ChangeLog file %s must be added\n' % filename)
+                    return 1
+                
+                else:
+                    raise ValueError('Do not know what to do with "%s"' % status_line)
+
+            self._flushCurrentMessage()
+        finally:
+            p.close()
+
+        #
+        # Generate the output
+        #
+        wrapper = textwrap.TextWrapper(initial_indent='   ', subsequent_indent='   ')
+
+        messages = self.file_messages.items()
+        messages.sort()
+        for filename, message_list in messages:
+            print "\n * `%s`:\n" % filename
+
+            for message in message_list:
+                print wrapper.fill(message + '[[BR]]')
+            
+        return 0
+
+if __name__ == '__main__':
+    try:
+        cl2svn().run()
+    except cl2svn.HelpRequested:
+        pass
+        
