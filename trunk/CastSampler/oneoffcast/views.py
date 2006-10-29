@@ -64,14 +64,20 @@ def main(request):
     # Do we want to change this to count references to a podcast by a user
     # instead of individual episodes?
     #
-    popular_podcasts = Podcast.objects.extra(
+    popular_podcasts_query = Podcast.objects.extra(
         select={'use_count':"""select count(*)
                                from oneoffcast_queueitem
                                where oneoffcast_queueitem.podcast_id = oneoffcast_podcast.id
                                """,
                 },
-        where=['use_count > 0'], # only include podcasts referenced by *someone*
-        ).order_by('-use_count')[:10]
+        ).order_by('-use_count')
+    popular_podcasts = []
+    for p in popular_podcasts_query:
+        if p.use_count <= 0:
+            break
+        popular_podcasts.append(p)
+        if len(popular_podcasts) >= 10:
+            break
     return render_to_response('index.html', 
                               {'newest_podcasts':newest_podcasts,
                                'popular_podcasts':popular_podcasts,
