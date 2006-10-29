@@ -172,6 +172,7 @@ INSERT INTO "django_admin_log" VALUES(44, '2006-10-21 11:45:00.195302', 1, 3, '4
 INSERT INTO "django_admin_log" VALUES(45, '2006-10-21 12:26:30.167160', 1, 9, '2', 'hackoff.com - podcast version', 3, '');
 INSERT INTO "django_admin_log" VALUES(46, '2006-10-21 12:29:03.930340', 1, 9, '1', 'Agile Toolkit Podcast', 3, '');
 INSERT INTO "django_admin_log" VALUES(47, '2006-10-28 10:12:30.483418', 1, 8, '1', 'QueueItem object', 3, '');
+INSERT INTO "django_admin_log" VALUES(48, '2006-10-29 08:04:10.586336', 1, 8, '7', 'QueueItem object', 3, '');
 CREATE TABLE "registration_userprofile" (
     "user_id" integer NOT NULL PRIMARY KEY REFERENCES "auth_user" ("id"),
     "activation_key" varchar(40) NOT NULL,
@@ -189,8 +190,8 @@ CREATE TABLE "oneoffcast_podcast" (
     "notes" text NOT NULL,
     "allowed" bool NOT NULL
 );
-INSERT INTO "oneoffcast_podcast" VALUES(2, 'hackoff.com - podcast version', 'hackoff.com: An historic murder mystery set in the internet bubble and rubble, by Tom Evslin', 'http://www.hackoff.com/blook/', 'http://localhost/~dhellmann/OneOffCast/hackoff.xml', '2006-10-21 12:26:45.396620', '', '', '', 1);
-INSERT INTO "oneoffcast_podcast" VALUES(3, 'Agile Toolkit Podcast', 'Talk for the Agile crowd.', 'http://agiletoolkit.libsyn.com', 'http://localhost/~dhellmann/OneOffCast/agile.xml', '2006-10-21 12:29:15.705540', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(2, 'LOCAL hackoff.com - podcast version', 'hackoff.com: An historic murder mystery set in the internet bubble and rubble, by Tom Evslin', 'http://www.hackoff.com/blook/', 'http://localhost/~dhellmann/OneOffCast/hackoff.xml', '2006-10-21 12:26:45.396620', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(3, 'LOCAL Agile Toolkit Podcast', 'Talk for the Agile crowd.', 'http://agiletoolkit.libsyn.com', 'http://localhost/~dhellmann/OneOffCast/agile.xml', '2006-10-21 12:29:15.705540', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(4, 'Distributing the Future', '"Distributing the Future" is O''Reilly Media''s weekly podcast featuring the technology and the people behind what you use now and what you''ll use next.
 
 This half hour program includes interviews and commentary on science, technology, related social issues, and just plain fun.', 'http://www.oreillynet.com/future/', 'http://www.oreillynet.com/pub/feed/37?format=rss2', '2006-10-22 10:31:27.898193', '', '', '', 1);
@@ -198,6 +199,8 @@ INSERT INTO "oneoffcast_podcast" VALUES(5, 'FOO Casts: Podcasts from O''Reilly a
 INSERT INTO "oneoffcast_podcast" VALUES(6, 'BusinessWeek - The Cutting Edge', 'Blogging and Podcasting', 'http://www.blogspotting.net/', 'http://www.businessweek.com/search/podcasts/podcasting.rss', '2006-10-25 19:10:05.169670', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(7, 'The it@cork Blog', 'The IT@Cork podcast - Tom Raftery interviews luminaries from the membership of IT@Cork', 'http://blog.itcork.ie', 'http://blog.itcork.ie/feed/', '2006-10-26 07:25:43.218234', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(8, 'PodTech News - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/PodTech+News', 'http://www.podtech.net/home/PodTech+News/feed', '2006-10-26 20:34:29.726580', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(9, 'web 2.0 - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/web+2.0', 'http://www.podtech.net/home/web+2.0/feed', '2006-10-29 08:03:08.562797', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(10, 'LOCAL web 2.0 - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/web+2.0', 'http://localhost/~dhellmann/OneOffCast/web20.xml', '2006-10-29 08:15:56.814293', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -211,6 +214,8 @@ INSERT INTO "oneoffcast_podcast_users" VALUES(5, 5, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(6, 6, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(7, 7, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(8, 8, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(9, 9, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(10, 10, 1);
 CREATE TABLE "oneoffcast_queueitem" (
     "id" integer NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
@@ -234,4 +239,6 @@ In this podcast, second in the series we are talking to Hugh MacLeod. Hugh is a 
 INSERT INTO "oneoffcast_queueitem" VALUES(4, 1, 6, 'Angel Money', 'Jeff Clavier, the founder of SoftTech VC, talks about his experiences as an angel investor in social media, search, and discovery startups. As we continue our series of interviews about the different states of startup investing, Clavier provides insight into angel investing, and its impact on the rest of the venture funding landscape', 'http://www.businessweek.com/mediacenter/qt/podcasts/podcasting/podcastbiz_10_04_06.mp3', 'http://www.businessweek.com/mediacenter/qt/podcasts/podcasting/podcastbiz_10_04_06.mp3', 7019212, 'audio/mpeg', '2006-10-28 13:52:07.596342', 'Jeff Clavier', 'n/a');
 INSERT INTO "oneoffcast_queueitem" VALUES(5, 1, 6, 'New Valuations', 'Fred Wilson and Brad Burnham, the founders of Union Square Ventures in New York, talk about how the new economics of starting and running companies is creating a new way of valuing startups. They also discuss what needs to happen for enterprises to adopt this new generation of technology and why it''s important to be careful these days about the kinds of companies in which they invest', 'http://www.businessweek.com/mediacenter/qt/podcasts/podcasting/podcastbiz_09_27_06.mp3', 'http://www.businessweek.com/mediacenter/qt/podcasts/podcasting/podcastbiz_09_27_06.mp3', 7697277, 'audio/mpeg', '2006-10-28 13:52:11.640682', 'Brad Burnham & Fred Wilson', 'n/a');
 INSERT INTO "oneoffcast_queueitem" VALUES(6, 1, 8, 'PodTech Weekly', 'From PodTech News, a closer look at Internet addiction, the all-important price of admission for next year''s gaming consoles, the FBI''s electronic eyes and who they''re watching, and a check-in with JibJab.', 'http://www.podtech.net/home/technology/1383/podtech-weekly', 'http://media.podtech.net/media/2006/10/PID_001287/Podtech_PodTech_News_Weekly_1.mp3', 27237925, 'audio/mpeg', '2006-10-28 13:53:20.213699', 'Editor', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(7, 1, 10, 'BlueDot, Share your favorite sites with your friends', 'Mike Arrington at TechCrunch says he uses BlueDot instead of other bookmarking for social Website sharing services. So, I headed up to Seattle to find out what was behind this innovative company. You’ll meet the entire team, get a demo, and more.', 'http://www.podtech.net/home/technology/1382/bluedot-share-your-favorite-sites-with-your-friends', 'http://media.podtech.net/media/2006/10/PID_001279/Podtech_bluedotvisit_350.mov', 90890592, 'video/mov', '2006-10-29 08:57:45.790780', 'Robert Scoble', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(8, 1, 10, 'LunchMeet Gets Political with TheBallot.org', 'Eddie Codel and Irina Slutsky talk political tech with Seth Walker of Radical Designs on the newly launched voter guide site TheBallot.org. Seth tells us how individuals and groups can use TheBallot.org to create voter guides, endorsements and voter blocs to help get the vote out this election season.', 'http://www.podtech.net/home/technology/1376/lunchmeet-gets-political-with-theballotorg', 'http://media.podtech.net/media/2006/10/PID_001274/Podtech_LM2-TheBallot.mov', 53708204, 'video/mov', '2006-10-29 08:57:49.854932', 'Editor', 'n/a');
 COMMIT;
