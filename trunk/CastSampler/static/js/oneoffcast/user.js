@@ -43,12 +43,70 @@ function get_mimetype_icon(mimetype) {
   return icon;
 }
 
+/* tell the server to remove something from the queue */
+function do_remove_from_queue(id) {
+
+  show_status("Removing ...");
+
+  dojo.io.bind({ 
+	url: "queue/" + id + "/",
+	handler: remove_from_queue_callback,
+	method: "DELETE",
+	});
+  return false;
+}
+
+/* remove the item from the display */
+function remove_item_from_queue(id) {
+  dojo.debug('remove_item_from_queue ' + id);
+  var queue_node = dojo.byId("queue");
+  var node_id = "queue_item_" + id;
+  var item_node = dojo.byId(node_id);
+
+  if (item_node) {
+	queue_node.removeChild(item_node);
+  }
+  else {
+	dojo.debug('Could not find node ' + node_id);
+  }
+  return false;
+}
+
+/* called when the server responds after removing something from the queue */
+function remove_from_queue_callback(type, data, evt) {
+  if (type == "load") {
+	
+	payload = dojo.json.evalJson(data);
+
+	if (payload["error"] != "") {
+	  show_error("queue", payload["error"]);
+	}
+
+	to_remove = payload['remove_from_queue'];
+	dojo.debug('remove_from_queue_callback');
+	dojo.debugShallow(to_remove);
+	for (var i=0; i < to_remove.length; i++) {
+	  id = to_remove[i];
+	  dojo.debug('Removing ' + id);
+	  remove_item_from_queue(id);
+	}
+
+  } else if (type == "error") {
+	dojo.debugShallow(data);
+  }
+
+  clear_status();
+
+  return false;
+}
+
 /* called to add a new entry to the display of the queue */
 function insert_entry_into_queue(entry, atFront) {
   var queue_node = dojo.byId("queue");
   
   var new_item = document.createElement("div");
   new_item.setAttribute("class", "queue_item");
+  new_item.setAttribute('id', 'queue_item_' + entry['id']);
   
   /* title */
   var item_title = document.createElement("div");
@@ -56,6 +114,7 @@ function insert_entry_into_queue(entry, atFront) {
   
   var item_link = document.createElement('a');
   item_link.setAttribute('href', entry['link']);
+  item_link.setAttribute('target', '_blank');
   item_link.appendChild(document.createTextNode(entry['podcast_name']));
   item_link.appendChild(document.createTextNode(' - '));
   item_link.appendChild(document.createTextNode(entry['title']));
@@ -70,7 +129,7 @@ function insert_entry_into_queue(entry, atFront) {
 
   var delete_link = document.createElement('a');
   delete_link.setAttribute('href', '');
-  delete_link.setAttribute('onclick', 'return false');
+  delete_link.setAttribute('onclick', 'return do_remove_from_queue(' + entry['id'] + ')');
   delete_link.setAttribute('class', 'delete_link');
   delete_icon = document.createElement('img');
   delete_icon.setAttribute('src', '/static/images/cancel.png');

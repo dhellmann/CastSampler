@@ -159,7 +159,6 @@ def queue(request, username):
         manipulator.do_html2python(new_data)
         new_item = manipulator.save(new_data)
 
-        # FIXME - Need to add values to the response
         response['add_to_queue'] = [ new_item.as_dict() ]
         
     elif request.method == 'GET':
@@ -170,6 +169,26 @@ def queue(request, username):
         response['queue'] = [ qi.as_dict()
                               for qi in queued_items
                               ]
+    logging.debug(response)
+    return response
+
+@jsonView()
+@same_user_only()
+@login_required
+def remove_from_queue(request, username, id):
+    """Remove id from the queue.
+    """
+    logging.debug('remove_from_queue(%s, %s) %s' % (username, id, request.method))
+
+    removed = []
+    response = {'remove_from_queue':removed,
+                }
+    
+    if request.method == 'DELETE':
+        item = QueueItem.objects.get(id=id)
+        item.delete()
+        removed.append(id)
+
     logging.debug(response)
     return response
 

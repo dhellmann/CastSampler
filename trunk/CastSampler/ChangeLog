@@ -7,6 +7,14 @@
 	functional yet.
 	(populate_feed_viewer): Add an icon to link directly to the
 	enclosure.
+	(insert_entry_into_queue): Links to remote items in the queue open
+	in a new window.
+	(do_remove_from_queue): Start the process of removing something
+	from the queue.
+	(remove_item_from_queue): Update the queue display by removing the
+	specified item.
+	(remove_from_queue_callback): AJAX callback invoked when the
+	server finishes removing something from the queue.
 
 	* static/images/cancel.png: New image to be used for delete links.
 

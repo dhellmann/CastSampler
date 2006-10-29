@@ -1,5 +1,11 @@
 2006-10-29  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (remove_from_queue): Deal with removing items from the
+	user's queue.
+
+	* urls.py (urlpatterns): Add the url for a /queue/item/ so we can
+	delete items from the queue.
+
 	* models.py (QueueItem.as_dict): Include the truncated_summary as
 	a different value from the full summary.
 

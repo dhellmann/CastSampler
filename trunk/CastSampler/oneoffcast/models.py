@@ -218,5 +218,6 @@ class QueueItem(models.Model):
               'enclosure_url':self.item_enclosure_url,
               'enclosure_mimetype':self.item_enclosure_mime_type,
               #'pubdate':self.add_date,
+              'id':self.id,
               }
         return d

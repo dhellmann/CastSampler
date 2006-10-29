@@ -60,6 +60,7 @@ urlpatterns = patterns('',
     (r'^external/(?P<id>\d+)', 'external'),
 
     # AJAX calls for user page
+    (r'^(?P<username>[^/]+)/queue/(?P<id>\d+)/$', 'remove_from_queue'),
     (r'^(?P<username>[^/]+)/queue/$', 'queue'),
     (r'^(?P<username>[^/]+)/feed_list/$', 'feed_list'),
 
