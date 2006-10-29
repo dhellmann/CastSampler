@@ -3,7 +3,7 @@
 # $Id$
 #
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 import logging
@@ -11,7 +11,7 @@ if DEBUG:
     level = logging.DEBUG
 else:
     level = logging.INFO
-logging.basicConfig(filename='/tmp/castsampler.log',
+logging.basicConfig(filename='/home/castsampler/castsampler.log',
                     filemode='w',
                     level=level,
                     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -24,10 +24,10 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = '/Users/dhellmann/Devel/CastSampler/src/trunk/CastSampler/db/castsampler.db' # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_ENGINE = 'postgresql'           # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
+DATABASE_NAME = 'castsampler'
+DATABASE_USER = 'castsampler'             # Not used with sqlite3.
+DATABASE_PASSWORD = 'castsampler'         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
@@ -95,7 +95,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/dhellmann/Devel/CastSampler/src/trunk/CastSampler/templates',
+    '/home/castsampler/CastSampler/templates',
 )
 
 INSTALLED_APPS = (
