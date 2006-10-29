@@ -26,6 +26,23 @@ function show_queue() {
     return false;
 }
 
+/* returns a new node to be used as an icon to represent the mimetype */
+function get_mimetype_icon(mimetype) {
+	icon = document.createElement('img');
+
+  if (mimetype.match("^audio/")) {
+	icon.setAttribute('src', '/static/images/sound.png');
+  } 
+  else if (mimetype.match('^video/')) {
+	icon.setAttribute('src', '/static/images/film.png');
+  } 
+  else {
+	icon = document.createTextNode(mimetype);
+  }
+
+  return icon;
+}
+
 /* called to add a new entry to the display of the queue */
 function insert_entry_into_queue(entry, atFront) {
   var queue_node = dojo.byId("queue");
@@ -37,13 +54,10 @@ function insert_entry_into_queue(entry, atFront) {
   var item_title = document.createElement("div");
   item_title.setAttribute("class", "item_title");
   
-  var podcast_link = document.createElement('a');
-  podcast_link.setAttribute('href', entry['podcast_home']);
-  podcast_link.appendChild(document.createTextNode(entry['podcast_name']));
-  item_title.appendChild(podcast_link);
-  item_title.appendChild(document.createTextNode(' - '));
   var item_link = document.createElement('a');
   item_link.setAttribute('href', entry['link']);
+  item_link.appendChild(document.createTextNode(entry['podcast_name']));
+  item_link.appendChild(document.createTextNode(' - '));
   item_link.appendChild(document.createTextNode(entry['title']));
   item_title.appendChild(item_link);
   new_item.appendChild(item_title);
@@ -53,12 +67,27 @@ function insert_entry_into_queue(entry, atFront) {
   item_summary.setAttribute('class', 'item_summary');
   item_summary.appendChild(document.createTextNode(entry['summary']));
   new_item.appendChild(item_summary);
+
+  var delete_link = document.createElement('a');
+  delete_link.setAttribute('href', '');
+  delete_link.setAttribute('onclick', 'return false');
+  delete_link.setAttribute('class', 'delete_link');
+  delete_icon = document.createElement('img');
+  delete_icon.setAttribute('src', '/static/images/cancel.png');
+  delete_icon.setAttribute('alt', 'Remove from queue');
+  delete_icon.setAttribute('title', 'Remove from queue');
+  delete_link.appendChild(delete_icon);
+  new_item.appendChild(delete_link);
   
   /* enclosure */
   var enclosure_link = document.createElement('a');
   enclosure_link.setAttribute('class', 'enclosure_link');
   enclosure_link.setAttribute('href', entry['enclosure_url']);
-  enclosure_link.appendChild(document.createTextNode(entry['enclosure_mimetype']));
+  
+  play_icon = get_mimetype_icon(entry['enclosure_mimetype']);
+  play_icon.setAttribute('alt', 'Play now');
+  play_icon.setAttribute('title', 'Play now');
+  enclosure_link.appendChild(play_icon);
   new_item.appendChild(enclosure_link);
   
   /* add action buttons to remove queue items */
@@ -127,18 +156,17 @@ function do_add_to_queue(podcast_id, entry_id) {
 	url: "queue/",
 	handler: add_to_queue_callback,
 	method: "POST",
-
-		content:{podcast:podcast_id,
-		  title:entry['title'],
-		  summary:entry['summary'],
-		  link:entry['link'],
-		  author_name:author_name,
-		  author_email:author_email,
-		  item_enclosure_url:enclosure['href'],
-		  item_enclosure_mime_type:enclosure['type'],
-		  item_enclosure_length:enclosure['length'],
-		  },
-		});
+	content:{podcast:podcast_id,
+             title:entry['title'],
+		     summary:entry['summary'],
+		     link:entry['link'],
+		     author_name:author_name,
+		     author_email:author_email,
+		     item_enclosure_url:enclosure['href'],
+		     item_enclosure_mime_type:enclosure['type'],
+		     item_enclosure_length:enclosure['length'],
+		     },
+	});
 
   return false;
 }
@@ -180,8 +208,8 @@ function insert_feed_into_list(feed_info) {
 	new_link.appendChild(document.createTextNode(feed_info["name"]));
 	show_icon = document.createElement('img');
 	show_icon.setAttribute('src', '/static/images/arrow_down.png');
-	show_icon.setAttribute('alt', 'Show Feed Below');
-	show_icon.setAttribute('title', 'Show Feed Below');
+	show_icon.setAttribute('alt', 'Show feed below');
+	show_icon.setAttribute('title', 'Show feed below');
 	new_link.appendChild(show_icon);
 	new_item.appendChild(new_link);
 
@@ -200,6 +228,19 @@ function insert_feed_into_list(feed_info) {
 	feed_icon.setAttribute('title', 'Visit podcast feed');
 	feed_icon.innerHTML = '<img src="/static/images/feed-icon-14x14.png" />';
 	new_item.appendChild(feed_icon);
+
+	/*
+	var delete_link = document.createElement('a');
+	delete_link.setAttribute('href', '');
+	delete_link.setAttribute('onclick', 'return false');
+	delete_link.setAttribute('class', 'delete_link');
+	delete_icon = document.createElement('img');
+	delete_icon.setAttribute('src', '/static/images/cancel.png');
+	delete_icon.setAttribute('alt', 'Remove this feed');
+	delete_icon.setAttribute('title', 'Remove this feed');
+	delete_link.appendChild(delete_icon);
+	new_item.appendChild(delete_link);
+	*/
 
 	list_node.appendChild(new_item);
   }
@@ -339,12 +380,24 @@ function populate_feed_viewer(podcast_id, entries) {
 	  title_node.setAttribute('class', 'podcast_entry_title');
 
 	  add_link = document.createElement('a');
+	  add_link.setAttribute('class', 'add_link');
 	  add_link.setAttribute('href', '');
 	  add_link.setAttribute('onclick', "return do_add_to_queue(" + podcast_id + ", " + i + ")");
 	  add_link.setAttribute('alt', 'Add to my queue');
 	  add_link.setAttribute('title', 'Add to my queue');
 	  add_link.innerHTML = '<img src="/static/images/add.png"/>' + entry['title'] + '</a>';
 	  title_node.appendChild(add_link);
+
+	  enclosure = entry['enclosures'][0];
+	  enclosure_mime_type = enclosure['type'];
+	  enclosure_url = enclosure['href'];
+	  var enclosure_link = document.createElement('a');
+	  enclosure_link.setAttribute('href', enclosure_url);
+	  play_icon = get_mimetype_icon(enclosure_mime_type);
+	  play_icon.setAttribute('alt', 'Play now');
+	  play_icon.setAttribute('title', 'Play now');
+	  enclosure_link.appendChild(play_icon);
+	  title_node.appendChild(enclosure_link);
 
 	  open_link = document.createElement('a');
 	  open_link.setAttribute('href', entry['link']);
@@ -353,6 +406,7 @@ function populate_feed_viewer(podcast_id, entries) {
 	  open_link.setAttribute('title', 'Open');
 	  open_link.innerHTML = '<img src="/static/images/link_go.png"/></a>';
 	  title_node.appendChild(open_link);
+
 	  entry_node.appendChild(title_node);
 
 	  summary_node = document.createElement('div');

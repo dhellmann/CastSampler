@@ -421,9 +421,9 @@ div.title {
 }
 
 .queue_item { 
-  margin-top: 0.5em;
-  margin-left: 0.5em;
-  padding-bottom: 1em;
+  margin: 0.5em;
+  padding: 0.25em;
+  border: 1px dashed black;
  }
 
 .queue_item a { 
@@ -439,9 +439,13 @@ div.title {
 }
 
 .queue_item .enclosure_link { 
-  font-size: 80%;
+/*  font-size: 80%;*/
   margin-left: 5%;
   text-decoration: none;
+}
+
+.queue_item .delete_link { 
+  float: right;
 }
 
 /*
@@ -457,13 +461,20 @@ div.title {
 }
 
 .podcast_entry img { 
-  padding-right: 0.5em;
   padding-left: 0.5em;
   text-decoration: none;
 }
 
 .podcast_entry a { 
   text-decoration: none;
+ }
+
+.podcast_entry .add_link { 
+  vertical-align: bottom;
+ }
+
+.podcast_entry .add_link img { 
+  padding-right: 0.5em;
  }
 
 .podcast_entry_title { 

@@ -1,3 +1,31 @@
+2006-10-29  Doug Hellmann  <dhellmann@racemi.com>
+
+	* static/js/oneoffcast/user.js (get_mimetype_icon): Function to
+	produce a DOM node to be inserted as the icon based on a mimetype.
+	(insert_entry_into_queue): Replace the text mimetype with an icon.
+	Add an icon for removing the thing from the queue, but it is not
+	functional yet.
+	(populate_feed_viewer): Add an icon to link directly to the
+	enclosure.
+
+	* static/images/cancel.png: New image to be used for delete links.
+
+	* static/images/sound.png: New image for use when showing a link
+	to an audio podcast.
+
+	* static/images/film.png: New image for use when showing a link
+	to a video podcast.
+
+	* static/css/site.css (queue_item): Allow the margin and padding
+	to apply around the entire item.  Add a border.
+	(queue_item enclosure_link): Do not reduce the font size.  We are
+	using icons most of the time now anyway.
+	(queue_item delete_link): New class for the delete icon.
+	(podcast_entry img): Do not add padding to the right side of the
+	icon.
+	(podcast_entry add_link): New class for the link to add the
+	podcast.
+
 2006-10-28  Doug Hellmann  <dhellmann@racemi.com>
 
 	* static/js/oneoffcast/user.js (show_queue_callback): Change

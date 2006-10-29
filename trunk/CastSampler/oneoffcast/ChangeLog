@@ -1,3 +1,8 @@
+2006-10-29  Doug Hellmann  <dhellmann@racemi.com>
+
+	* models.py (QueueItem.as_dict): Include the truncated_summary as
+	a different value from the full summary.
+
 2006-10-28  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (queue): Sort items by reverse order so the most recent

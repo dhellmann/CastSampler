@@ -105,10 +105,10 @@ CREATE TABLE "django_session" (
     "session_data" text NOT NULL,
     "expire_date" datetime NOT NULL
 );
-INSERT INTO "django_session" VALUES('32b61f225cb17bc7e027541916d4f99c', 'KGRwMQpTJ3Rlc3Rjb29raWUnCnAyClMnd29ya2VkJwpwMwpzUydfYXV0aF91c2VyX2lkJwpwNApJ
-MQpzUydfYXV0aF91c2VyX2JhY2tlbmQnCnA1ClMnZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k
-cy5Nb2RlbEJhY2tlbmQnCnA2CnMuNzI1ZWZhMTE3MDI0OGE3NTMzZTBkNjdhZWJiZGNlZmI=
-', '2006-11-11 07:56:12.012047');
+INSERT INTO "django_session" VALUES('f9dae947ea47fa138711e884f3e81f36', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
+bmRzLk1vZGVsQmFja2VuZCcKcDMKc1MnX2F1dGhfdXNlcl9pZCcKcDQKSTEKcy5kYjI2ODY1ZjFh
+MGNiNDA0YjJkNDhiODVhOGFlZWZmMQ==
+', '2006-11-11 13:04:01.421302');
 CREATE TABLE "django_site" (
     "id" integer NOT NULL PRIMARY KEY,
     "domain" varchar(100) NOT NULL,
@@ -171,6 +171,7 @@ INSERT INTO "django_admin_log" VALUES(43, '2006-10-21 11:33:43.586740', 1, 3, '6
 INSERT INTO "django_admin_log" VALUES(44, '2006-10-21 11:45:00.195302', 1, 3, '4', 'emailtest', 3, '');
 INSERT INTO "django_admin_log" VALUES(45, '2006-10-21 12:26:30.167160', 1, 9, '2', 'hackoff.com - podcast version', 3, '');
 INSERT INTO "django_admin_log" VALUES(46, '2006-10-21 12:29:03.930340', 1, 9, '1', 'Agile Toolkit Podcast', 3, '');
+INSERT INTO "django_admin_log" VALUES(47, '2006-10-28 10:12:30.483418', 1, 8, '1', 'QueueItem object', 3, '');
 CREATE TABLE "registration_userprofile" (
     "user_id" integer NOT NULL PRIMARY KEY REFERENCES "auth_user" ("id"),
     "activation_key" varchar(40) NOT NULL,
@@ -224,4 +225,13 @@ CREATE TABLE "oneoffcast_queueitem" (
     "author_name" varchar(128) NOT NULL,
     "author_email" varchar(75) NOT NULL
 );
+INSERT INTO "oneoffcast_queueitem" VALUES(1, 1, 3, 'Agile06 - Ward Cunningham - Eclipse Foundation', 'Ward and I talk about his new position as the Director of Committer Community Development at Eclipse.  He discusses the release of Callisto by the Eclipse foundation, itâs Agile roots and other fun tool related topics.-bob', 'http://agiletoolkit.libsyn.com/index.php?post_id=131922', 'http://media.libsyn.com/media/agiletoolkit/Agile2006_WardCunningham.mp3', 11623852, 'audio/mpeg', '2006-10-28 13:46:13.047197', 'Bob Payne', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(2, 1, 3, 'Agile06 - Mary Lynn Manns - Fearless Chage and Agile 2007', 'Mary Lynn is the co author of Fearless Change and the Chair of the Agile 2007 Conference here in Washington DC.  What can I say ... the book is great and I look forward to working with her on Agile 2007.I did not get as much time to talk with her at the conference as I would have liked since she was swamped.  - bob ', 'http://agiletoolkit.libsyn.com/index.php?post_id=129015', 'http://media.libsyn.com/media/agiletoolkit/Agile2006_MaryLynnManns.mp3', 6550643, 'audio/mpeg', '2006-10-28 13:46:25.855880', 'Bob Payne', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(3, 1, 7, 'Pre-conference podcast - Hugh MacLeod', 'Download audio file (hugh_macleod_podcast.mp3)
+Podcast length - 31:22
+Welcome to the IT@Cork pre-conference PR podcasts. In this podcast series, kindly sponsored by Blacknight Solutions, we are talking to some of the speakers in the upcoming 2006 IT@Cork Business and Technology conference.
+In this podcast, second in the series we are talking to Hugh MacLeod. Hugh is a blogger, [...]', 'http://blog.itcork.ie/pre-conference-podcast-hugh-macleod/', 'http://www.podtrac.com/pts/redirect.mp3?http://podcasts.tomrafteryit.net/hugh_macleod_podcast.mp3', 15058647, 'audio/mpeg', '2006-10-28 13:51:29.902883', 'IT@Cork', 'tom@tomrafteryit.net');
+INSERT INTO "oneoffcast_queueitem" VALUES(4, 1, 6, 'Angel Money', 'Jeff Clavier, the founder of SoftTech VC, talks about his experiences as an angel investor in social media, search, and discovery startups. As we continue our series of interviews about the different states of startup investing, Clavier provides insight into angel investing, and its impact on the rest of the venture funding landscape', 'http://www.businessweek.com/mediacenter/qt/podcasts/podcasting/podcastbiz_10_04_06.mp3', 'http://www.businessweek.com/mediacenter/qt/podcasts/podcasting/podcastbiz_10_04_06.mp3', 7019212, 'audio/mpeg', '2006-10-28 13:52:07.596342', 'Jeff Clavier', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(5, 1, 6, 'New Valuations', 'Fred Wilson and Brad Burnham, the founders of Union Square Ventures in New York, talk about how the new economics of starting and running companies is creating a new way of valuing startups. They also discuss what needs to happen for enterprises to adopt this new generation of technology and why it''s important to be careful these days about the kinds of companies in which they invest', 'http://www.businessweek.com/mediacenter/qt/podcasts/podcasting/podcastbiz_09_27_06.mp3', 'http://www.businessweek.com/mediacenter/qt/podcasts/podcasting/podcastbiz_09_27_06.mp3', 7697277, 'audio/mpeg', '2006-10-28 13:52:11.640682', 'Brad Burnham & Fred Wilson', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(6, 1, 8, 'PodTech Weekly', 'From PodTech News, a closer look at Internet addiction, the all-important price of admission for next year''s gaming consoles, the FBI''s electronic eyes and who they''re watching, and a check-in with JibJab.', 'http://www.podtech.net/home/technology/1383/podtech-weekly', 'http://media.podtech.net/media/2006/10/PID_001287/Podtech_PodTech_News_Weekly_1.mp3', 27237925, 'audio/mpeg', '2006-10-28 13:53:20.213699', 'Editor', 'n/a');
 COMMIT;
