@@ -130,15 +130,15 @@ def find_or_create_podcast(feed_url, user=None):
         data = feedparser.parse(feed_url)
 
         try:
-            name = data.feed.title
+            name = data.feed.title.encode('utf-8', 'replace')
         except AttributeError, err:
             raise RuntimeError('Could not parse %s: %s' % (feed_url, 'no title'))
         try:
-            description = data.feed.description
+            description = data.feed.description.encode('utf-8', 'replace')
         except AttributeError, err:
             description = ''
         try:
-            home_url = data.feed.link
+            home_url = data.feed.link.encode('utf-8', 'replace')
         except AttributeError, err:
             raise RuntimeError('Could not parse %s: %s' % (feed_url, 'no site URL'))
         
