@@ -34,14 +34,13 @@
 #
 from django.db import models
 from django.contrib.auth.models import User
-import feedparser
 import logging
 
 
 #
 # Import Local modules
 #
-
+from oneoffcast.download_cache import retrieve_feed
 
 #
 # Module
@@ -95,8 +94,7 @@ class Podcast(models.Model):
     def get_current_feed_contents(self):
         """Return the parsed feed data.
         """
-        logging.debug('Fetching %s' % self.feed_url)
-        return feedparser.parse(self.feed_url)
+        return retrieve_feed(self.feed_url)
 
     def get_use_count(self):
         """Returns the number of QueueItems referencing this podcast.
@@ -131,8 +129,8 @@ def find_or_create_podcast(feed_url, user=None):
         data = podcast.get_current_feed_contents()
 
     else:
-        logging.debug('parsing %s' % feed_url)
-        data = feedparser.parse(feed_url)
+        logging.debug('creating podcast from feed %s' % feed_url)
+        data = retrieve_feed(feed_url)
 
         try:
             name = data.feed.title.encode('utf-8', 'replace')

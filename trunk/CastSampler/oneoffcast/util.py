@@ -150,7 +150,7 @@ def convert_feed_to_entries(parsed_feed):
              
         if new_entry.get('enclosures'):
             entries.append(new_entry)
-        logging.debug(new_entry)
+        #logging.debug(new_entry)
     return entries
 
 

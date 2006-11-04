@@ -1,5 +1,14 @@
 2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
 
+	* models.py: Use the download_cache module to retrieve feed contents.
+
+	* views.py: Less debug logging.
+
+	* util.py (convert_feed_to_entries): Less debug logging.
+
+	* download_cache.py (retrieve_feed): Utility function to manage
+	the cached version of the parsed feed.
+
 	* views.py (main): Limit the recent and popular lists to 5 items each.
 
 	* templates/index.html: Rearrange and start writing introduction copy.

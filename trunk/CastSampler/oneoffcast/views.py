@@ -175,7 +175,7 @@ def queue(request, username):
         response['queue'] = [ qi.as_dict()
                               for qi in queued_items
                               ]
-    logging.debug(response)
+    #logging.debug(response)
     return response
 
 @jsonView()
@@ -195,7 +195,7 @@ def remove_from_queue(request, username, id):
         item.delete()
         removed.append(id)
 
-    logging.debug(response)
+    #logging.debug(response)
     return response
 
 
