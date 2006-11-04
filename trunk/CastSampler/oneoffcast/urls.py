@@ -64,8 +64,8 @@ urlpatterns = patterns('',
     (r'^(?P<username>[^/]+)/queue/$', 'queue'),
     (r'^(?P<username>[^/]+)/feed_list/$', 'feed_list'),
 
-    # Forms on the user page
-    (r'^(?P<username>[^/]+)/add_feed/$', 'add_feed'),
+    # Subscriptions to podcasts
+    (r'^(?P<username>[^/]+)/subscriptions/((?P<feed_id>\d+)/)?$', 'subscriptions'),
 
     # User pages
     (r'^(?P<username>[^/]+)/$', 'user'),

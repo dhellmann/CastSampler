@@ -1,5 +1,12 @@
 2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (subscriptions): When they DELETE a subscription,
+	remove the relationship between the user and the podcast, then
+	remove the queue items from that podcast.
+
+	* urls.py (urlpatterns): Change add_feeds to subscriptions so we
+	can use the same structure for adding and removing new feeds.
+
 	* views.py (queue): Make sure we have an integer for the
 	item_enclosure_length.
 

@@ -264,11 +264,12 @@ function insert_feed_into_list(feed_info) {
   var feed_node_id = 'feed_' + feed_info['id'];
   var feed_node = dojo.byId(feed_node_id);
   if (! feed_node) {
+	var feed_id = feed_info['id'];
 	var list_node = dojo.byId("my_podcasts");
 	var new_item = document.createElement("li");
 	new_item.setAttribute('id', feed_node_id);
 	var new_link = document.createElement("a");
-	new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_info["id"] + ")");
+	new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_id + ")");
 	new_link.setAttribute("href", "");
 	new_link.appendChild(document.createTextNode(feed_info["name"]));
 	show_icon = document.createElement('img');
@@ -294,10 +295,9 @@ function insert_feed_into_list(feed_info) {
 	feed_icon.innerHTML = '<img src="/static/images/feed-icon-14x14.png" />';
 	new_item.appendChild(feed_icon);
 
-	/*
 	var delete_link = document.createElement('a');
 	delete_link.setAttribute('href', '');
-	delete_link.setAttribute('onclick', 'return false');
+	delete_link.setAttribute('onclick', 'return do_remove_feed(' + feed_id + ')');
 	delete_link.setAttribute('class', 'delete_link');
 	delete_icon = document.createElement('img');
 	delete_icon.setAttribute('src', '/static/images/cancel.png');
@@ -305,7 +305,6 @@ function insert_feed_into_list(feed_info) {
 	delete_icon.setAttribute('title', 'Remove this feed');
 	delete_link.appendChild(delete_icon);
 	new_item.appendChild(delete_link);
-	*/
 
 	list_node.appendChild(new_item);
   }
@@ -320,7 +319,7 @@ function do_add_feed() {
   clear_feed_viewer();
   
   dojo.io.bind({ 
-	url: "add_feed/",
+	url: "subscriptions/",
 		handler: add_feed_callback,
 		formNode: document.getElementById("add_feed"),
 		method:"POST",
@@ -344,6 +343,49 @@ function add_feed_callback(type, data, evt) {
 	  insert_feed_into_list(payload);
 	  populate_feed_viewer(payload['id'], payload["entries"]);
 	  clear_error("add_feed_results");
+	}
+	
+  } else if (type == "error") {
+	clear_error("add_feed_results");
+	show_error("add_feed_results", data);
+  }
+}
+
+function do_remove_feed(id) {
+  show_status("Removing feed...");
+  clear_feed_viewer();
+  
+  dojo.io.bind({ 
+	url: "subscriptions/" + id + "/",
+		handler: remove_feed_callback,
+		method:"DELETE",
+		});
+
+  return false;
+}
+
+/* called when we get the json response from the server when a feed is removed */
+function remove_feed_callback(type, data, evt) {
+  clear_status();
+
+  if (type == "load") {
+	
+	payload = dojo.json.evalJson(data);
+	
+	if (payload["error"] != "") {
+	  show_error("add_feed_results", payload["error"]);
+	}
+	else {
+	  clear_error("add_feed_results");
+
+	  /* Update the list of feeds */
+	  var feed_node_id = 'feed_' + payload['removed'];
+	  var feed_node = dojo.byId(feed_node_id);
+	  var list_node = dojo.byId("my_podcasts");
+	  list_node.removeChild(feed_node);
+
+	  /* Update the queue, in case one or more items were removed. */
+	  show_queue();
 	}
 	
   } else if (type == "error") {

@@ -118,12 +118,13 @@ def user(request, username):
 @jsonView()
 @login_required
 @same_user_only()
-def add_feed(request, username=None):
-    """The user wants to add items from a feed they are giving us.
+def subscriptions(request, username=None, feed_id=None):
+    """Do something with the user's subscription.
     """
+    logging.debug('subscriptions %s' % request.method)
     response = {}
     
-    if request.POST:
+    if request.method == 'POST':
         #
         # Process the form input and check for errors
         #
@@ -140,6 +141,25 @@ def add_feed(request, username=None):
 
         response.update(podcast.as_dict())
         response['entries'] = convert_feed_to_entries(parsed_feed)
+
+    elif request.method == 'DELETE':
+        logging.debug('Deleting %s' % feed_id)
+
+        #
+        # Remove the podcast from the user's subscriptions
+        #
+        podcast = Podcast.objects.get(id=feed_id)
+        podcast.users.remove(request.user)
+        response['removed'] = feed_id
+
+        #
+        # Remove any queue items from that podcast from
+        # the user's queue.
+        #
+        for item in QueueItem.objects.filter(user=request.user,
+                                             podcast=podcast,
+                                             ):
+            item.delete()
 
     return response
 

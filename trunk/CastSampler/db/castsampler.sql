@@ -174,6 +174,7 @@ INSERT INTO "django_admin_log" VALUES(47, '2006-10-28 10:12:30.483418', 1, 8, '1
 INSERT INTO "django_admin_log" VALUES(48, '2006-10-29 08:04:10.586336', 1, 8, '7', 'QueueItem object', 3, '');
 INSERT INTO "django_admin_log" VALUES(49, '2006-10-30 06:36:52.614230', 1, 3, '2', 'test', 3, '');
 INSERT INTO "django_admin_log" VALUES(50, '2006-10-30 06:37:12.141228', 1, 3, '1', 'test', 2, 'Changed username, last login and date joined.');
+INSERT INTO "django_admin_log" VALUES(51, '2006-11-04 15:49:53.444991', 1, 9, '12', 'Barnes & Noble''s Meet the Writers Podcast', 3, '');
 CREATE TABLE "registration_userprofile" (
     "user_id" integer NOT NULL PRIMARY KEY REFERENCES "auth_user" ("id"),
     "activation_key" varchar(40) NOT NULL,
@@ -203,7 +204,7 @@ INSERT INTO "oneoffcast_podcast" VALUES(8, 'PodTech News - powered by PodTech.ne
 INSERT INTO "oneoffcast_podcast" VALUES(9, 'web 2.0 - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/web+2.0', 'http://www.podtech.net/home/web+2.0/feed', '2006-10-29 08:03:08.562797', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(10, 'LOCAL web 2.0 - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/web+2.0', 'http://localhost/~dhellmann/OneOffCast/web20.xml', '2006-10-29 08:15:56.814293', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(11, 'Amateur Traveler Podcast | travel for the love of it', 'Travel for the love of it: travel stories, news, tips, tricks and resources', 'http://AmateurTraveler.com/', 'http://feeds.feedburner.com/AmateurTravelerPodcast', '2006-11-04 08:56:20.950751', '', '', '', 1);
-INSERT INTO "oneoffcast_podcast" VALUES(12, 'Barnes & Noble''s Meet the Writers Podcast', 'Hear the latest word on today''s hottest authors with Barnes & Noble''s exclusive Meet the Writers Podcast. Listen as your favorite writers discuss their inspirations and influences, their favorite books, and the reasons they write.', 'http://www.barnesandnoble.com/writers', 'http://www.bn.com/rss/mtw.xml', '2006-11-04 10:35:20.362405', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(12, 'Barnes & Noble''s Meet the Writers Podcast', 'Hear the latest word on today''s hottest authors with Barnes & Noble''s exclusive Meet the Writers Podcast. Listen as your favorite writers discuss their inspirations and influences, their favorite books, and the reasons they write.', 'http://www.barnesandnoble.com/writers', 'http://www.bn.com/rss/mtw.xml', '2006-11-04 15:50:05.860626', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -211,7 +212,6 @@ CREATE TABLE "oneoffcast_podcast_users" (
     UNIQUE ("podcast_id", "user_id")
 );
 INSERT INTO "oneoffcast_podcast_users" VALUES(2, 2, 1);
-INSERT INTO "oneoffcast_podcast_users" VALUES(3, 3, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(4, 4, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(5, 5, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(6, 6, 1);
@@ -221,6 +221,7 @@ INSERT INTO "oneoffcast_podcast_users" VALUES(9, 9, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(10, 10, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(11, 11, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(12, 12, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(13, 3, 1);
 CREATE TABLE "oneoffcast_queueitem" (
     "id" integer NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
@@ -235,5 +236,4 @@ CREATE TABLE "oneoffcast_queueitem" (
     "author_name" varchar(128) NOT NULL,
     "author_email" varchar(75) NOT NULL
 );
-INSERT INTO "oneoffcast_queueitem" VALUES(11, 1, 12, 'Meet the Writers: Janet Fitch', 'The author of White Oleander tells how a rejection letter inspired her most acclaimed work, plus discussion of her new novel, Paint It Black.', 'http://www.barnesandnoble.com/writers', 'http://http.earthcache.net/htc-01.media.globix.net/COMP009996MOD1/Janet_Fitch.mp3', 0, 'audio/mpeg', '2006-11-04 10:41:23.880587', 'undefined', 'n/a');
 COMMIT;
