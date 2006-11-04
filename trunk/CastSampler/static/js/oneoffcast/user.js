@@ -265,7 +265,7 @@ function insert_feed_into_list(feed_info) {
   var feed_node = dojo.byId(feed_node_id);
   if (! feed_node) {
 	var feed_id = feed_info['id'];
-	var list_node = dojo.byId("my_podcasts");
+	var list_node = dojo.byId("my_subscriptions");
 	var new_item = document.createElement("li");
 	new_item.setAttribute('id', feed_node_id);
 	var new_link = document.createElement("a");
@@ -381,7 +381,7 @@ function remove_feed_callback(type, data, evt) {
 	  /* Update the list of feeds */
 	  var feed_node_id = 'feed_' + payload['removed'];
 	  var feed_node = dojo.byId(feed_node_id);
-	  var list_node = dojo.byId("my_podcasts");
+	  var list_node = dojo.byId("my_subscriptions");
 	  list_node.removeChild(feed_node);
 
 	  /* Update the queue, in case one or more items were removed. */

@@ -383,34 +383,34 @@ div.title {
 ** Feed list
 */
 
-#my_podcasts { 
+#my_subscriptions { 
 }
 
-#my_podcasts_wrapper { 
+#my_subscriptions_wrapper { 
 }
 
-#my_podcasts li { 
+#my_subscriptions li { 
   padding: 0;
   margin: 0;
 }
 
-#my_podcasts img { 
+#my_subscriptions img { 
   padding-left: 0.25em;
   padding-right: 0.25em;
   padding-top: 0;
   padding-bottom: 0;
 }
 
-#my_podcasts a {
+#my_subscriptions a {
   text-decoration: none;
 }
 
-#my_podcasts a:visited {
+#my_subscriptions a:visited {
   color: black;
   background-color: transparent;
 }
 
-#my_podcasts a:active {
+#my_subscriptions a:active {
   color: black;
   background-color: transparent;
 }
