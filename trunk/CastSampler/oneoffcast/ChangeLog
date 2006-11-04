@@ -1,5 +1,7 @@
 2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
 
+	* feeds.py (UserFeed.item_link): Add a method for item_link().
+
 	* models.py: Use the download_cache module to retrieve feed contents.
 
 	* views.py: Less debug logging.

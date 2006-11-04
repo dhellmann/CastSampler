@@ -36,6 +36,7 @@ from django.contrib.auth.models import User
 from django.contrib.syndication.feeds import Feed
 from django.utils.feedgenerator import Atom1Feed, Rss201rev2Feed
 
+import logging
 
 #
 # Import Local modules
@@ -63,6 +64,9 @@ class UserFeed(Feed):
     
     def description(self, obj):
         return 'CastSampler feed assembled for %s' % obj.username
+
+    def item_link(self, obj):
+        return obj.link
     
     def item_enclosure_url(self, obj):
         return obj.item_enclosure_url

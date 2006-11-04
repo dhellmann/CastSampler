@@ -1,5 +1,11 @@
 2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/js/oneoffcast/user.js (do_add_to_queue): If we do not
+	have an entry link for the item, use the enclosure link instead so
+	there is *some* value.
+	(populate_feed_viewer): Only show a link to the "item" if we have
+	an item link.
+
 	* static/css/site.css (sidebar_r): Change float to right and
 	increase the width to 24% to take up more of the available space.
 

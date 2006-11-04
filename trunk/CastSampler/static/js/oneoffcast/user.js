@@ -211,6 +211,12 @@ function do_add_to_queue(podcast_id, entry_id) {
 	author_email = 'n/a';
   }
 
+  if (entry['link']) {
+	entry_link = entry['link'];
+  } else {
+	entry_link = enclosure['href'];
+  }
+
   dojo.io.bind({ 
 	url: "queue/",
 	handler: add_to_queue_callback,
@@ -218,7 +224,7 @@ function do_add_to_queue(podcast_id, entry_id) {
 	content:{podcast:podcast_id,
              title:entry['title'],
 		     summary:entry['summary'],
-		     link:entry['link'],
+		     link:entry_link,
 		     author_name:author_name,
 		     author_email:author_email,
 		     item_enclosure_url:enclosure['href'],
@@ -458,13 +464,16 @@ function populate_feed_viewer(podcast_id, entries) {
 	  enclosure_link.appendChild(play_icon);
 	  title_node.appendChild(enclosure_link);
 
-	  open_link = document.createElement('a');
-	  open_link.setAttribute('href', entry['link']);
-	  open_link.setAttribute('target', '_blank');
-	  open_link.setAttribute('alt', 'Open');
-	  open_link.setAttribute('title', 'Open');
-	  open_link.innerHTML = '<img src="/static/images/link_go.png"/></a>';
-	  title_node.appendChild(open_link);
+	  /* We only link to the entry if we have a valid link. */
+	  if (entry['link']) {
+		open_link = document.createElement('a');
+		open_link.setAttribute('href', entry['link']);
+		open_link.setAttribute('target', '_blank');
+		open_link.setAttribute('alt', 'Open');
+		open_link.setAttribute('title', 'Open');
+		open_link.innerHTML = '<img src="/static/images/link_go.png"/></a>';
+		title_node.appendChild(open_link);
+	  }
 
 	  entry_node.appendChild(title_node);
 
