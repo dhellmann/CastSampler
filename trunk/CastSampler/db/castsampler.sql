@@ -21,8 +21,7 @@ CREATE TABLE "auth_user" (
     "last_login" datetime NOT NULL,
     "date_joined" datetime NOT NULL
 );
-INSERT INTO "auth_user" VALUES(1, 'dhellmann', '', '', 'oneoffcast@gmail.com', 'sha1$2113b$5ac39071f072894ce489992f8523afaec6516572', 1, 1, 1, '2006-10-21 11:17:01.764001', '2006-09-10 19:23:55.357882');
-INSERT INTO "auth_user" VALUES(2, 'test', '', '', '', 'sha1$5337a$d969ad84028e9f294f67d7963e77c5fa75032f4a', 0, 1, 0, '2006-09-17 10:14:13.000715', '2006-09-17 10:14:13.000715');
+INSERT INTO "auth_user" VALUES(1, 'test', '', '', 'oneoffcast@gmail.com', 'sha1$2113b$5ac39071f072894ce489992f8523afaec6516572', 1, 1, 1, '2006-10-21 11:17:01', '2006-09-10 19:23:55');
 INSERT INTO "auth_user" VALUES(3, 'nonadmin', '', '', 'doug-oneoffcast@hellfly.net', 'sha1$ccd81$ed10601d1d8cb7c317f05269c4faba7db62a8166', 0, 0, 0, '2006-10-09 08:20:46.009972', '2006-10-09 08:20:46.009972');
 CREATE TABLE "auth_permission" (
     "id" integer NOT NULL PRIMARY KEY,
@@ -105,10 +104,10 @@ CREATE TABLE "django_session" (
     "session_data" text NOT NULL,
     "expire_date" datetime NOT NULL
 );
-INSERT INTO "django_session" VALUES('f9dae947ea47fa138711e884f3e81f36', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
+INSERT INTO "django_session" VALUES('3b30d8e7addc2b051805cc48e2ca1b32', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
 bmRzLk1vZGVsQmFja2VuZCcKcDMKc1MnX2F1dGhfdXNlcl9pZCcKcDQKSTEKcy5kYjI2ODY1ZjFh
 MGNiNDA0YjJkNDhiODVhOGFlZWZmMQ==
-', '2006-11-11 13:04:01.421302');
+', '2006-11-18 08:56:02.356915');
 CREATE TABLE "django_site" (
     "id" integer NOT NULL PRIMARY KEY,
     "domain" varchar(100) NOT NULL,
@@ -173,6 +172,8 @@ INSERT INTO "django_admin_log" VALUES(45, '2006-10-21 12:26:30.167160', 1, 9, '2
 INSERT INTO "django_admin_log" VALUES(46, '2006-10-21 12:29:03.930340', 1, 9, '1', 'Agile Toolkit Podcast', 3, '');
 INSERT INTO "django_admin_log" VALUES(47, '2006-10-28 10:12:30.483418', 1, 8, '1', 'QueueItem object', 3, '');
 INSERT INTO "django_admin_log" VALUES(48, '2006-10-29 08:04:10.586336', 1, 8, '7', 'QueueItem object', 3, '');
+INSERT INTO "django_admin_log" VALUES(49, '2006-10-30 06:36:52.614230', 1, 3, '2', 'test', 3, '');
+INSERT INTO "django_admin_log" VALUES(50, '2006-10-30 06:37:12.141228', 1, 3, '1', 'test', 2, 'Changed username, last login and date joined.');
 CREATE TABLE "registration_userprofile" (
     "user_id" integer NOT NULL PRIMARY KEY REFERENCES "auth_user" ("id"),
     "activation_key" varchar(40) NOT NULL,
@@ -201,6 +202,7 @@ INSERT INTO "oneoffcast_podcast" VALUES(7, 'The it@cork Blog', 'The IT@Cork podc
 INSERT INTO "oneoffcast_podcast" VALUES(8, 'PodTech News - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/PodTech+News', 'http://www.podtech.net/home/PodTech+News/feed', '2006-10-26 20:34:29.726580', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(9, 'web 2.0 - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/web+2.0', 'http://www.podtech.net/home/web+2.0/feed', '2006-10-29 08:03:08.562797', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(10, 'LOCAL web 2.0 - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/web+2.0', 'http://localhost/~dhellmann/OneOffCast/web20.xml', '2006-10-29 08:15:56.814293', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(11, 'Amateur Traveler Podcast | travel for the love of it', 'Travel for the love of it: travel stories, news, tips, tricks and resources', 'http://AmateurTraveler.com/', 'http://feeds.feedburner.com/AmateurTravelerPodcast', '2006-11-04 08:56:20.950751', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -216,6 +218,7 @@ INSERT INTO "oneoffcast_podcast_users" VALUES(7, 7, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(8, 8, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(9, 9, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(10, 10, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(11, 11, 1);
 CREATE TABLE "oneoffcast_queueitem" (
     "id" integer NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
@@ -241,4 +244,5 @@ INSERT INTO "oneoffcast_queueitem" VALUES(5, 1, 6, 'New Valuations', 'Fred Wilso
 INSERT INTO "oneoffcast_queueitem" VALUES(6, 1, 8, 'PodTech Weekly', 'From PodTech News, a closer look at Internet addiction, the all-important price of admission for next year''s gaming consoles, the FBI''s electronic eyes and who they''re watching, and a check-in with JibJab.', 'http://www.podtech.net/home/technology/1383/podtech-weekly', 'http://media.podtech.net/media/2006/10/PID_001287/Podtech_PodTech_News_Weekly_1.mp3', 27237925, 'audio/mpeg', '2006-10-28 13:53:20.213699', 'Editor', 'n/a');
 INSERT INTO "oneoffcast_queueitem" VALUES(7, 1, 10, 'BlueDot, Share your favorite sites with your friends', 'Mike Arrington at TechCrunch says he uses BlueDot instead of other bookmarking for social Website sharing services. So, I headed up to Seattle to find out what was behind this innovative company. You’ll meet the entire team, get a demo, and more.', 'http://www.podtech.net/home/technology/1382/bluedot-share-your-favorite-sites-with-your-friends', 'http://media.podtech.net/media/2006/10/PID_001279/Podtech_bluedotvisit_350.mov', 90890592, 'video/mov', '2006-10-29 08:57:45.790780', 'Robert Scoble', 'n/a');
 INSERT INTO "oneoffcast_queueitem" VALUES(8, 1, 10, 'LunchMeet Gets Political with TheBallot.org', 'Eddie Codel and Irina Slutsky talk political tech with Seth Walker of Radical Designs on the newly launched voter guide site TheBallot.org. Seth tells us how individuals and groups can use TheBallot.org to create voter guides, endorsements and voter blocs to help get the vote out this election season.', 'http://www.podtech.net/home/technology/1376/lunchmeet-gets-political-with-theballotorg', 'http://media.podtech.net/media/2006/10/PID_001274/Podtech_LM2-TheBallot.mov', 53708204, 'video/mov', '2006-10-29 08:57:49.854932', 'Editor', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(9, 1, 4, 'Getting Involved', 'The seasons are changing once again - here in the U.S. it''s election season. Are you sufficiently involved? Tom Steinberg of mySociety talks about some of the tools available in the U.K.. Too real for you? Jim Purbrick talks about creation and community in Second Life.(DTF 10-16-2006: 18 minutes, 40 seconds)', 'http://www.oreillynet.com/pub/a/network/2006/10/16/distributing-the-future.html', 'http://downloads.oreilly.com/network/2006/10/16/distributing-the-future-2006-10-16.mp3', 93337553, 'audio/mpeg', '2006-11-02 14:21:51.708936', 'Daniel H. Steinberg', 'webmaster@oreillynet.com');
 COMMIT;
