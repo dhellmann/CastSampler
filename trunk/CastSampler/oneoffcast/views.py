@@ -161,6 +161,16 @@ def queue(request, username):
         new_data = request.POST.copy()
         new_data['user'] = request.user.id
 
+        #
+        # Fix up the length in case it is invalid
+        #
+        length = new_data.get('item_enclosure_length', 0)
+        try:
+            length = int(length)
+        except (TypeError, ValueError):
+            length = 0
+        new_data['item_enclosure_length'] = length
+
         manipulator = QueueItem.AddManipulator()
         manipulator.do_html2python(new_data)
         new_item = manipulator.save(new_data)
