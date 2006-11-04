@@ -107,3 +107,6 @@ INSTALLED_APPS = (
     'CastSampler.oneoffcast',
     'CastSampler.registration',
 )
+
+ONEOFFCAST_CACHE_DIR = '/home/castsampler/FeedCache'
+ONEOFFCAST_CACHE_TTL_SECS = 60*15 # 15 minutes
