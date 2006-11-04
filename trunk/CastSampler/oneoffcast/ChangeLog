@@ -1,3 +1,9 @@
+2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (main): Limit the recent and popular lists to 5 items each.
+
+	* templates/index.html: Rearrange and start writing introduction copy.
+
 2006-10-29  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (remove_from_queue): Deal with removing items from the

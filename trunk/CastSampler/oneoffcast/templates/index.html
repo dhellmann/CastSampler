@@ -5,21 +5,35 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+  <div class="mainpage">
+    
+    <ul>
+      <li>Sample individual episodes from podcasts without subscribing to
+        all of them.</li>
+      <li>Create a shared podcast feed for a group. </li>
+    </ul>
+  
+    <div style="font-size: 200%">
+      <a href="register">Sign up now...</a>
+    </div>
+  </div>
+{% endblock %}
 
-<h1>Newest Podcasts</h1>
-<ul>
-{% for podcast in newest_podcasts %}
-  <li><a href="{{podcast.home_url}}">{{podcast.name}}</a></li>
-{% endfor %}
-</ul>
+{% block sidebar_r %}
+  <h1>Newest Episodes</h1>
+  <ul>
+    {% for podcast in newest_podcasts %}
+    <li><a href="{{podcast.home_url}}" target="_blank">{{podcast.name}}</a></li>
+    {% endfor %}
+  </ul>
 
-{% if popular_podcasts %}
-<h1>Popular Podcasts</h1>
-<ul>
-{% for podcast in popular_podcasts %}
-  <li>{{podcast.use_count}} - <a href="{{podcast.home_url}}">{{podcast.name}}</a></li>
-{% endfor %}
-</ul>
-{% endif %}
+  {% if popular_podcasts %}
+  <h1>Popular Shows</h1>
+  <ul>
+    {% for podcast in popular_podcasts %}
+    <li>{{podcast.use_count}} - <a href="{{podcast.home_url}}" target="_blank">{{podcast.name}}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
 {% endblock %}

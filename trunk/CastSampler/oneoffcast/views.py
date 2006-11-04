@@ -58,7 +58,7 @@ def main(request):
     #
     # The 10 most recently added podcasts.
     #
-    newest_podcasts = Podcast.objects.all().order_by('-registration_date')[:10]
+    newest_podcasts = Podcast.objects.all().order_by('-registration_date')[:5]
     #
     # Look for how many individual episodes from a given podcast are referenced.
     # Do we want to change this to count references to a podcast by a user
@@ -76,7 +76,7 @@ def main(request):
         if p.use_count <= 0:
             break
         popular_podcasts.append(p)
-        if len(popular_podcasts) >= 10:
+        if len(popular_podcasts) >= 5:
             break
     return render_to_response('index.html', 
                               {'newest_podcasts':newest_podcasts,

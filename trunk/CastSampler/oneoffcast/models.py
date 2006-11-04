@@ -98,6 +98,11 @@ class Podcast(models.Model):
         logging.debug('Fetching %s' % self.feed_url)
         return feedparser.parse(self.feed_url)
 
+    def get_use_count(self):
+        """Returns the number of QueueItems referencing this podcast.
+        """
+        return QueueItem.objects.count(podcast=self)
+
     def as_dict(self):
         """Return a dictionary of interesting values that the view
         wants, in a form suitable for serializing via JSON.
