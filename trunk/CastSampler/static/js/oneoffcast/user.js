@@ -65,6 +65,9 @@ function remove_item_from_queue(id) {
 
   if (item_node) {
 	queue_node.removeChild(item_node);
+	if (queue_node.childNodes.length == 0) {
+	  set_queue_empty();
+	}
   }
   else {
 	dojo.debug('Could not find node ' + node_id);
@@ -160,6 +163,11 @@ function insert_entry_into_queue(entry, atFront) {
   }
 }
 
+function set_queue_empty() {
+  var queue_node = dojo.byId("queue");
+  queue_node.innerHTML = '<div id="empty_queue_item" class="queue_item">Your queue is empty.</div>';
+}
+
 /* called when we get the json response from the server with the queue contents */
 function show_queue_callback(type, data, evt) {
   if (type == "load") {
@@ -178,7 +186,7 @@ function show_queue_callback(type, data, evt) {
 	  queue_contents = payload['queue'];
 
 	  if (queue_contents.length == 0) {
-		queue_node.innerHTML = '<div id="empty_queue_item" class="queue_item">Your queue is empty.</div>';
+		set_queue_empty();
 	  }
 	  else {
 		for (var i=0; i < queue_contents.length; i++) {

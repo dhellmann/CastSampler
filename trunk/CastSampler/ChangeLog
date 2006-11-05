@@ -1,5 +1,10 @@
 2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/js/oneoffcast/user.js: Add set_queue_empty to have a
+	consistent way to reflect the empty queue.  Check the queue length
+	when we remove an item so we can update the display if there is
+	nothing in the queue.
+
 	* urls.py (urlpatterns): Add a url handler for /contact/ to go to
 	the contact page view.
 
