@@ -42,9 +42,16 @@
       }
     }
 
+    var onload_counter=0;
     function clear_status() {
-      var node = dojo.byId("status_message");
-      dojo.lfx.html.fadeHide(node, 200).play();
+      if (onload_counter > 0) {
+          onload_counter = onload_counter - 1;
+      }
+
+      if (onload_counter <= 0) {
+          var node = dojo.byId("status_message");
+          dojo.lfx.html.fadeHide(node, 200).play();
+      }
     }
 
     function show_error(parent_node_name, message) {

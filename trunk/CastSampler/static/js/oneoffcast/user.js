@@ -192,6 +192,7 @@ function show_queue_callback(type, data, evt) {
 	dojo.debugShallow(data);
 	clear_feed_viewer();
   }
+  clear_status();
 }
 
 
@@ -423,6 +424,7 @@ function show_user_feeds_callback(type, data, evt) {
   else if (type == "error") {
 	show_error("add_feed_results", data);
   }
+  clear_status();
 }
 
 /*
@@ -537,12 +539,15 @@ function populate_feed_viewer(podcast_id, entries) {
 ** ONLOAD
 */
 function user_onload() {
+  show_status("Loading user data...");
+  onload_counter = 2;
   show_queue();
   show_user_feeds();
   clear_feed_viewer();
 
   if (document.add_feed.url.value) {
 	/* we have a URL, so add it and start showing the contents */
+    onload_counter = 3;
 	do_add_feed();
   }
 }

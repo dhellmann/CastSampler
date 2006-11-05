@@ -1,8 +1,19 @@
 2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/base.html (clear_status): Use a counter to control
+	whether we should really clear the status field so we can post
+	multiple messages when the page loads.
+
+	* static/js/oneoffcast/user.js (user_onload): Update the
+	onload_counter so we can post status messages and not have the
+	last one cleared until the page is fully loaded.
+
+2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
+
 	* static/js/oneoffcast/user.js (user_onload): If the add_feed.url
 	input field has a value when we load the page, call do_add_feed to
 	add the feed to the user's subscriptions and show the feed contents.
+	
 
 2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
 

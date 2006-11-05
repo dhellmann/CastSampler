@@ -104,10 +104,10 @@ CREATE TABLE "django_session" (
     "session_data" text NOT NULL,
     "expire_date" datetime NOT NULL
 );
-INSERT INTO "django_session" VALUES('3b30d8e7addc2b051805cc48e2ca1b32', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
-bmRzLk1vZGVsQmFja2VuZCcKcDMKc1MnX2F1dGhfdXNlcl9pZCcKcDQKSTEKcy5kYjI2ODY1ZjFh
-MGNiNDA0YjJkNDhiODVhOGFlZWZmMQ==
-', '2006-11-18 08:56:02.356915');
+INSERT INTO "django_session" VALUES('3b30d8e7addc2b051805cc48e2ca1b32', 'KGRwMQpTJ3Rlc3Rjb29raWUnCnAyClMnd29ya2VkJwpwMwpzUydfYXV0aF91c2VyX2lkJwpwNApJ
+MQpzUydfYXV0aF91c2VyX2JhY2tlbmQnCnA1ClMnZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k
+cy5Nb2RlbEJhY2tlbmQnCnA2CnMuNzI1ZWZhMTE3MDI0OGE3NTMzZTBkNjdhZWJiZGNlZmI=
+', '2006-11-19 06:54:18.729557');
 CREATE TABLE "django_site" (
     "id" integer NOT NULL PRIMARY KEY,
     "domain" varchar(100) NOT NULL,
@@ -219,9 +219,9 @@ INSERT INTO "oneoffcast_podcast_users" VALUES(7, 7, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(8, 8, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(9, 9, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(10, 10, 1);
-INSERT INTO "oneoffcast_podcast_users" VALUES(11, 11, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(12, 12, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(13, 3, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(14, 11, 1);
 CREATE TABLE "oneoffcast_queueitem" (
     "id" integer NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
