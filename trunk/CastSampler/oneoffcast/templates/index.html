@@ -20,20 +20,55 @@
 {% endblock %}
 
 {% block sidebar_r %}
-  <h1>Newest Episodes</h1>
-  <ul>
-    {% for podcast in newest_podcasts %}
-    <li><a href="{{podcast.home_url}}" target="_blank">{{podcast.name}}</a></li>
-    {% endfor %}
-  </ul>
+
+  <script type="text/javascript">
+    function submit_form(form_name) {
+      var form = dojo.byId(form_name);
+      form.submit();
+      return false;
+    }
+  </script>
+
+  {% if newest_podcasts %}
+  <h1>New</h1>
+  {% for podcast in newest_podcasts %}
+  <div class="sidebar_podcast_wrapper">
+    <div class="sidebar_podcast_add">
+      <form id="add_newest_{{podcast.id}}" method="post" action="/cast/{{user}}/">
+        <input type="hidden" name="url" value="{{podcast.feed_url}}" />
+        <a href="javascript: submit_form('add_newest_{{podcast.id}}')">
+          <img alt="Add {{podcast.name}} to subscriptions" 
+            title="Add {{podcast.name}} to subscriptions"
+            src="/static/images/add.png"/></a>
+      </form>
+    </div>
+    <div class="sidebar_podcast">
+      <a href="{{podcast.home_url}}" target="_blank">{{podcast.name}}</a>
+      <a href="{{podcast.feed_url}}" target="_blank"><img alt="Show feed" title="Show feed" src="/static/images/feed-icon-14x14.png"/></a>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
 
   {% if popular_podcasts %}
-  <h1>Popular Shows</h1>
-  <ul>
-    {% for podcast in popular_podcasts %}
-    <li>{{podcast.use_count}} - <a href="{{podcast.home_url}}" target="_blank">{{podcast.name}}</a></li>
-    {% endfor %}
-  </ul>
+  <h1>Popular</h1>
+  {% for podcast in popular_podcasts %}
+  <div class="sidebar_podcast_wrapper">
+    <div class="sidebar_podcast_add">
+      <form id="add_popular_{{podcast.id}}" method="post" action="/cast/{{user}}/">
+        <input type="hidden" name="url" value="{{podcast.feed_url}}" />
+          <a href="javascript: submit_form('add_popular_{{podcast.id}}')">
+            <img alt="Add {{podcast.name}} to subscriptions" 
+              title="Add {{podcast.name}} to subscriptions"
+              src="/static/images/add.png"/></a>
+      </form>
+    </div>
+    <div class="sidebar_podcast">
+      <a href="{{podcast.home_url}}" target="_blank">{{podcast.name}}</a>
+      <a href="{{podcast.feed_url}}" target="_blank"><img alt="Show feed" title="Show feed" src="/static/images/feed-icon-14x14.png"/></a>
+    </div>
+  </div>
+  {% endfor %}
   {% endif %}
 
 {% endblock %}

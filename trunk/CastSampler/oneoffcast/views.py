@@ -100,9 +100,14 @@ def user(request, username):
     #
     # Build up a form for adding by the feed
     #
+    new_data = {}
     if request.POST:
-        manipulator = AddFeedForm()
         new_data = request.POST.copy()
+    elif request.GET:
+        new_data = request.GET.copy()
+
+    if new_data:
+        manipulator = AddFeedForm()
         errors = manipulator.get_validation_errors(new_data)
         add_feed_form = forms.FormWrapper(manipulator, new_data, errors)
     else:

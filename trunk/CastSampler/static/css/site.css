@@ -494,3 +494,41 @@ div.title {
   font-size: 120%;
   margin: 1em;
 }
+
+/*
+** Sidebar lists
+*/
+
+.sidebar_podcast_add { 
+  display: inline;
+  float: left;
+  margin-left: 2px;
+}
+
+.sidebar_podcast { 
+  margin-left: 20px;
+}
+
+.sidebar_podcast_wrapper { 
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+ }
+
+.sidebar_podcast img { 
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.sidebar_podcast a {
+  text-decoration: none;
+}
+
+.sidebar_podcast a:visited {
+  background-color: transparent;
+}
+
+.sidebar_podcast a:active {
+  background-color: transparent;
+}

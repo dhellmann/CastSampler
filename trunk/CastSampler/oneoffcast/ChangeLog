@@ -1,4 +1,11 @@
+2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (user): Allow POST or GET submission of a URL for a feed.
+
 2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
+
+	* templates/index.html: Update layout of new podcast list and
+	include links to add, see the home page, and the feed.
 
 	* views.py (subscriptions): When they DELETE a subscription,
 	remove the relationship between the user and the podcast, then

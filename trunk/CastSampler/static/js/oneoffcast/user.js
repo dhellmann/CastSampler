@@ -540,4 +540,9 @@ function user_onload() {
   show_queue();
   show_user_feeds();
   clear_feed_viewer();
+
+  if (document.add_feed.url.value) {
+	/* we have a URL, so add it and start showing the contents */
+	do_add_feed();
+  }
 }

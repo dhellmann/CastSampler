@@ -1,4 +1,12 @@
+2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
+
+	* static/js/oneoffcast/user.js (user_onload): If the add_feed.url
+	input field has a value when we load the page, call do_add_feed to
+	add the feed to the user's subscriptions and show the feed contents.
+
 2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
+
+	* static/css/site.css: Add styles for the podcast lists in the sidebar.
 
 	* static/js/oneoffcast/user.js (do_add_to_queue): If we do not
 	have an entry link for the item, use the enclosure link instead so
