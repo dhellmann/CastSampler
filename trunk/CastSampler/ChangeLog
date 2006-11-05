@@ -1,5 +1,9 @@
 2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/js/oneoffcast/user.js: When we add something to the
+	queue, first make sure the "your queue is empty" message is no
+	longer visible.
+
 	* templates/base.html (clear_status): Use a counter to control
 	whether we should really clear the status field so we can post
 	multiple messages when the page loads.

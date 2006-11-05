@@ -178,7 +178,7 @@ function show_queue_callback(type, data, evt) {
 	  queue_contents = payload['queue'];
 
 	  if (queue_contents.length == 0) {
-		queue_node.innerHTML = '<div class="queue_item">Your queue is empty.</div>';
+		queue_node.innerHTML = '<div id="empty_queue_item" class="queue_item">Your queue is empty.</div>';
 	  }
 	  else {
 		for (var i=0; i < queue_contents.length; i++) {
@@ -243,9 +243,20 @@ function add_to_queue_callback(type, data, evt) {
 	
 	payload = dojo.json.evalJson(data);
 
+	/* errors *
+
 	if (payload["error"] != "") {
 	  show_error("queue", payload["error"]);
 	}
+
+	/* remove the empty queue message */
+	var empty_queue = dojo.byId('empty_queue_item');
+	if (empty_queue) {
+	  var queue_node = dojo.byId("queue");
+	  queue_node.removeChild(empty_queue);
+	}
+
+	/* add the response to the front of the queue */
 
 	queue_contents = payload['add_to_queue'];
 	for (var i=0; i < queue_contents.length; i++) {
