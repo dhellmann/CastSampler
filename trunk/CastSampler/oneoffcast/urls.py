@@ -50,10 +50,11 @@ feeds = {
     'rss':feeds.RSSFeed,
     }
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     # User feed
     (r'^feed/(?P<url>.*)$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
-) + \
+    ) + \
             patterns('oneoffcast.views',
 
     # Process access to external feeds

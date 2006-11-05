@@ -68,4 +68,6 @@ urlpatterns = patterns(
     (r'^static/(.*)$', 'django.views.static.serve',
      { 'document_root':'/Users/dhellmann/Devel/CastSampler/src/trunk/CastSampler/static'}),
 
+    # Contact page and user feedback form
+    (r'^contact/$', 'oneoffcast.views.contact'),
 )

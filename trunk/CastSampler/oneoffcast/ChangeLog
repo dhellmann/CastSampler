@@ -1,6 +1,9 @@
 2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (user): Allow POST or GET submission of a URL for a feed.
+	(contact): Add a simple view to deal with the contact page.
+	Mostly this is to get the menu bar, etc., but we will have a form
+	for podcasters here, too.
 
 2006-11-04  Doug Hellmann  <dhellmann@racemi.com>
 

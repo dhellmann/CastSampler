@@ -9,13 +9,21 @@
     
     <ul>
       <li>Sample individual episodes from podcasts without subscribing to
-        all of them.</li>
-      <li>Create a shared podcast feed for a group. </li>
+        all of them, so you only download the content you actually want.</li>
+      <li>Create a shared podcast feed for a group to share episodes
+        you all find interesting.</li>
+      <li>Create a "custom mix playlist" for a special occasion.</li>
     </ul>
-  
+
+{% if not user %}  
+    <div style="font-size: 150%">
+      <a href="/accounts/login">Login</a> to the guest account (password <tt>guest</tt>) or
+    </div>
     <div style="font-size: 200%">
       <a href="register">Sign up now...</a>
     </div>
+{% endif %}
+
   </div>
 {% endblock %}
 

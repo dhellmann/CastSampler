@@ -496,6 +496,14 @@ div.title {
 }
 
 /*
+** Contact page
+*/
+.contactpage { 
+  font-size: 120%;
+  margin: 1em;
+}
+
+/*
 ** Sidebar lists
 */
 

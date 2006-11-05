@@ -86,11 +86,15 @@
 
 {% if user.is_authenticated %}
       <div id="menu_bar_r">
-        <span>{{ user }}</span> |
+        <a href="/cast/{{user}}">{{ user }}</a> |
+{% if user.is_staff %}
+        <a href="/admin">Admin</a> |
+{% endif %}
         <a href="/accounts/logout">Logout</a>
       </div>
       <div id="menu_bar_l">
         <a class="menu_item" href="/">Home</a>
+        <a class="menu_item" href="/contact">Contact Us</a>
         <a class="last_menu_item" href="/cast/{{ user }}">My Queue</a>
       </div>
 {% else %}
@@ -99,7 +103,8 @@
         <a href="/accounts/register">Register</a>
       </div>
       <div id="menu_bar_l">
-        <a class="last_menu_item" href="/">Home</a>
+        <a class="menu_item" href="/">Home</a>
+        <a class="last_menu_item" href="/contact">Contact Us</a>
       </div>
 {% endif %}
 

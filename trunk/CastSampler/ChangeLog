@@ -1,5 +1,15 @@
 2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
 
+	* urls.py (urlpatterns): Add a url handler for /contact/ to go to
+	the contact page view.
+
+	* templates/base.html: Add a link to the contact page.
+
+	* static/css/site.css (contactpage): Add styles for the contact page.
+
+	* templates/base.html: If the user is staff, include a link to the
+	admin site.
+
 	* static/js/oneoffcast/user.js: When we add something to the
 	queue, first make sure the "your queue is empty" message is no
 	longer visible.

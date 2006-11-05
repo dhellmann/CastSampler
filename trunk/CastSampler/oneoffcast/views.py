@@ -259,3 +259,12 @@ def external(request, id):
     response['entries'] = convert_feed_to_entries(parsed_feed)
     response['id'] = id
     return response
+
+
+def contact(request):
+    """Returns the contact page for user feedback.
+    """
+    return render_to_response('contact.html', 
+                              {'user':request.user,
+                               })
+    
