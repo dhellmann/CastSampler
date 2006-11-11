@@ -104,10 +104,10 @@ CREATE TABLE "django_session" (
     "session_data" text NOT NULL,
     "expire_date" datetime NOT NULL
 );
-INSERT INTO "django_session" VALUES('f3c15593af278a24e7120b32e666eaca', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
+INSERT INTO "django_session" VALUES('3b459becab3bef3e4b6ef37880965946', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
 bmRzLk1vZGVsQmFja2VuZCcKcDMKc1MnX2F1dGhfdXNlcl9pZCcKcDQKSTEKcy5kYjI2ODY1ZjFh
 MGNiNDA0YjJkNDhiODVhOGFlZWZmMQ==
-', '2006-11-25 09:20:30.130806');
+', '2006-11-25 14:45:37.786618');
 CREATE TABLE "django_site" (
     "id" integer NOT NULL PRIMARY KEY,
     "domain" varchar(100) NOT NULL,

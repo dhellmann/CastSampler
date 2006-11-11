@@ -569,4 +569,8 @@ function user_onload() {
     onload_counter = 3;
 	do_add_feed();
   }
+
+  /* give the url field focus */
+  document.add_feed.url.focus();
+
 }

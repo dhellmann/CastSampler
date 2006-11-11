@@ -5,23 +5,27 @@
 
 {% block javascript %}
 <SCRIPT TYPE="text/javascript">
-<!--
-function submitenter(myfield,e)
-{
-var keycode;
-if (window.event) keycode = window.event.keyCode;
-else if (e) keycode = e.which;
-else return true;
+    function submitenter(myfield,e)
+    {
+    var keycode;
+    if (window.event) keycode = window.event.keyCode;
+    else if (e) keycode = e.which;
+    else return true;
+    
+    if (keycode == 13)
+    {
+    myfield.form.submit();
+    return false;
+    }
+    else
+    return true;
+    }
 
-if (keycode == 13)
-   {
-   myfield.form.submit();
-   return false;
-   }
-else
-   return true;
-}
-//-->
+    function login_onload() {
+        document.login_form.id_username.focus();
+    }
+
+    dojo.event.connect(window, "onload", login_onload);
 </SCRIPT>
 
 {% endblock %}
@@ -49,7 +53,8 @@ else
                 class="vPasswordField required" 
                 name="password" size="15" value=""
                 maxlength="30" type="password" 
-                onKeyPress="return submitenter(this,event)" />
+                onKeyPress="return submitenter(this,event)" 
+                />
             </td>
           </tr>
         </table>

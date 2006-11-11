@@ -7,6 +7,9 @@
 	that and spell out what the password field should look like so we
 	can tie in the event.
 
+	* templates/login.html: Reformat some javascript code.  Add an
+	onload handler to set the focus to the username field.
+
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (register): Use settings to control parameters to the email.
