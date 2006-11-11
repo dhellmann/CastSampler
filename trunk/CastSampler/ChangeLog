@@ -1,5 +1,10 @@
 2006-11-11  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/js/oneoffcast/user.js (user_onload): The template now
+	includes the initial subscription list and queue contents in js
+	variables, so iterate over those onload instead of calling back to
+	the server again.
+
 	* static/js/oneoffcast/user.js (user_onload): Set the initial
 	focus to the URL field.
 

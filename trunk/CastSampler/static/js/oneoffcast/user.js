@@ -17,14 +17,6 @@ dojo.io.bind({
 /*
 ** CURRENT QUEUE
 */
-function show_queue() {
-  dojo.io.bind({ 
-	url: "queue/",
-		handler: show_queue_callback,
-		method:"GET",
-		});
-    return false;
-}
 
 /* returns a new node to be used as an icon to represent the mimetype */
 function get_mimetype_icon(mimetype) {
@@ -163,48 +155,21 @@ function insert_entry_into_queue(entry, atFront) {
   }
 }
 
+/* the user has nothing in their queue, so display a message to that effect */
 function set_queue_empty() {
   var queue_node = dojo.byId("queue");
   queue_node.innerHTML = '<div id="empty_queue_item" class="queue_item">Your queue is empty.</div>';
 }
 
-/* called when we get the json response from the server with the queue contents */
-function show_queue_callback(type, data, evt) {
-  if (type == "load") {
-	
-	payload = dojo.json.evalJson(data);
-
-	if (payload["error"] != "") {
-	  show_error("queue", payload["error"]);
-	}
-	else {
-	  /* find the node where we should show the queue */
-	  var queue_node = dojo.byId("queue");
-	  queue_node.innerHTML = "";
-	  
-	  /* process the queue contents */
-	  queue_contents = payload['queue'];
-
-	  if (queue_contents.length == 0) {
-		set_queue_empty();
-	  }
-	  else {
-		for (var i=0; i < queue_contents.length; i++) {
-		  item = queue_contents[i];
-		  insert_entry_into_queue(item, 0);
-		}
-	  }
-	}
-	
-  } else if (type == "error") {
-	dojo.debugShallow(data);
-	clear_feed_viewer();
-  }
-  clear_status();
-}
-
-
+/*
+** Global variable that holds the entries retrieved as part of the
+** feed the user has clicked on.  We use this because there are a
+** bunch of attributes for each entry and it is easier to refer to the
+** entry by id than pass all of those values around.
+*/
 var podcast_entries = {};
+
+/* Tell the server we want to add something to the queue. */
 function do_add_to_queue(podcast_id, entry_id) {
   var entry = podcast_entries[entry_id];
 
@@ -310,8 +275,8 @@ function insert_feed_into_list(feed_info) {
 	feed_icon = document.createElement('a');
 	feed_icon.setAttribute('href', feed_info['feed_url']);
 	feed_icon.setAttribute('target', '_blank');
-	feed_icon.setAttribute('alt', 'Visit podcast feed');
-	feed_icon.setAttribute('title', 'Visit podcast feed');
+	feed_icon.setAttribute('alt', 'Direct link to feed');
+	feed_icon.setAttribute('title', 'Direct link to feed');
 	feed_icon.innerHTML = '<img src="/static/images/feed-icon-14x14.png" />';
 	new_item.appendChild(feed_icon);
 
@@ -321,8 +286,8 @@ function insert_feed_into_list(feed_info) {
 	delete_link.setAttribute('class', 'delete_link');
 	delete_icon = document.createElement('img');
 	delete_icon.setAttribute('src', '/static/images/cancel.png');
-	delete_icon.setAttribute('alt', 'Remove this feed');
-	delete_icon.setAttribute('title', 'Remove this feed');
+	delete_icon.setAttribute('alt', 'Remove this subscription');
+	delete_icon.setAttribute('title', 'Remove this subscription');
 	delete_link.appendChild(delete_icon);
 	new_item.appendChild(delete_link);
 
@@ -371,6 +336,7 @@ function add_feed_callback(type, data, evt) {
   }
 }
 
+/* tell the server we want to remove a feed from the subscription list */
 function do_remove_feed(id) {
   show_status("Removing feed...");
   clear_feed_viewer();
@@ -414,42 +380,17 @@ function remove_feed_callback(type, data, evt) {
   }
 }
 
-/* Ask the server what feeds this user has. */
-function show_user_feeds() {
-  dojo.io.bind({ 
-	url: "feed_list/",
-		handler: show_user_feeds_callback,
-		method: "GET",
-		});
-  return false;
-}
-
 /* called when we get the json response from the server with the list of feeds */
-function show_user_feeds_callback(type, data, evt) {
-  if (type == "load") {
+function show_user_feeds() {
+  feed_list = initial_subscriptions;
 
-	payload = dojo.json.evalJson(data);
-
-	if (payload["error"] != "") {
-	  show_error("add_feed_results", payload["error"]);
-	}
-	else {
-	  feed_list = payload['list'];
-	  for (i=0; i < feed_list.length; i++) {
-		insert_feed_into_list(feed_list[i]);
-	  }
-	}
-  }
-  else if (type == "error") {
-	show_error("add_feed_results", data);
-  }
-  clear_status();
 }
 
 /*
 ** SHOW FEEDS form
 */
 function show_feed_by_id(id) {
+  dojo.debug('show_feed_by_id ' + id);
   show_status("Loading feed...");
   clear_feed_viewer();
   dojo.io.bind({ 
@@ -558,19 +499,32 @@ function populate_feed_viewer(podcast_id, entries) {
 ** ONLOAD
 */
 function user_onload() {
-  show_status("Loading user data...");
-  onload_counter = 2;
-  show_queue();
-  show_user_feeds();
+  /* show the queue contents */
+  var queue_node = dojo.byId("queue");
+  queue_node.innerHTML = "";
+
+  if (initial_queue.length == 0) {
+	set_queue_empty();
+  }
+  else {
+	for (var i=0; i < initial_queue.length; i++) {
+	  insert_entry_into_queue(initial_queue[i], 0);
+	}
+  }
+
+  /* show the user feeds */
+  for (i=0; i < initial_subscriptions.length; i++) {
+	insert_feed_into_list(initial_subscriptions[i]);
+  }
+
   clear_feed_viewer();
 
   if (document.add_feed.url.value) {
 	/* we have a URL, so add it and start showing the contents */
-    onload_counter = 3;
+    onload_counter = onload_counter + 1;
 	do_add_feed();
   }
 
   /* give the url field focus */
   document.add_feed.url.focus();
-
 }

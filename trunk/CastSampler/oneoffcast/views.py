@@ -112,10 +112,24 @@ def user(request, username):
         add_feed_form = forms.FormWrapper(manipulator, new_data, errors)
     else:
         add_feed_form = AddFeedForm()
-    
+
+    #
+    # Look up some data we need for the page
+    #
+    subscriptions = [ sub.as_dict()
+                      for sub in request.user.podcast_set.filter(allowed=True).order_by('name')
+                      ]
+    json_subscriptions = simplejson.dumps(subscriptions)
+    queue = [ qi.as_dict()
+              for qi in QueueItem.objects.filter(user=request.user).order_by('-add_date')
+              ]
+    json_queue = simplejson.dumps(queue)
+        
     return render_to_response('user.html',
                               {'user':request.user,
                                'add_feed':add_feed_form,
+                               'subscriptions':json_subscriptions,
+                               'queue':json_queue,
                                })
 
 

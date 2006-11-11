@@ -1,5 +1,13 @@
 2006-11-11  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (user): Include json representations of queue and
+	subscriptions in the data passed to the template.
+
+	* templates/user.html: Add some JavaScript to remember the initial
+	state of the queue and subscriptions list.  We use this data to
+	draw the page in the onload handler instead of the template so we
+	only have one place where the layout logic for that stuff lives.
+
 	* download_cache.py (retrieve_feed): If the cached_result does not
 	have a 'modified' value or an 'etag' value, that is ok.  Not all
 	feeds are going to provide those values.

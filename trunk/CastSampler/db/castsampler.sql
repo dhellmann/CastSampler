@@ -207,6 +207,7 @@ INSERT INTO "oneoffcast_podcast" VALUES(10, 'LOCAL web 2.0 - powered by PodTech.
 INSERT INTO "oneoffcast_podcast" VALUES(11, 'Amateur Traveler Podcast | travel for the love of it', 'Travel for the love of it: travel stories, news, tips, tricks and resources', 'http://AmateurTraveler.com/', 'http://feeds.feedburner.com/AmateurTravelerPodcast', '2006-11-04 08:56:20.950751', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(12, 'Barnes & Noble''s Meet the Writers Podcast', 'Hear the latest word on today''s hottest authors with Barnes & Noble''s exclusive Meet the Writers Podcast. Listen as your favorite writers discuss their inspirations and influences, their favorite books, and the reasons they write.', 'http://www.barnesandnoble.com/writers', 'http://www.bn.com/rss/mtw.xml', '2006-11-04 15:50:05.860626', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(13, 'The Jason Calacanis Weblog', 'The Jason Calacanis Weblog', 'http://podcast.calacanis.com', 'http://podcast.calacanis.com/rss.xml', '2006-11-11 08:38:55.665308', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(14, 'ScobleShow: Videoblog about geeks, technology, and developers', '- powered by PodTech.net', 'http://www.podtech.net/scobleshow', 'http://www.podtech.net/scobleshow/feed', '2006-11-11 16:14:28.105967', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -225,6 +226,7 @@ INSERT INTO "oneoffcast_podcast_users" VALUES(12, 12, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(13, 3, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(14, 11, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(15, 13, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(16, 14, 1);
 CREATE TABLE "oneoffcast_queueitem" (
     "id" integer NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
@@ -240,4 +242,6 @@ CREATE TABLE "oneoffcast_queueitem" (
     "author_email" varchar(75) NOT NULL
 );
 INSERT INTO "oneoffcast_queueitem" VALUES(1, 1, 11, '#65 - Seattle, Washington', 'Seattle, Washington', 'http://m.podshow.com/media/2032/episodes/35114/amateurtraveler-35114-11-04-2006.mp3', 'http://m.podshow.com/media/2032/episodes/35114/amateurtraveler-35114-11-04-2006.mp3', 17732354, 'audio/mpeg', '2006-11-06 08:15:33.606753', 'Chris Christensen', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(2, 1, 3, 'Agile06 - Ward Cunningham - Eclipse Foundation', 'Ward and I talk about his new position as the Director of Committer Community Development at Eclipse.  He discusses the release of Callisto by the Eclipse foundation, itâs Agile roots and other fun tool related topics.-bob', 'http://agiletoolkit.libsyn.com/index.php?post_id=131922', 'http://media.libsyn.com/media/agiletoolkit/Agile2006_WardCunningham.mp3', 11623852, 'audio/mpeg', '2006-11-11 15:33:13.587174', 'Bob Payne', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(3, 1, 14, 'The best demo at Web 2.0 Summit: Microsoft''s Photosynth', 'Gary Flake, distinguished engineer at Microsoft, gives us a tour around a new 3D photo experience that amazed attendees at the O''Reilly Web 2.0 Summit yesterday when it was demonstrated. Several people came up to me afterward and said it was the coolest thing they had seen all week.', 'http://www.podtech.net/scobleshow/technology/1219/the-best-demo-at-web-20-summit-microsofts-photosynth', 'http://media.podtech.net/media/2006/11/PID_001408/Podtech_photosynth.mov', 72275703, 'video/mov', '2006-11-11 16:14:38.748800', 'Robert Scoble', 'n/a');
 COMMIT;
