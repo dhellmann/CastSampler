@@ -1,5 +1,12 @@
 2006-11-11  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/base.html: Need the dojo.string and
+	dojo.widget.Tooltip packages.
+
+	* static/js/oneoffcast/user.js (insert_entry_into_queue): Show the
+	partial summary in the queue and the full summary in a tooltip
+	associated with the title link.
+	
 	* static/js/oneoffcast/user.js (user_onload): The template now
 	includes the initial subscription list and queue contents in js
 	variables, so iterate over those onload instead of calling back to

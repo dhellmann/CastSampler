@@ -95,6 +95,17 @@ function remove_from_queue_callback(type, data, evt) {
   return false;
 }
 
+function summarize_string(/*string*/s, /*number*/len) {
+// summary:
+//	Truncates 'str' after 'len' characters and appends periods as necessary so that it ends with "..."
+
+	if(!len || s.length <= len){
+		return s; // string
+	}
+
+	return s.substring(0, len).replace(/\.+$/, "") + "..."; // string
+}
+
 /* called to add a new entry to the display of the queue */
 function insert_entry_into_queue(entry, atFront) {
   var queue_node = dojo.byId("queue");
@@ -110,6 +121,7 @@ function insert_entry_into_queue(entry, atFront) {
   var item_link = document.createElement('a');
   item_link.setAttribute('href', entry['link']);
   item_link.setAttribute('target', '_blank');
+  item_link.setAttribute('id', 'item_link_' + entry['id']);
   item_link.appendChild(document.createTextNode(entry['podcast_name']));
   item_link.appendChild(document.createTextNode(' - '));
   item_link.appendChild(document.createTextNode(entry['title']));
@@ -117,10 +129,14 @@ function insert_entry_into_queue(entry, atFront) {
   new_item.appendChild(item_title);
   
   /* summary / body */
+
   var item_summary = document.createElement('div');
   item_summary.setAttribute('class', 'item_summary');
-  item_summary.appendChild(document.createTextNode(entry['summary']));
+  short_summary = dojo.string.summary(entry['summary'], 100);
+  item_summary.appendChild(document.createTextNode(short_summary));
   new_item.appendChild(item_summary);
+
+  /* add action buttons to remove queue items */
 
   var delete_link = document.createElement('a');
   delete_link.setAttribute('href', '');
@@ -144,8 +160,8 @@ function insert_entry_into_queue(entry, atFront) {
   enclosure_link.appendChild(play_icon);
   new_item.appendChild(enclosure_link);
   
-  /* add action buttons to remove queue items */
-  
+  /* put the item into the queue display */
+
   if (atFront) {
 	first_child = queue_node.childNodes[0];
 	queue_node.insertBefore(new_item, first_child);
@@ -153,6 +169,15 @@ function insert_entry_into_queue(entry, atFront) {
   else {
 	queue_node.appendChild(new_item);
   }
+
+  /* Construct a tooltip to show the full summary. */
+
+  var tooltip = dojo.widget.createWidget('Tooltip',
+										 {id:'tooltip_' + entry['id'],
+											 connectId:'item_link_' + entry['id'],
+											 caption:entry['summary'],
+											 });
+  new_item.appendChild(tooltip.domNode);
 }
 
 /* the user has nothing in their queue, so display a message to that effect */
