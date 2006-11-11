@@ -1,0 +1,4 @@
+# $Id$
+0 5 * * *	/home/castsampler/bin/dumpforbackup.sh
+0 4 * * *	/home/castsampler/bin/cleanup_cache.sh
+
