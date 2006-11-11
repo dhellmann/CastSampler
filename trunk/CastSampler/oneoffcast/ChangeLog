@@ -1,3 +1,7 @@
+2006-11-11  Doug Hellmann  <dhellmann@racemi.com>
+
+	* templates/user.html: Replace the add button with a dojo button.
+
 2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (user): Allow POST or GET submission of a URL for a feed.

@@ -21,7 +21,7 @@
 
 {% block content %}
 
-  <form id="add_feed" method="post" name="add_feed">
+  <form id="add_feed" method="post" name="add_feed" onsubmit="return do_add_feed()">
     <fieldset>
       <legend>Add feed</legend>
 
@@ -29,7 +29,9 @@
         <tr>
           <td><label for="url">Feed URL:</label></td>
           <td>{{ add_feed.url }} </td>
-          <td><input type="submit" value="add" onclick="return do_add_feed()" /></td>
+          <td>
+              <button dojoType="UserButton" onclick="return do_add_feed()">Add</button>
+            </td>
         </tr>
       </table>
 

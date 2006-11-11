@@ -1,3 +1,12 @@
+2006-11-11  Doug Hellmann  <dhellmann@racemi.com>
+
+	* templates/login.html: Replace the submit button with a nice dojo
+	button.  Unfortunately, that also requires us to handle the form
+	submission when the user presses enter, so add some code from
+	http://www.htmlcodetutorial.com/forms/index_famsupp_157.html for
+	that and spell out what the password field should look like so we
+	can tie in the event.
+
 2006-10-21  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (register): Use settings to control parameters to the email.

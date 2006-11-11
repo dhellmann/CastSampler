@@ -21,8 +21,8 @@ CREATE TABLE "auth_user" (
     "last_login" datetime NOT NULL,
     "date_joined" datetime NOT NULL
 );
-INSERT INTO "auth_user" VALUES(1, 'test', '', '', 'oneoffcast@gmail.com', 'sha1$2113b$5ac39071f072894ce489992f8523afaec6516572', 1, 1, 1, '2006-10-21 11:17:01', '2006-09-10 19:23:55');
-INSERT INTO "auth_user" VALUES(3, 'nonadmin', '', '', 'doug-oneoffcast@hellfly.net', 'sha1$ccd81$ed10601d1d8cb7c317f05269c4faba7db62a8166', 0, 0, 0, '2006-10-09 08:20:46.009972', '2006-10-09 08:20:46.009972');
+INSERT INTO "auth_user" VALUES(1, 'test', '', '', 'oneoffcast@gmail.com', 'sha1$2113b$5ac39071f072894ce489992f8523afaec6516572', 1, 1, 1, '2006-11-05 09:40:10.547381', '2006-09-10 19:23:55');
+INSERT INTO "auth_user" VALUES(2, 'nonadmin', '', '', 'doug-castsampler@hellfly.net', 'sha1$cbd2a$f69f91992e93d8bb23f40b11a0207f832994911d', 0, 1, 0, '2006-11-05 09:41:43.526678', '2006-11-05 09:41:43.526678');
 CREATE TABLE "auth_permission" (
     "id" integer NOT NULL PRIMARY KEY,
     "name" varchar(50) NOT NULL,
@@ -104,10 +104,10 @@ CREATE TABLE "django_session" (
     "session_data" text NOT NULL,
     "expire_date" datetime NOT NULL
 );
-INSERT INTO "django_session" VALUES('3b30d8e7addc2b051805cc48e2ca1b32', 'KGRwMQpTJ3Rlc3Rjb29raWUnCnAyClMnd29ya2VkJwpwMwpzUydfYXV0aF91c2VyX2lkJwpwNApJ
-MQpzUydfYXV0aF91c2VyX2JhY2tlbmQnCnA1ClMnZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5k
-cy5Nb2RlbEJhY2tlbmQnCnA2CnMuNzI1ZWZhMTE3MDI0OGE3NTMzZTBkNjdhZWJiZGNlZmI=
-', '2006-11-19 06:54:18.729557');
+INSERT INTO "django_session" VALUES('f3c15593af278a24e7120b32e666eaca', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
+bmRzLk1vZGVsQmFja2VuZCcKcDMKc1MnX2F1dGhfdXNlcl9pZCcKcDQKSTEKcy5kYjI2ODY1ZjFh
+MGNiNDA0YjJkNDhiODVhOGFlZWZmMQ==
+', '2006-11-25 09:20:30.130806');
 CREATE TABLE "django_site" (
     "id" integer NOT NULL PRIMARY KEY,
     "domain" varchar(100) NOT NULL,
@@ -175,6 +175,7 @@ INSERT INTO "django_admin_log" VALUES(48, '2006-10-29 08:04:10.586336', 1, 8, '7
 INSERT INTO "django_admin_log" VALUES(49, '2006-10-30 06:36:52.614230', 1, 3, '2', 'test', 3, '');
 INSERT INTO "django_admin_log" VALUES(50, '2006-10-30 06:37:12.141228', 1, 3, '1', 'test', 2, 'Changed username, last login and date joined.');
 INSERT INTO "django_admin_log" VALUES(51, '2006-11-04 15:49:53.444991', 1, 9, '12', 'Barnes & Noble''s Meet the Writers Podcast', 3, '');
+INSERT INTO "django_admin_log" VALUES(52, '2006-11-05 09:41:23.322604', 1, 3, '3', 'nonadmin', 3, '');
 CREATE TABLE "registration_userprofile" (
     "user_id" integer NOT NULL PRIMARY KEY REFERENCES "auth_user" ("id"),
     "activation_key" varchar(40) NOT NULL,
@@ -205,6 +206,7 @@ INSERT INTO "oneoffcast_podcast" VALUES(9, 'web 2.0 - powered by PodTech.net', '
 INSERT INTO "oneoffcast_podcast" VALUES(10, 'LOCAL web 2.0 - powered by PodTech.net', '- powered by PodTech.net', 'http://www.podtech.net/home/category/web+2.0', 'http://localhost/~dhellmann/OneOffCast/web20.xml', '2006-10-29 08:15:56.814293', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(11, 'Amateur Traveler Podcast | travel for the love of it', 'Travel for the love of it: travel stories, news, tips, tricks and resources', 'http://AmateurTraveler.com/', 'http://feeds.feedburner.com/AmateurTravelerPodcast', '2006-11-04 08:56:20.950751', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(12, 'Barnes & Noble''s Meet the Writers Podcast', 'Hear the latest word on today''s hottest authors with Barnes & Noble''s exclusive Meet the Writers Podcast. Listen as your favorite writers discuss their inspirations and influences, their favorite books, and the reasons they write.', 'http://www.barnesandnoble.com/writers', 'http://www.bn.com/rss/mtw.xml', '2006-11-04 15:50:05.860626', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(13, 'The Jason Calacanis Weblog', 'The Jason Calacanis Weblog', 'http://podcast.calacanis.com', 'http://podcast.calacanis.com/rss.xml', '2006-11-11 08:38:55.665308', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -222,6 +224,7 @@ INSERT INTO "oneoffcast_podcast_users" VALUES(10, 10, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(12, 12, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(13, 3, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(14, 11, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(15, 13, 1);
 CREATE TABLE "oneoffcast_queueitem" (
     "id" integer NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
@@ -236,4 +239,5 @@ CREATE TABLE "oneoffcast_queueitem" (
     "author_name" varchar(128) NOT NULL,
     "author_email" varchar(75) NOT NULL
 );
+INSERT INTO "oneoffcast_queueitem" VALUES(1, 1, 11, '#65 - Seattle, Washington', 'Seattle, Washington', 'http://m.podshow.com/media/2032/episodes/35114/amateurtraveler-35114-11-04-2006.mp3', 'http://m.podshow.com/media/2032/episodes/35114/amateurtraveler-35114-11-04-2006.mp3', 17732354, 'audio/mpeg', '2006-11-06 08:15:33.606753', 'Chris Christensen', 'n/a');
 COMMIT;

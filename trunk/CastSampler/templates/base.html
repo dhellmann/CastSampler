@@ -10,21 +10,25 @@
 {% block head %}
 {% endblock %}
         
-   <script type="text/javascript">
-          djConfig = { isDebug: true };
-   </script>
+      <script type="text/javascript">
+        djConfig = { isDebug: true };
+      </script>
 
-   <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+      <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
 
-   <script type="text/javascript">
-            dojo.require("dojo.dom.*");
-            dojo.require("dojo.event.*");
-            dojo.require("dojo.html.*");
-            dojo.require("dojo.io.*");
-            dojo.require("dojo.json");
-            dojo.require("dojo.lfx.*");
-            dojo.require("dojo.style.*");
-   </script>
+      <script type="text/javascript">
+        dojo.require("dojo.dom.*");
+        dojo.require("dojo.event.*");
+        dojo.require("dojo.html.*");
+        dojo.require("dojo.io.*");
+        dojo.require("dojo.json");
+        dojo.require("dojo.lfx.*");
+        dojo.require("dojo.style.*");
+        dojo.require("dojo.widget.Button");
+        dojo.setModulePrefix('acme', 'tests/widget/acme');
+        dojo.widget.manager.registerWidgetPackage('acme');
+        dojo.require("acme.UserButton");
+      </script>
 
   <script type="text/javascript">
     /*

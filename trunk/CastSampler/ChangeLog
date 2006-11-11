@@ -1,3 +1,8 @@
+2006-11-11  Doug Hellmann  <dhellmann@racemi.com>
+
+	* templates/base.html: Add dojo.widget package configuration to
+	the javascript.
+
 2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
 
 	* static/js/oneoffcast/user.js: Add set_queue_empty to have a

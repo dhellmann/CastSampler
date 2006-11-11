@@ -3,26 +3,61 @@
 
 {% block title %}Login{% endblock %}
 
+{% block javascript %}
+<SCRIPT TYPE="text/javascript">
+<!--
+function submitenter(myfield,e)
+{
+var keycode;
+if (window.event) keycode = window.event.keyCode;
+else if (e) keycode = e.which;
+else return true;
+
+if (keycode == 13)
+   {
+   myfield.form.submit();
+   return false;
+   }
+else
+   return true;
+}
+//-->
+</SCRIPT>
+
+{% endblock %}
+
 {% block content %}
-    <h2>Login</h2>
-
-    {% if form.has_errors %}
-    <center><div class="error">Your username and password didn't match. Please try again.</div></center>
-    {% endif %}
-
-    <form method="post" action=".">
-      <center>
-        <fieldset style="width: 50%">
-          <legend>Login</legend>
-          
-          <table class="form_table">
-            <tr><td><label for="id_username">Username:</label></td><td>{{ form.username }}</td></tr>
-            <tr><td><label for="id_password">Password:</label></td><td>{{ form.password }}</td></tr>
-          </table>
+  <h2>Login</h2>
+  
+  {% if form.has_errors %}
+  <center><div class="error">Your username and password didn't match. Please try again.</div></center>
+  {% endif %}
+  
+  <form id="login_form" name="login_form" method="post" action=".">
+    <center>
+      <fieldset style="width: 50%">
+        <legend>Login</legend>
         
-        <input type="submit" value="login" />
-          <input type="hidden" name="next" value="{{ next }}" />
-        </fieldset>
-      </center>
-    </form>
+        <table class="form_table">
+          <tr>
+            <td><label for="id_username">Username:</label></td>
+            <td>{{form.username }}</td>
+          </tr>
+          <tr>
+            <td><label for="id_password">Password:</label></td>
+            <td><input id="id_password" 
+                class="vPasswordField required" 
+                name="password" size="15" value=""
+                maxlength="30" type="password" 
+                onKeyPress="return submitenter(this,event)" />
+            </td>
+          </tr>
+        </table>
+        
+        <input type="hidden" name="next" value="{{ next }}" />
+          
+          <button type="submit" dojoType="UserButton" onclick="document.login_form.submit()">Login</button>
+      </fieldset>
+    </center>
+  </form>
 {% endblock %}
