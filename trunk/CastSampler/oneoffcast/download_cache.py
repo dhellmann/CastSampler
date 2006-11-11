@@ -110,8 +110,14 @@ def retrieve_feed(feed_url):
         # the feed so we can send them to the feedparser
         # below if we end up repulling the feed.
         #
-        modified = cached_result.modified
-        etag = cached_result.etag
+        try:
+            modified = cached_result.modified
+        except AttributeError:
+            pass
+        try:
+            etag = cached_result.etag
+        except AttributeError:
+            pass
         if settings.DEBUG:
             logging.debug('  cache modified: %s' % str(modified))
             logging.debug('  cache etag: %s' % etag)

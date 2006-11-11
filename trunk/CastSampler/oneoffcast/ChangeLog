@@ -1,5 +1,9 @@
 2006-11-11  Doug Hellmann  <dhellmann@racemi.com>
 
+	* download_cache.py (retrieve_feed): If the cached_result does not
+	have a 'modified' value or an 'etag' value, that is ok.  Not all
+	feeds are going to provide those values.
+
 	* templates/user.html: Replace the add button with a dojo button.
 
 2006-11-05  Doug Hellmann  <dhellmann@racemi.com>
