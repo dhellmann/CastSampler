@@ -6,21 +6,32 @@
 
 {% block content %}
   <div class="mainpage">
-    
-    <ul>
-      <li>Sample individual episodes from podcasts without subscribing to
-        all of them, so you only download the content you actually want.</li>
-      <li>Create a shared podcast feed for a group to share episodes
-        you all find interesting.</li>
-      <li>Create a "custom mix playlist" for a special occasion.</li>
-    </ul>
 
-{% if not user %}  
-    <div style="font-size: 150%">
-      <a href="/accounts/login">Login</a> to the guest account (password <tt>guest</tt>) or
+    <div class="what_is_it">
+      <h3 style="background-color: #eeeeee">What is CastSampler?</h3>
+      <ul>
+        <li>Sample individual episodes from podcasts without subscribing to
+          all of them, so you only download the content you actually want.</li>
+        <li>Create a shared podcast feed for a group to share episodes
+          you all find interesting.</li>
+        <li>Create a "custom mix playlist" for a special occasion.</li>
+      </ul>
     </div>
-    <div style="font-size: 200%">
-      <a href="register">Sign up now...</a>
+
+{% if not user.is_authenticated %}
+    <div class="try_it">
+      Use the guest account (password <tt>guest</tt>) to
+      <center>
+        <button dojoType="UserButton" onclick="document.location.href='/accounts/login'">
+          <span style="font-size: large">Login</span>
+        </button>
+      </center>
+      or
+      <center>
+        <button dojoType="UserButton" onclick="document.location.href='register'">
+          <span style="font-size: large">Sign up now...</span>
+        </button>
+      </center>
     </div>
 {% endif %}
 

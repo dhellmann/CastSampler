@@ -495,6 +495,21 @@ div.title {
   margin: 1em;
 }
 
+.try_it { 
+  font-size: 150%;
+  background-color: #5F7353;
+  color: white;
+  text-align: center;
+  padding: 2em;
+  margin: 1em;
+}
+
+.what_is_it {
+  border: 1px solid #737153; /* dark brown */
+  margin: 1em;
+  background-color: #eeeeee;
+}
+
 /*
 ** Contact page
 */

@@ -104,10 +104,10 @@ CREATE TABLE "django_session" (
     "session_data" text NOT NULL,
     "expire_date" datetime NOT NULL
 );
-INSERT INTO "django_session" VALUES('3b459becab3bef3e4b6ef37880965946', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
+INSERT INTO "django_session" VALUES('5416c80107a66fac5d99dec7df31fe18', 'KGRwMQpTJ19hdXRoX3VzZXJfYmFja2VuZCcKcDIKUydkamFuZ28uY29udHJpYi5hdXRoLmJhY2tl
 bmRzLk1vZGVsQmFja2VuZCcKcDMKc1MnX2F1dGhfdXNlcl9pZCcKcDQKSTEKcy5kYjI2ODY1ZjFh
 MGNiNDA0YjJkNDhiODVhOGFlZWZmMQ==
-', '2006-11-25 14:45:37.786618');
+', '2006-11-26 10:48:36.230692');
 CREATE TABLE "django_site" (
     "id" integer NOT NULL PRIMARY KEY,
     "domain" varchar(100) NOT NULL,
@@ -244,4 +244,5 @@ CREATE TABLE "oneoffcast_queueitem" (
 INSERT INTO "oneoffcast_queueitem" VALUES(1, 1, 11, '#65 - Seattle, Washington', 'Seattle, Washington', 'http://m.podshow.com/media/2032/episodes/35114/amateurtraveler-35114-11-04-2006.mp3', 'http://m.podshow.com/media/2032/episodes/35114/amateurtraveler-35114-11-04-2006.mp3', 17732354, 'audio/mpeg', '2006-11-06 08:15:33.606753', 'Chris Christensen', 'n/a');
 INSERT INTO "oneoffcast_queueitem" VALUES(2, 1, 3, 'Agile06 - Ward Cunningham - Eclipse Foundation', 'Ward and I talk about his new position as the Director of Committer Community Development at Eclipse.  He discusses the release of Callisto by the Eclipse foundation, itâs Agile roots and other fun tool related topics.-bob', 'http://agiletoolkit.libsyn.com/index.php?post_id=131922', 'http://media.libsyn.com/media/agiletoolkit/Agile2006_WardCunningham.mp3', 11623852, 'audio/mpeg', '2006-11-11 15:33:13.587174', 'Bob Payne', 'n/a');
 INSERT INTO "oneoffcast_queueitem" VALUES(3, 1, 14, 'The best demo at Web 2.0 Summit: Microsoft''s Photosynth', 'Gary Flake, distinguished engineer at Microsoft, gives us a tour around a new 3D photo experience that amazed attendees at the O''Reilly Web 2.0 Summit yesterday when it was demonstrated. Several people came up to me afterward and said it was the coolest thing they had seen all week.', 'http://www.podtech.net/scobleshow/technology/1219/the-best-demo-at-web-20-summit-microsofts-photosynth', 'http://media.podtech.net/media/2006/11/PID_001408/Podtech_photosynth.mov', 72275703, 'video/mov', '2006-11-11 16:14:38.748800', 'Robert Scoble', 'n/a');
+INSERT INTO "oneoffcast_queueitem" VALUES(4, 1, 5, 'Web 2.0 Podcast - a look ahead', 'The Web 2.0 Summit 2006 wrapped up last night. Two and one half days jam packed with sessions. You''ll get to hear and see most of them in this Web 2.0 podcast stream. Next week Tim O''Reilly and John Battelle kick our podcast off with their look at Web 2.0. You''ll then hear conversations with Google''s Eric Schmidt, IAC''s Barry Diller, The New York Times'' Arthur Sulzberger, Jr., and Alibaba''s Jack Ma. Today''s podcast is a preview of coming attractions and is brought to you by the Intel Software Partner Program (www.intel.com/partner).', 'http://www.oreillynet.com/pub/a/network/2006/11/10/web2-look-ahead.html', 'http://downloads.oreilly.com/network/2006/11/10/web2-look-ahead.mp3', 2446228, 'audio/mpeg', '2006-11-11 17:37:07.493393', 'Daniel H. Steinberg', 'webmaster@oreillynet.com');
 COMMIT;
