@@ -1,0 +1,57 @@
+{% extends "two_columns.html" %}
+{% load subscription_list_tags %}
+
+<!-- $Id$ -->
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="mainpage">
+
+    <div class="what_is_it">
+      <h3 style="background-color: #eeeeee">What is CastSampler?</h3>
+      <ul>
+        <li>Sample individual episodes from podcasts without subscribing to
+          all of them, so you only download the content you actually want.</li>
+        <li>Create a shared podcast feed for a group to share episodes
+          you all find interesting.</li>
+        <li>Create a "custom mix playlist" for a special occasion.</li>
+      </ul>
+    </div>
+
+{% if not user.is_authenticated %}
+    <div class="try_it">
+      Use the guest account (password <tt>guest</tt>) to
+      <center>
+        <button dojoType="UserButton" onclick="document.location.href='/accounts/login'">
+          <span style="font-size: large">Login</span>
+        </button>
+      </center>
+      or
+      <center>
+        <button dojoType="UserButton" onclick="document.location.href='register'">
+          <span style="font-size: large">Sign up now...</span>
+        </button>
+      </center>
+    </div>
+{% endif %}
+
+  </div>
+{% endblock %}
+
+{% block sidebar_r %}
+
+  <script type="text/javascript">
+    function submit_form(form_name) {
+      var form = dojo.byId(form_name);
+      form.submit();
+      return false;
+    }
+  </script>
+
+  {% newest_subscription_list 5 %}
+
+  {% popular_subscription_list 5 %}
+
+
+{% endblock %}

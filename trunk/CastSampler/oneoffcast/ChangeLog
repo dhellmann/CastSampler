@@ -1,5 +1,19 @@
 2006-11-12  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/popular_subscription_list.html: Template for the
+	popular_subscription_list tag.
+
+	* templates/newest_subscription_list.html: Template for the
+	newest_subscription_list tag.
+
+	* templatetags/subscription_list_tags.py
+	(newest_subscription_list): Template tag to show a list of the
+	most recently subscribed podcasts.
+	(popular_subscription_list): Template tag to show a list of the
+	most popular podcasts.
+
+	* views.py: Move some of the main views to the site-wide views module.
+
 	* templates/index.html: Update the formatting of the "login or
 	register" invitation section of the home page.
 

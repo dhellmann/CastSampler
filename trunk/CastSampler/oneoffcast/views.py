@@ -52,38 +52,6 @@ from oneoffcast.util import *
 # Module
 #
 
-def main(request):
-    """Main page for the app.
-    """
-    #
-    # The 10 most recently added podcasts.
-    #
-    newest_podcasts = Podcast.objects.all().order_by('-registration_date')[:5]
-    #
-    # Look for how many individual episodes from a given podcast are referenced.
-    # Do we want to change this to count references to a podcast by a user
-    # instead of individual episodes?
-    #
-    popular_podcasts_query = Podcast.objects.extra(
-        select={'use_count':"""select count(*)
-                               from oneoffcast_queueitem
-                               where oneoffcast_queueitem.podcast_id = oneoffcast_podcast.id
-                               """,
-                },
-        ).order_by('-use_count')
-    popular_podcasts = []
-    for p in popular_podcasts_query:
-        if p.use_count <= 0:
-            break
-        popular_podcasts.append(p)
-        if len(popular_podcasts) >= 5:
-            break
-    return render_to_response('index.html', 
-                              {'newest_podcasts':newest_podcasts,
-                               'popular_podcasts':popular_podcasts,
-                               'user':request.user,
-                               })
-
 
 @login_required
 def user_redirect(request, urlBase='/cast'):
@@ -274,11 +242,3 @@ def external(request, id):
     response['id'] = id
     return response
 
-
-def contact(request):
-    """Returns the contact page for user feedback.
-    """
-    return render_to_response('contact.html', 
-                              {'user':request.user,
-                               })
-    

@@ -1,5 +1,11 @@
 2006-11-12  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py: New module with views that are not strictly part of
+	any app on the site.
+
+	* urls.py (urlpatterns): Use site-wide views module for contacts
+	page and the home page.
+
 	* static/css/site.css: Update the formatting of the "login or
 	register" invitation section of the home page.
 

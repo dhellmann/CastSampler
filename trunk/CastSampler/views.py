@@ -25,49 +25,35 @@
 # CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-"""
+"""CastSampler site views
 
 """
 
 #
 # Import system modules
 #
-from django.conf.urls.defaults import *
-
+from django.shortcuts import render_to_response
 
 #
 # Import Local modules
 #
 
-
 #
 # Module
 #
 
+def main(request):
+    """Main page for the app.
+    """
+    return render_to_response('index.html', 
+                              {'user':request.user,
+                               })
 
-urlpatterns = patterns(
-    '',
-    # Example:
-    # (r'^CastSampler/', include('CastSampler.apps.foo.urls.foo')),
+
+def contact(request):
+    """Returns the contact page for user feedback.
+    """
+    return render_to_response('contact.html', 
+                              {'user':request.user,
+                               })
     
-    # Main page
-    (r'^$', 'views.main'),
-    
-    # Override the URL for blind logins to take the user to their home page
-    (r'^accounts/profile/$', 'django.views.generic.simple.redirect_to', {'url':'/cast/'}),
-    # Account registration, login, etc.
-    (r'^accounts/', include('registration.urls')),
-    
-    # Uncomment this for admin:
-    (r'^admin/', include('django.contrib.admin.urls')),
-
-    # The oneoffcast app
-    (r'^cast/', include('oneoffcast.urls')),
-
-    # Static content (CSS, images, etc.)
-    (r'^static/(.*)$', 'django.views.static.serve',
-     { 'document_root':'/Users/dhellmann/Devel/CastSampler/src/trunk/CastSampler/static'}),
-
-    # Contact page and user feedback form
-    (r'^contact/$', 'views.contact'),
-)

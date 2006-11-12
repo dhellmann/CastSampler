@@ -1,0 +1,20 @@
+{% if newest_subscriptions %}
+<h1>New</h1>
+{% for subscription in newest_subscriptions %}
+<div class="sidebar_podcast_wrapper">
+  <div class="sidebar_podcast_add">
+    <form id="add_newest_{{subscription.id}}" method="post" action="/cast/{{user}}/">
+      <input type="hidden" name="url" value="{{subscription.feed_url}}" />
+      <a href="javascript: submit_form('add_newest_{{subscription.id}}')">
+        <img alt="Add {{subscription.name}} to subscriptions" 
+          title="Add {{subscription.name}} to subscriptions"
+          src="/static/images/add.png"/></a>
+    </form>
+  </div>
+  <div class="sidebar_podcast">
+    <a href="{{subscription.home_url}}" target="_blank">{{subscription.name}}</a>
+    <a href="{{subscription.feed_url}}" target="_blank"><img alt="Show feed" title="Show feed" src="/static/images/feed-icon-14x14.png"/></a>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
