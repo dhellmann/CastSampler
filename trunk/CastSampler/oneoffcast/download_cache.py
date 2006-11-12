@@ -175,11 +175,19 @@ def retrieve_feed(feed_url):
             # to the cache file.
             #
             if settings.DEBUG: logging.debug('  updating cache contents')
+            cache_ok = True
             f = open(cache_file, 'wb')
             try:
-                pickle.dump(parsed_result, f)
+                try:
+                    pickle.dump(parsed_result, f)
+                except Exception, err:
+                    logging.debug('Error writing cache: %s' % str(err))
+                    cache_ok = False
             finally:
                 f.close()
+
+            if not cache_ok:
+                os.unlink(cache_file)
 
             #
             # Now that we have written those results to the cache,

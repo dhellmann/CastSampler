@@ -208,6 +208,7 @@ INSERT INTO "oneoffcast_podcast" VALUES(11, 'Amateur Traveler Podcast | travel f
 INSERT INTO "oneoffcast_podcast" VALUES(12, 'Barnes & Noble''s Meet the Writers Podcast', 'Hear the latest word on today''s hottest authors with Barnes & Noble''s exclusive Meet the Writers Podcast. Listen as your favorite writers discuss their inspirations and influences, their favorite books, and the reasons they write.', 'http://www.barnesandnoble.com/writers', 'http://www.bn.com/rss/mtw.xml', '2006-11-04 15:50:05.860626', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(13, 'The Jason Calacanis Weblog', 'The Jason Calacanis Weblog', 'http://podcast.calacanis.com', 'http://podcast.calacanis.com/rss.xml', '2006-11-11 08:38:55.665308', '', '', '', 1);
 INSERT INTO "oneoffcast_podcast" VALUES(14, 'ScobleShow: Videoblog about geeks, technology, and developers', '- powered by PodTech.net', 'http://www.podtech.net/scobleshow', 'http://www.podtech.net/scobleshow/feed', '2006-11-11 16:14:28.105967', '', '', '', 1);
+INSERT INTO "oneoffcast_podcast" VALUES(15, 'Controlling Chaos', 'Project Management: Practical advice to help you succeed in managing real projects in the real world. More art than science, Project Management is the "glue & grease" that allows modern organizations to drive through turbulent times with some semblance of', 'http://www.controllingchaos.com', 'http://feeds.feedburner.com/ControllingChaos', '2006-11-12 13:13:08.402445', '', '', '', 1);
 CREATE TABLE "oneoffcast_podcast_users" (
     "id" integer NOT NULL PRIMARY KEY,
     "podcast_id" integer NOT NULL REFERENCES "oneoffcast_podcast" ("id"),
@@ -227,6 +228,7 @@ INSERT INTO "oneoffcast_podcast_users" VALUES(13, 3, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(14, 11, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(15, 13, 1);
 INSERT INTO "oneoffcast_podcast_users" VALUES(16, 14, 1);
+INSERT INTO "oneoffcast_podcast_users" VALUES(17, 15, 1);
 CREATE TABLE "oneoffcast_queueitem" (
     "id" integer NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),

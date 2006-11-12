@@ -1,5 +1,8 @@
 2006-11-12  Doug Hellmann  <dhellmann@racemi.com>
 
+	* download_cache.py (retrieve_feed): Do a little better job with
+	error handling when we try to write the cache.
+
 	* templates/popular_subscription_list.html: Template for the
 	popular_subscription_list tag.
 
