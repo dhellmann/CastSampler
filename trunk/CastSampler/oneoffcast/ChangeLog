@@ -1,3 +1,8 @@
+2006-11-13  Doug Hellmann  <dhellmann@racemi.com>
+
+	* download_cache.py (retrieve_feed): Update the user-agent string
+	to indicate that castsampler is a domain.
+
 2006-11-12  Doug Hellmann  <dhellmann@racemi.com>
 
 	* models.py (QueueItem.as_dict): Include the pubdate for the item.

@@ -147,7 +147,7 @@ def retrieve_feed(feed_url):
     if need_to_fetch:
         if settings.DEBUG: logging.debug('  fetching')
         parsed_result = feedparser.parse(feed_url,
-                                         agent='CastSampler',
+                                         agent='CastSampler.com',
                                          modified=modified,
                                          etag=etag,
                                          )
