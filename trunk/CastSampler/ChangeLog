@@ -1,5 +1,13 @@
 2006-11-12  Doug Hellmann  <dhellmann@racemi.com>
 
+	* static/js/oneoffcast/user.js: Include date information in the
+	queue and feed viewer.
+
+	* static/css/site.css: Add styles for the date fields in the queue
+	and feed contents viewer.
+
+	* templates/base.html: Disable flash storage for dojo.
+
 	* views.py: New module with views that are not strictly part of
 	any app on the site.
 

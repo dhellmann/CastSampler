@@ -131,6 +131,7 @@ def find_or_create_podcast(feed_url, user=None):
     else:
         logging.debug('creating podcast from feed %s' % feed_url)
         data = retrieve_feed(feed_url)
+        #logging.debug(data)
 
         try:
             name = data.feed.title.encode('utf-8', 'replace')
@@ -220,7 +221,7 @@ class QueueItem(models.Model):
               'summary':self.summary,
               'enclosure_url':self.item_enclosure_url,
               'enclosure_mimetype':self.item_enclosure_mime_type,
-              #'pubdate':self.add_date,
+              'pubdate':self.add_date.ctime(),
               'id':self.id,
               }
         return d

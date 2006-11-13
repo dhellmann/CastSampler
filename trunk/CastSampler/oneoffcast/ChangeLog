@@ -1,5 +1,7 @@
 2006-11-12  Doug Hellmann  <dhellmann@racemi.com>
 
+	* models.py (QueueItem.as_dict): Include the pubdate for the item.
+
 	* download_cache.py (retrieve_feed): Do a little better job with
 	error handling when we try to write the cache.
 

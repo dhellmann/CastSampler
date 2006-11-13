@@ -440,6 +440,11 @@ div.title {
   margin-left: 5%;
 }
 
+.queue_item .item_pubdate { 
+  text-align: right;
+  font-size: 80%;
+}
+
 .queue_item .enclosure_link { 
 /*  font-size: 80%;*/
   margin-left: 5%;
@@ -481,6 +486,13 @@ div.title {
 
 .podcast_entry_title { 
   font-weight: bold;
+}
+
+.podcast_entry_pubdate { 
+  font-size: 80%;
+  margin-left: 3em;
+  text-align: right;
+  float: right;
 }
 
 .podcast_entry_summary { 

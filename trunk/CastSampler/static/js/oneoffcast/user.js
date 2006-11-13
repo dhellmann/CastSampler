@@ -127,6 +127,11 @@ function insert_entry_into_queue(entry, atFront) {
   item_link.appendChild(document.createTextNode(entry['title']));
   item_title.appendChild(item_link);
   new_item.appendChild(item_title);
+
+  var pubdate = document.createElement('div');
+  pubdate.setAttribute('class', 'item_pubdate');
+  pubdate.appendChild(document.createTextNode(entry['pubdate']));
+  new_item.appendChild(pubdate);
   
   /* summary / body */
 
@@ -505,6 +510,11 @@ function populate_feed_viewer(podcast_id, entries) {
 	  }
 
 	  entry_node.appendChild(title_node);
+
+	  var pubdate = document.createElement('div');
+	  pubdate.setAttribute('class', 'podcast_entry_pubdate');
+	  pubdate.appendChild(document.createTextNode(entry['updated']));
+	  entry_node.appendChild(pubdate);
 
 	  summary_node = document.createElement('div');
 	  summary_node.setAttribute('class', 'podcast_entry_summary');
