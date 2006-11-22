@@ -410,12 +410,6 @@ function remove_feed_callback(type, data, evt) {
   }
 }
 
-/* called when we get the json response from the server with the list of feeds */
-function show_user_feeds() {
-  feed_list = initial_subscriptions;
-
-}
-
 /*
 ** SHOW FEEDS form
 */

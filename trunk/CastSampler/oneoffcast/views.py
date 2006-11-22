@@ -32,12 +32,14 @@
 #
 # Import system modules
 #
+from django.contrib.auth import LOGIN_URL, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import serializers
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
+from django.template import loader, Context
 
 import logging
 
@@ -101,17 +103,49 @@ def user(request, username):
                                })
 
 
-
-@jsonView()
-@login_required
-@same_user_only()
 def subscriptions(request, username=None, feed_id=None):
-    """Do something with the user's subscription.
+    """Do something with the user's subscription list.
     """
     logging.debug('subscriptions %s' % request.method)
+
+    if request.method == 'GET':
+        #
+        # Provide an OPML file with the list of feeds
+        #
+        subscriptions = request.user.podcast_set.filter(allowed=True).order_by('name')
+
+        #
+        # Really, there isn't an easier way to set the mimetype without having
+        # to render the entire template ourselves?
+        #
+        response = HttpResponse(mimetype='text/x-opml')
+        response['Content-Disposition'] = 'attachment; filename=castsampler.opml'
+        t = loader.get_template('subscriptions.opml')
+        c = Context({'user':request.user,
+                     'subscriptions':subscriptions,
+                     })
+        response.write(t.render(c))
+        return response
+    #
+    # If they used another request method, they must be trying
+    # to modify the list of subscriptions.
+    #
+    return change_subscriptions(request, username=username, feed_id=feed_id)
+
+@jsonView()
+@same_user_only()
+@login_required
+def change_subscriptions(request, username=None, feed_id=None):
+    """Modify the user's subscription list.
+    """
     response = {}
+    logging.debug('change_subscriptions %s' % request.method)
     
     if request.method == 'POST':
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect('%s?%s=%s' % (LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
+        if request.user.username != username:
+            raise RuntimeError('You are not allowed to add subscriptions for another user.')
         #
         # Process the form input and check for errors
         #
@@ -130,6 +164,11 @@ def subscriptions(request, username=None, feed_id=None):
         response['entries'] = convert_feed_to_entries(parsed_feed)
 
     elif request.method == 'DELETE':
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect('%s?%s=%s' % (LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
+        if request.user.username != username:
+            raise RuntimeError('You are not allowed to remove subscriptions for another user.')
+
         logging.debug('Deleting %s' % feed_id)
 
         #
@@ -215,18 +254,6 @@ def remove_from_queue(request, username, id):
     #logging.debug(response)
     return response
 
-
-@jsonView()
-@same_user_only()
-@login_required
-def feed_list(request, username):
-    """Returns JSON package of podcasts for the user.
-    """
-    l = []
-    response = { 'list': l }
-    for p in request.user.podcast_set.filter(allowed=True).order_by('name'):
-        l.append(p.as_dict())
-    return response
 
 @jsonView()
 @login_required

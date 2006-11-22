@@ -1,3 +1,19 @@
+2006-11-22  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (subscriptions): Basic GET access to /subscriptions/
+	should return the OPML file.  Other methods of access to the same
+	URL are now handled by change_subscriptions.
+	(change_subscriptions): Handle modifications to the user's subscriptions.
+
+	* urls.py (urlpatterns): Remove feed_list since it is no longer used.
+
+	* templates/user.html: Add link to OPML file for subscriptions.
+
+	* templates/subscriptions.opml: Template for OPML list of subscriptions.
+
+	* download_cache.py (retrieve_feed): If we cannot create the cache
+	output file, log the error and return the data.
+
 2006-11-13  Doug Hellmann  <dhellmann@racemi.com>
 
 	* download_cache.py (retrieve_feed): Update the user-agent string

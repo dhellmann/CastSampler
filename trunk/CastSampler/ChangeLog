@@ -1,3 +1,9 @@
+2006-11-22  Doug Hellmann  <dhellmann@racemi.com>
+
+	* static/js/oneoffcast/user.js: Remove dead code.
+
+	* static/images/opml-icon-16x16.png: Icon for OPML link.
+
 2006-11-12  Doug Hellmann  <dhellmann@racemi.com>
 
 	* static/js/oneoffcast/user.js: Include date information in the

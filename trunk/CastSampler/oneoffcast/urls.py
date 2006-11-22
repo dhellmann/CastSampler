@@ -63,7 +63,6 @@ urlpatterns = patterns(
     # AJAX calls for user page
     (r'^(?P<username>[^/]+)/queue/(?P<id>\d+)/$', 'remove_from_queue'),
     (r'^(?P<username>[^/]+)/queue/$', 'queue'),
-    (r'^(?P<username>[^/]+)/feed_list/$', 'feed_list'),
 
     # Subscriptions to podcasts
     (r'^(?P<username>[^/]+)/subscriptions/((?P<feed_id>\d+)/)?$', 'subscriptions'),

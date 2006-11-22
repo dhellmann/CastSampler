@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<opml version="2.0">
+  <head>
+    <title>{{user}}'s CastSampler Subscriptions</title>
+    <dateModified>{% now "r" %}</dateModified>
+    <ownerName>{{user}}</ownerName>
+  </head>
+  <body>
+{% for sub in subscriptions %}
+    <outline text="{{sub.name|escape}}" description="{{sub.description|escape}}" xmlUrl="{{sub.feed_url}}" htmlUrl="{{sub.home_url}}" type="rss" />
+{% endfor %}
+  </body>
+</opml>
