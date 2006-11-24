@@ -9,7 +9,7 @@
   <div class="mainpage">
 
     <div class="what_is_it">
-      <h3 style="background-color: #eeeeee">What is CastSampler?</h3>
+      <h3>What is CastSampler?</h3>
       <ul>
         <li>Sample individual episodes from podcasts without subscribing to
           all of them, so you only download the content you actually want.</li>
@@ -49,9 +49,12 @@
     }
   </script>
 
-  {% newest_subscription_list 5 %}
-
-  {% popular_subscription_list 5 %}
-
+  <div class="queue_wrapper" style="padding: 1em">
+    {% newest_subscription_list 5 %}
+  </div>
+    
+  <div class="queue_wrapper" style="padding: 1em">
+    {% popular_subscription_list 5 %}
+  </div>
 
 {% endblock %}

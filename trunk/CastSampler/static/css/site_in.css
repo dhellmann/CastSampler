@@ -74,8 +74,7 @@ hr {
 
 
 h1, h2, h3, h4, h5, h6 {
-/*  color: DARK2; */
-/*  background-color: white;*/
+  color: DARK1;
   clear: left;
   font: 100% Verdana, Helvetica, Arial, sans-serif;
   margin: 0;
@@ -520,7 +519,7 @@ div.title {
 
 .try_it { 
   font-size: 150%;
-  background-color: #5F7353;
+  background-color: DARK1;
   color: white;
   text-align: center;
   padding: 2em;
@@ -528,9 +527,9 @@ div.title {
 }
 
 .what_is_it {
-  border: 1px solid #737153; /* dark brown */
+  border: 1px solid DARK1;
   margin: 1em;
-  background-color: #eeeeee;
+  background-color: white;
 }
 
 /*
