@@ -2,6 +2,7 @@
 <h2>Popular</h2>
 {% for subscription in popular_subscriptions %}
 <div class="sidebar_podcast_wrapper">
+{% if user.is_authenticated %}
   <div class="sidebar_podcast_add">
     <form id="add_popular_{{subscription.id}}" method="post" action="/cast/{{user}}/">
       <input type="hidden" name="url" value="{{subscription.feed_url}}" />
@@ -14,7 +15,17 @@
   <div class="sidebar_podcast">
     <a href="{{subscription.home_url}}" target="_blank">{{subscription.name}}</a>
     <a href="{{subscription.feed_url}}" target="_blank"><img alt="Show feed" title="Show feed" src="/static/images/feed-icon-14x14.png"/></a>
+ </div>
+{% else %}
+  <div class="sidebar_podcast_add">
+    <a href="{{subscription.feed_url}}" target="_blank"><img alt="Show
+          feed" title="Show feed"
+          src="/static/images/feed-icon-14x14.png"/></a>
   </div>
+  <div class="sidebar_podcast">
+    <a href="{{subscription.home_url}}" target="_blank">{{subscription.name}}</a>
+  </div>
+{% endif %}
 </div>
 {% endfor %}
 {% endif %}

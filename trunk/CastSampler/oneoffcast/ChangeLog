@@ -1,3 +1,14 @@
+2006-11-24  Doug Hellmann  <dhellmann@racemi.com>
+
+	* templatetags/subscription_list_tags.py: Recode the tags so they
+	have access to context and can use the user variable.	
+
+	* templates/popular_subscription_list.html: Only show the add
+	button if the user is logged in.
+
+	* templates/newest_subscription_list.html: Only show the add
+	button if the user is logged in.
+
 2006-11-22  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (subscriptions): Basic GET access to /subscriptions/
