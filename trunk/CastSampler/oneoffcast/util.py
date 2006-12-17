@@ -146,7 +146,10 @@ def convert_feed_to_entries(parsed_feed):
                 del new_entry[name]
 
         for attr in [ 'title', 'summary' ]:
-             stripped = strip_html(new_entry[attr])
+             try:
+                  stripped = strip_html(new_entry[attr])
+             except KeyError:
+                  continue
              encoded = stripped.encode('utf-8', 'replace')
              new_entry[attr] = encoded
              
