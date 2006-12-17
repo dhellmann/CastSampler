@@ -1,5 +1,7 @@
 2006-12-17  Doug Hellmann  <dhellmann@racemi.com>
 
+	* util.py (convert_feed_to_entries): Only remove keys that exist.
+
 	* views.py (change_subscriptions): Use the feedfinder module to
 	try to ensure that the url being added points to a feed.
 	(change_subscriptions): If feedfinder.py doesn't think the URL

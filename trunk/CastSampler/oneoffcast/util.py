@@ -140,9 +140,11 @@ def convert_feed_to_entries(parsed_feed):
     for e in parsed_feed['entries']:
         new_entry = {}
         new_entry.update(e)
-        del new_entry['summary_detail']
-        del new_entry['title_detail']
-        del new_entry['updated_parsed']
+
+        for name in [ 'summary_detail', 'title_detail', 'updated_parsed' ]:
+            if name in new_entry:
+                del new_entry[name]
+
         for attr in [ 'title', 'summary' ]:
              stripped = strip_html(new_entry[attr])
              encoded = stripped.encode('utf-8', 'replace')
