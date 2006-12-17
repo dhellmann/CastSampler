@@ -41,6 +41,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import loader, Context
 
+import feedfinder
+
 import logging
 
 #
@@ -146,6 +148,7 @@ def change_subscriptions(request, username=None, feed_id=None):
             return HttpResponseRedirect('%s?%s=%s' % (LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
         if request.user.username != username:
             raise RuntimeError('You are not allowed to add subscriptions for another user.')
+        
         #
         # Process the form input and check for errors
         #
@@ -158,6 +161,25 @@ def change_subscriptions(request, username=None, feed_id=None):
             raise RuntimeError(error_text)
             
         manipulator.do_html2python(new_data)
+
+        #
+        # If the URL does not look like a feed, see if we
+        # can find a single feed from the URL.
+        #
+        url = new_data['url']
+        logging.debug('Checking %s for a feed' % url)
+        feed_guesses = feedfinder.feeds(url)
+        logging.debug('Found %s feed urls' % str(feed_guesses))
+        if url not in feed_guesses:
+            if feed_guesses:
+                new_data['url'] = feed_guesses[0]
+                logging.debug('Using %s instead' % new_data['url'])
+            else:
+                raise RuntimeError('Could not find a syndication feed at %s' % url)
+
+        #
+        # We are ready to save the feed info to the database
+        #
         podcast, parsed_feed = manipulator.save(new_data)
 
         response.update(podcast.as_dict())

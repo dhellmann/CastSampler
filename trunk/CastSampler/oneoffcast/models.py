@@ -136,6 +136,8 @@ def find_or_create_podcast(feed_url, user=None):
         try:
             name = data.feed.title.encode('utf-8', 'replace')
         except AttributeError, err:
+            logging.debug('data is a %s' % data.__class__.__name__)
+            logging.debug(data)
             raise RuntimeError('Could not parse %s: %s' % (feed_url, 'no title'))
         try:
             description = data.feed.description.encode('utf-8', 'replace')

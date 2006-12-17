@@ -1,5 +1,10 @@
 2006-12-17  Doug Hellmann  <dhellmann@racemi.com>
 
+	* views.py (change_subscriptions): Use the feedfinder module to
+	try to ensure that the url being added points to a feed.
+
+	* templates/user.html: Fix the title of the alternate link.
+
 	* urls.py (feeds): Take out the Atom feed.
 
 	* feeds.py (UniqueGUIDRSSFeed.add_item): Switch the unique_id if

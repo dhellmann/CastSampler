@@ -17,6 +17,14 @@ logging.basicConfig(filename='/tmp/castsampler.log',
                     format='%(asctime)s %(levelname)-8s %(message)s',
                     )
 
+#
+# Configure the trace module to write trace messages to the log file.
+#
+if DEBUG:
+    from trace import trace, LogOutput
+    trace.setOutputStream(LogOutput())
+    
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
     ('Doug Hellmann', 'doug@hellfly.net'),
