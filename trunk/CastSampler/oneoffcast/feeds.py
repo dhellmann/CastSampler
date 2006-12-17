@@ -34,7 +34,7 @@
 #
 from django.contrib.auth.models import User
 from django.contrib.syndication.feeds import Feed
-from django.utils.feedgenerator import Atom1Feed, Rss201rev2Feed
+from django.utils.feedgenerator import Rss201rev2Feed
 
 import logging
 
@@ -89,8 +89,24 @@ class UserFeed(Feed):
     def items(self, obj):
         return models.QueueItem.objects.filter(user=obj).order_by('add_date')
 
-class RSSFeed(UserFeed):
-    feed_type = Rss201rev2Feed
+class UniqueGUIDRSSFeed(Rss201rev2Feed):
 
-class AtomFeed(UserFeed):
-    feed_type = Atom1Feed
+    _existing_unique_ids = set()
+
+    def add_item(self, link=None, unique_id=None, enclosure=None, **kwds):
+        #
+        # Switch the unique_id if it refers to the link because
+        # some sites (Barnes and Noble) use the same link for all
+        # enclosures but the enclosure url is still different.
+        #
+        if link == unique_id:
+            unique_id = enclosure.url
+        return Rss201rev2Feed.add_item(self,
+                                       link=link,
+                                       unique_id=unique_id,
+                                       enclosure=enclosure,
+                                       **kwds)
+
+class RSSFeed(UserFeed):
+    feed_type = UniqueGUIDRSSFeed
+

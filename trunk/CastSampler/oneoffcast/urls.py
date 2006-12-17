@@ -46,7 +46,6 @@ from oneoffcast import feeds
 #
 
 feeds = {
-    'atom':feeds.AtomFeed,
     'rss':feeds.RSSFeed,
     }
 

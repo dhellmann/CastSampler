@@ -1,3 +1,13 @@
+2006-12-17  Doug Hellmann  <dhellmann@racemi.com>
+
+	* urls.py (feeds): Take out the Atom feed.
+
+	* feeds.py (UniqueGUIDRSSFeed.add_item): Switch the unique_id if
+	it refers to the link because some sites (Barnes and Noble) use
+	the same link for all enclosures but the enclosure url is still
+	different.
+	(AtomFeed): Remove the AtomFeed because we don't actually use it.
+
 2006-11-24  Doug Hellmann  <dhellmann@racemi.com>
 
 	* templatetags/subscription_list_tags.py: Recode the tags so they

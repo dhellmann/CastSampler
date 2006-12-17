@@ -212,7 +212,12 @@ function do_add_to_queue(podcast_id, entry_id) {
 	author_email = author_detail['email'];
   } else {
 	author_name = entry['author'];
-	author_email = 'n/a';
+	if (author_name) {
+	  author_email = 'n/a';
+	} else {
+	  author_name = '';
+	  author_email = '';
+	}
   }
 
   if (entry['link']) {
