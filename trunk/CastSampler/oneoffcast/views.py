@@ -174,8 +174,6 @@ def change_subscriptions(request, username=None, feed_id=None):
             if feed_guesses:
                 new_data['url'] = feed_guesses[0]
                 logging.debug('Using %s instead' % new_data['url'])
-            else:
-                raise RuntimeError('Could not find a syndication feed at %s' % url)
 
         #
         # We are ready to save the feed info to the database

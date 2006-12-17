@@ -2,6 +2,9 @@
 
 	* views.py (change_subscriptions): Use the feedfinder module to
 	try to ensure that the url being added points to a feed.
+	(change_subscriptions): If feedfinder.py doesn't think the URL
+	points to a feed, assume the user knows better and try to use it
+	anyway.
 
 	* templates/user.html: Fix the title of the alternate link.
 
