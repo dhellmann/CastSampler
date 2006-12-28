@@ -295,8 +295,8 @@ function insert_feed_into_list(feed_info) {
 	show_icon = document.createElement('img');
 	/*show_icon.setAttribute('src', '/static/images/feed_magnify.png');*/
 	show_icon.setAttribute('src', '/static/images/feed-icon-14x14.png');
-	show_icon.setAttribute('alt', 'Show feed below');
-	show_icon.setAttribute('title', 'Show feed below');
+	show_icon.setAttribute('alt', 'Show feed contents');
+	show_icon.setAttribute('title', 'Show feed contents');
 	new_link.appendChild(show_icon);
 	new_item.appendChild(new_link);
 
