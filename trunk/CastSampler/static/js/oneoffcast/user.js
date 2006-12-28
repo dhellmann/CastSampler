@@ -489,7 +489,7 @@ function populate_feed_viewer(podcast_name, podcast_id, entries) {
   done_node.setAttribute('href', '');
   done_node.setAttribute('alt', 'Back to subscriptions');
   done_node.setAttribute('title', 'Back to subscriptions');
-  done_node.setAttribute('onclick', "return show_subscriptions();");
+  done_node.setAttribute('onclick', "return show_subscriptions()");
   done_node.setAttribute('class', 'done');
   done_arrow = document.createElement('img');
   done_arrow.setAttribute('src', '/static/images/text_list_bullets.png');
@@ -615,4 +615,5 @@ function user_onload() {
 function show_subscriptions() {
   dojo.lfx.html.fadeShow("my_subscriptions_wrapper", 1).play();
   dojo.lfx.html.fadeHide("feed_viewer", 1).play();
+  return false;
 }
