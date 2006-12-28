@@ -424,7 +424,7 @@ function show_feed_by_id(id, name, url) {
   dojo.debug('show_feed_by_id ' + id + ' ' + name);
 
   /* hide the subscription list */
-  dojo.lfx.html.fadeHide("my_subscriptions_wrapper", 100).play();
+  dojo.lfx.html.fadeHide("my_subscriptions_wrapper", 1).play();
 
   /* show the feed viewer */
   var viewer_node = clear_feed_viewer();
@@ -613,6 +613,6 @@ function user_onload() {
 ** Hide the feed_viewer and show the subscriptions
 */
 function show_subscriptions() {
-  dojo.lfx.html.fadeShow("my_subscriptions_wrapper", 100).play();
-  dojo.lfx.html.fadeHide("feed_viewer", 100).play();
+  dojo.lfx.html.fadeShow("my_subscriptions_wrapper", 1).play();
+  dojo.lfx.html.fadeHide("feed_viewer", 1).play();
 }
