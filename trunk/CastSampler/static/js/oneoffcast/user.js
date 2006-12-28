@@ -289,7 +289,7 @@ function insert_feed_into_list(feed_info) {
 	var new_item = document.createElement("li");
 	new_item.setAttribute('id', feed_node_id);
 	var new_link = document.createElement("a");
-	new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_id + ", '" + feed_info['name'] + "', '" + feed_info['home_url'] + "')");
+	new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_id + ", '" + escape(feed_info['name']) + "', '" + feed_info['home_url'] + "')");
 	new_link.setAttribute("href", "");
 	new_link.appendChild(document.createTextNode(feed_info["name"]));
 	show_icon = document.createElement('img');
@@ -441,7 +441,7 @@ function show_feed_by_id(id, name, url) {
   home_icon.innerHTML = '<img src="/static/images/house.png" />';
   legend_node.appendChild(home_icon);
 
-  legend_node.appendChild(document.createTextNode(' ' + name));
+  legend_node.appendChild(document.createTextNode(' ' + unescape(name)));
 
   viewer_node.appendChild(legend_node);
 
