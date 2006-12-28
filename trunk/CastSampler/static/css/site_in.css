@@ -577,3 +577,7 @@ div.title {
 .sidebar_podcast a:active {
   background-color: transparent;
 }
+
+.done { 
+  text-decoration: none;
+ }
