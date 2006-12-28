@@ -287,5 +287,6 @@ def external(request, id):
     response = {}
     response['entries'] = convert_feed_to_entries(parsed_feed)
     response['id'] = id
+    response['name'] = podcast.name
     return response
 

@@ -289,11 +289,12 @@ function insert_feed_into_list(feed_info) {
 	var new_item = document.createElement("li");
 	new_item.setAttribute('id', feed_node_id);
 	var new_link = document.createElement("a");
-	new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_id + ")");
+	new_link.setAttribute("onclick", "return show_feed_by_id(" + feed_id + ", '" + feed_info['name'] + "', '" + feed_info['home_url'] + "')");
 	new_link.setAttribute("href", "");
 	new_link.appendChild(document.createTextNode(feed_info["name"]));
 	show_icon = document.createElement('img');
-	show_icon.setAttribute('src', '/static/images/arrow_down.png');
+	/*show_icon.setAttribute('src', '/static/images/feed_magnify.png');*/
+	show_icon.setAttribute('src', '/static/images/feed-icon-14x14.png');
 	show_icon.setAttribute('alt', 'Show feed below');
 	show_icon.setAttribute('title', 'Show feed below');
 	new_link.appendChild(show_icon);
@@ -307,13 +308,15 @@ function insert_feed_into_list(feed_info) {
 	home_icon.innerHTML = '<img src="/static/images/house.png" />';
 	new_item.appendChild(home_icon);
 
+	/*
 	feed_icon = document.createElement('a');
 	feed_icon.setAttribute('href', feed_info['feed_url']);
 	feed_icon.setAttribute('target', '_blank');
 	feed_icon.setAttribute('alt', 'Direct link to feed');
 	feed_icon.setAttribute('title', 'Direct link to feed');
-	feed_icon.innerHTML = '<img src="/static/images/feed-icon-14x14.png" />';
+	feed_icon.innerHTML = '<img src="/static/images/feed-14x14.png" />';
 	new_item.appendChild(feed_icon);
+	*/
 
 	var delete_link = document.createElement('a');
 	delete_link.setAttribute('href', '');
@@ -336,8 +339,7 @@ function insert_feed_into_list(feed_info) {
 */
 function do_add_feed() {
   show_status("Loading feed...");
-  clear_feed_viewer();
-  
+
   dojo.io.bind({ 
 	url: "subscriptions/",
 		handler: add_feed_callback,
@@ -361,7 +363,7 @@ function add_feed_callback(type, data, evt) {
 	}
 	else {
 	  insert_feed_into_list(payload);
-	  populate_feed_viewer(payload['id'], payload["entries"]);
+	  populate_feed_viewer(payload['name'], payload['id'], payload["entries"]);
 	  clear_error("add_feed_results");
 	}
 	
@@ -418,10 +420,32 @@ function remove_feed_callback(type, data, evt) {
 /*
 ** SHOW FEEDS form
 */
-function show_feed_by_id(id) {
-  dojo.debug('show_feed_by_id ' + id);
+function show_feed_by_id(id, name, url) {
+  dojo.debug('show_feed_by_id ' + id + ' ' + name);
+
+  /* hide the subscription list */
+  dojo.lfx.html.fadeHide("my_subscriptions_wrapper", 100).play();
+
+  /* show the feed viewer */
+  var viewer_node = clear_feed_viewer();
+  dojo.lfx.html.fadeShow(viewer_node, 1).play();
+
+  /* indicate which podcast we are displaying */
+  legend_node = document.createElement('legend');
+
+  home_icon = document.createElement('a');
+  home_icon.setAttribute('href', url);
+  home_icon.setAttribute('target', '_blank');
+  home_icon.setAttribute('alt', 'Visit home page');
+  home_icon.setAttribute('title', 'Visit home page');
+  home_icon.innerHTML = '<img src="/static/images/house.png" />';
+  legend_node.appendChild(home_icon);
+
+  legend_node.appendChild(document.createTextNode(' ' + name));
+
+  viewer_node.appendChild(legend_node);
+
   show_status("Loading feed...");
-  clear_feed_viewer();
   dojo.io.bind({ 
 	url: "/cast/external/" + id + "/",
 		handler: show_feed_by_id_callback,
@@ -440,7 +464,7 @@ function show_feed_by_id_callback(type, data, evt) {
 	  show_error("feed_viewer", payload["error"]);
 	}
 	else {
-	  populate_feed_viewer(payload['id'], payload["entries"]);
+	  populate_feed_viewer(payload['name'], payload['id'], payload["entries"]);
 	}
   }
   else if (type == "error") {
@@ -457,11 +481,28 @@ function clear_feed_viewer() {
 }
 
 /* given a list of entries from the parsed feed, show them */
-function populate_feed_viewer(podcast_id, entries) {
-  var viewer_node = clear_feed_viewer();
+function populate_feed_viewer(podcast_name, podcast_id, entries) {
+  var viewer_node = dojo.byId("feed_viewer");
+
+  /* Add a link to indicate that we are done with this feed */
+  done_node = document.createElement('a');
+  done_node.setAttribute('href', '');
+  done_node.setAttribute('alt', 'Back to subscriptions');
+  done_node.setAttribute('title', 'Back to subscriptions');
+  done_node.setAttribute('onclick', "return show_subscriptions();");
+  done_node.setAttribute('class', 'done');
+  done_arrow = document.createElement('img');
+  done_arrow.setAttribute('src', '/static/images/text_list_bullets.png');
+  done_node.appendChild(done_arrow);
+  done_node.appendChild(document.createTextNode(' Subscriptions'));
+  viewer_node.appendChild(done_node);
+  viewer_node.appendChild(document.createElement('br'));
 
   if (entries.length == 0) {
-	viewer_node.innerHTML = '<div class="message">No entries</div>';
+	message_node = document.createElement('div');
+	message_node.setAttribute('class', 'message');
+	message_node.appendChild(document.createTextNode('No entries'));
+	viewer_node.appendChild(message_node);
   }
   else {
 	/* update our global variable so the code to add to the queue can find the entries */
@@ -522,6 +563,9 @@ function populate_feed_viewer(podcast_id, entries) {
 
 	  viewer_node.appendChild(entry_node);
 	}
+	  
+	/* duplicate the "Done" link */
+	viewer_node.appendChild(done_node.cloneNode(true));
   }
 
   dojo.lfx.html.wipeIn(viewer_node, 200).play();
@@ -551,6 +595,7 @@ function user_onload() {
 	insert_feed_into_list(initial_subscriptions[i]);
   }
 
+  dojo.lfx.html.fadeHide("feed_viewer", 1).play();
   clear_feed_viewer();
 
   if (document.add_feed.url.value) {
@@ -561,4 +606,13 @@ function user_onload() {
 
   /* give the url field focus */
   document.add_feed.url.focus();
+}
+
+
+/*
+** Hide the feed_viewer and show the subscriptions
+*/
+function show_subscriptions() {
+  dojo.lfx.html.fadeShow("my_subscriptions_wrapper", 100).play();
+  dojo.lfx.html.fadeHide("feed_viewer", 100).play();
 }
