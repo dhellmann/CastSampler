@@ -605,7 +605,7 @@ function user_onload() {
   }
 
   /* give the url field focus */
-  document.add_feed.url.focus();
+  /* document.add_feed.url.focus(); */
 }
 
 
