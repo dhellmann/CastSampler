@@ -1,3 +1,21 @@
+2007-01-07  Doug Hellmann  <dhellmann@racemi.com>
+
+	* tools/mkcss.sh (ERROR): Add color symbol for error messages.
+
+	* templates/two_columns.html: Move the status message above the
+	content.
+
+	* templates/base.html: Move the status message above the content.
+
+	* static/js/oneoffcast/user.js (hide_subscriptions): New function
+	to hide the subscription viewer and add form.
+	(show_subscriptions): New function to show the subscription viewer
+	and add form.
+	(hide_feed_viewer): New function to hide the feed viewer node.
+	(show_feed_viewer): New function to show the feed viewer node.
+
+	* static/css/site_in.css: Add ERROR symbol for error message colors.
+
 2006-12-17  Doug Hellmann  <dhellmann@racemi.com>
 
 	* trace.py: Import the trace module from HappyDoc.

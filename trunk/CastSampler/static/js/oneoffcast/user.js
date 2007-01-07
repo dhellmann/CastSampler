@@ -14,6 +14,34 @@ dojo.io.bind({
 });
 */
 
+function hide_subscriptions() {
+  /* the subscription list */
+  dojo.lfx.html.fadeHide("my_subscriptions_wrapper", 1).play();
+
+  /* the form for adding a new subscription */
+  dojo.lfx.html.fadeHide("add_feed", 1).play();
+}
+
+function show_subscriptions () {
+  /* the subscription list */
+  dojo.lfx.html.fadeShow("my_subscriptions_wrapper", 1).play();
+
+  /* the form for adding a new subscription */
+  dojo.lfx.html.fadeShow("add_feed", 1).play();
+}
+
+function hide_feed_viewer() {
+  dojo.lfx.html.fadeHide("feed_viewer", 1).play();
+}
+
+function show_feed_viewer() {
+  /* show the feed viewer */
+  var viewer_node = clear_feed_viewer();
+  dojo.lfx.html.fadeShow(viewer_node, 1).play();
+
+  return viewer_node;
+}
+
 /*
 ** CURRENT QUEUE
 */
@@ -338,6 +366,7 @@ function insert_feed_into_list(feed_info) {
 ** ADD FEED form
 */
 function do_add_feed() {
+  clear_error("add_feed_results");
   show_status("Loading feed...");
 
   dojo.io.bind({ 
@@ -363,6 +392,8 @@ function add_feed_callback(type, data, evt) {
 	}
 	else {
 	  insert_feed_into_list(payload);
+	  hide_subscriptions();
+	  show_feed_viewer();
 	  populate_feed_viewer(payload['name'], payload['id'], payload["entries"]);
 	  clear_error("add_feed_results");
 	}
@@ -423,12 +454,8 @@ function remove_feed_callback(type, data, evt) {
 function show_feed_by_id(id, name, url) {
   dojo.debug('show_feed_by_id ' + id + ' ' + name);
 
-  /* hide the subscription list */
-  dojo.lfx.html.fadeHide("my_subscriptions_wrapper", 1).play();
-
-  /* show the feed viewer */
-  var viewer_node = clear_feed_viewer();
-  dojo.lfx.html.fadeShow(viewer_node, 1).play();
+  hide_subscriptions();
+  viewer_node = show_feed_viewer();
 
   /* indicate which podcast we are displaying */
   legend_node = document.createElement('legend');
@@ -595,7 +622,7 @@ function user_onload() {
 	insert_feed_into_list(initial_subscriptions[i]);
   }
 
-  dojo.lfx.html.fadeHide("feed_viewer", 1).play();
+  hide_feed_viewer();
   clear_feed_viewer();
 
   if (document.add_feed.url.value) {
@@ -613,7 +640,7 @@ function user_onload() {
 ** Hide the feed_viewer and show the subscriptions
 */
 function show_subscriptions() {
-  dojo.lfx.html.fadeShow("my_subscriptions_wrapper", 1).play();
+  show_subscriptions();
   dojo.lfx.html.fadeHide("feed_viewer", 1).play();
   return false;
 }

@@ -24,6 +24,16 @@
 
 {% block content %}
 
+  <fieldset id="my_subscriptions_wrapper">
+    <legend><a href="subscriptions"><img
+          src="/static/images/opml-icon-16x16.png" /></a> My Subscriptions</legend>
+    <ul id="my_subscriptions">
+    </ul>
+
+  </fieldset>
+
+  <fieldset id="feed_viewer"></fieldset>
+
   <form id="add_feed" method="post" name="add_feed" onsubmit="return do_add_feed()">
     <fieldset>
       <legend>Add feed</legend>
@@ -42,16 +52,6 @@
 
     </fieldset>
   </form>
-
-  <fieldset id="my_subscriptions_wrapper">
-    <legend><a href="subscriptions"><img
-          src="/static/images/opml-icon-16x16.png" /></a> My Subscriptions</legend>
-    <ul id="my_subscriptions">
-    </ul>
-
-  </fieldset>
-
-  <fieldset id="feed_viewer"></fieldset>
 
 {% endblock %}
 

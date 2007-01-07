@@ -1,3 +1,8 @@
+2007-01-07  Doug Hellmann  <dhellmann@racemi.com>
+
+	* templates/user.html: Move the add_feed form below the list of
+	subscriptions.
+
 2006-12-17  Doug Hellmann  <dhellmann@racemi.com>
 
 	* util.py (convert_feed_to_entries): Only process keys that exist.

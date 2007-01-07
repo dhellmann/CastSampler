@@ -359,7 +359,7 @@ div.title {
 
 .major_error {
   /* Class for error indication in forms */
-  background: #FDB946;
+  background: ERROR;
   border: 1px solid black;
   padding: 0.5em;
   margin: 0;
@@ -369,7 +369,7 @@ div.title {
 
 .error {
   /* Class for error indication in forms */
-  color: #FDB946;
+  color: ERROR;
   background-color: transparent;
   font-weight: bold;
 /*  border: 1px solid black;*/

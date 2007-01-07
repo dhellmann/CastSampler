@@ -21,5 +21,6 @@ cat $IN \
 	| sed 's/DARK2/#664D22/g' \
 	| sed 's/LIGHT2/#9F7E32/g' \
 	| sed 's/LIGHT3/#D0DAB0/g' \
+	| sed 's/ERROR/red/g' \
 	> $OUT
 
