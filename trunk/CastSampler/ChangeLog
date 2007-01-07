@@ -1,5 +1,8 @@
 2007-01-07  Doug Hellmann  <dhellmann@racemi.com>
 
+	* templates/contact.html: Set thet able background color to
+	prevent ugliness.
+
 	* tools/mkcss.sh (ERROR): Add color symbol for error messages.
 
 	* templates/two_columns.html: Move the status message above the
