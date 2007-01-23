@@ -321,12 +321,19 @@ function insert_feed_into_list(feed_info) {
 	new_link.setAttribute("href", "");
 	new_link.appendChild(document.createTextNode(feed_info["name"]));
 	show_icon = document.createElement('img');
-	/*show_icon.setAttribute('src', '/static/images/feed_magnify.png');*/
-	show_icon.setAttribute('src', '/static/images/feed-icon-14x14.png');
+	show_icon.setAttribute('src', '/static/images/feed_magnify.png');
 	show_icon.setAttribute('alt', 'Show feed contents');
 	show_icon.setAttribute('title', 'Show feed contents');
 	new_link.appendChild(show_icon);
 	new_item.appendChild(new_link);
+
+	monitor_icon = document.createElement('a');
+	monitor_icon.setAttribute('href', feed_info['monitor_url']);
+	monitor_icon.setAttribute('target', '_blank');
+	monitor_icon.setAttribute('alt', 'Monitor feed');
+	monitor_icon.setAttribute('title', 'Monitor feed');
+	monitor_icon.innerHTML = '<img src="/static/images/feed.png" />';
+	new_item.appendChild(monitor_icon);
 
 	home_icon = document.createElement('a');
 	home_icon.setAttribute('href', feed_info['home_url']);
@@ -516,7 +523,7 @@ function populate_feed_viewer(podcast_name, podcast_id, entries) {
   done_node.setAttribute('href', '');
   done_node.setAttribute('alt', 'Back to subscriptions');
   done_node.setAttribute('title', 'Back to subscriptions');
-  done_node.setAttribute('onclick', "return show_subscriptions()");
+  done_node.setAttribute('onclick', "return switch_to_subscriptions()");
   done_node.setAttribute('class', 'done');
   done_arrow = document.createElement('img');
   done_arrow.setAttribute('src', '/static/images/text_list_bullets.png');
@@ -639,8 +646,8 @@ function user_onload() {
 /*
 ** Hide the feed_viewer and show the subscriptions
 */
-function show_subscriptions() {
+function switch_to_subscriptions() {
+  hide_feed_viewer();
   show_subscriptions();
-  dojo.lfx.html.fadeHide("feed_viewer", 1).play();
   return false;
 }

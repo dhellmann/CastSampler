@@ -88,7 +88,7 @@ def user(request, username):
     #
     # Look up some data we need for the page
     #
-    subscriptions = [ sub.as_dict()
+    subscriptions = [ sub.as_dict(request.user)
                       for sub in request.user.podcast_set.filter(allowed=True).order_by('name')
                       ]
     json_subscriptions = simplejson.dumps(subscriptions)
@@ -180,7 +180,7 @@ def change_subscriptions(request, username=None, feed_id=None):
         #
         podcast, parsed_feed = manipulator.save(new_data)
 
-        response.update(podcast.as_dict())
+        response.update(podcast.as_dict(request.user))
         response['entries'] = convert_feed_to_entries(parsed_feed)
 
     elif request.method == 'DELETE':
@@ -209,6 +209,28 @@ def change_subscriptions(request, username=None, feed_id=None):
 
     return response
 
+def _do_add_to_queue(user, data):
+    "Really do the work to add an item to the user's queue."
+
+    # Process the form input and check for errors
+    new_data = data.copy()
+    new_data['user'] = user.id
+
+    logging.debug('_do_add_to_queue(%s)' % str(data))
+
+    # Fix up the length in case it is invalid
+    length = new_data.get('item_enclosure_length', 0)
+    try:
+        length = int(length)
+    except (TypeError, ValueError):
+        length = 0
+    new_data['item_enclosure_length'] = length
+
+    manipulator = QueueItem.AddManipulator()
+    manipulator.do_html2python(new_data)
+    new_item = manipulator.save(new_data)
+    return new_item
+
 
 @jsonView()
 @same_user_only()
@@ -221,26 +243,7 @@ def queue(request, username):
     response = {}
     
     if request.method == 'POST':
-        #
-        # Process the form input and check for errors
-        #
-        new_data = request.POST.copy()
-        new_data['user'] = request.user.id
-
-        #
-        # Fix up the length in case it is invalid
-        #
-        length = new_data.get('item_enclosure_length', 0)
-        try:
-            length = int(length)
-        except (TypeError, ValueError):
-            length = 0
-        new_data['item_enclosure_length'] = length
-
-        manipulator = QueueItem.AddManipulator()
-        manipulator.do_html2python(new_data)
-        new_item = manipulator.save(new_data)
-
+        new_item = _do_add_to_queue(request.user, request.POST)
         response['add_to_queue'] = [ new_item.as_dict() ]
         
     elif request.method == 'GET':
@@ -253,6 +256,20 @@ def queue(request, username):
                               ]
     #logging.debug(response)
     return response
+
+
+@same_user_only()
+@login_required
+def add_to_queue(request, username):
+    logging.debug('add_to_queue(%s)' % username)
+    logging.debug(str(request.GET))
+    
+    # Add the new item
+    _do_add_to_queue(request.user, request.GET)
+
+    # Redirect to the user page
+    return user_redirect(request)
+
 
 @jsonView()
 @same_user_only()
@@ -289,4 +306,3 @@ def external(request, id):
     response['id'] = id
     response['name'] = podcast.name
     return response
-

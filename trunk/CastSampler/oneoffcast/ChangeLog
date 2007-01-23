@@ -1,3 +1,25 @@
+2007-01-22  Doug Hellmann  <dhellmann@racemi.com>
+
+	* templates/user.html: Use the feed.png that matches the other
+	icons.
+
+	* models.py (Podcast.as_dict): Include the monitor_url in the
+	response.
+
+	* views.py (_do_add_to_queue): New function to avoid repeating the
+	add-to-queue code.
+	(queue): Call _do_add_to_queue.
+	(add_to_queue): New view method to add an item to the queue then
+	show the user page with the full queue.
+
+	* urls.py (urlpatterns): Organize different URLs into separate
+	lists.  Add URL pattern for monitor feeds.
+
+	* feeds.py (ProxyFeed): Class to produce the feed with links for
+	adding items to a queue directly.
+	(ProxyFeedArgs): Since the ProxyFeed uses multiple arguments, we
+	need a class to keep up with both values.
+
 2007-01-07  Doug Hellmann  <dhellmann@racemi.com>
 
 	* templates/user.html: Move the add_feed form below the list of

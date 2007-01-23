@@ -101,13 +101,14 @@ class Podcast(models.Model):
         """
         return QueueItem.objects.count(podcast=self)
 
-    def as_dict(self):
+    def as_dict(self, user):
         """Return a dictionary of interesting values that the view
         wants, in a form suitable for serializing via JSON.
         """
         d = { 'name':self.name,
               'home_url':self.home_url,
               'feed_url':self.feed_url,
+              'monitor_url':'/cast/feed/monitor/%s/%s/' % (user.username, self.id),
               'id':self.id,
               }
         return d

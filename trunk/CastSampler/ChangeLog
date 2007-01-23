@@ -1,3 +1,11 @@
+2007-01-22  Doug Hellmann  <dhellmann@racemi.com>
+
+	* static/js/oneoffcast/user.js (switch_to_subscriptions): Rename
+	to avoid recursion and conflict with the other function that
+	actually changes the visibility of the subscription list.
+	(insert_feed_into_list): Include a link to the monitor feed for a
+	subscription.
+
 2007-01-07  Doug Hellmann  <dhellmann@racemi.com>
 
 	* templates/contact.html: Set thet able background color to

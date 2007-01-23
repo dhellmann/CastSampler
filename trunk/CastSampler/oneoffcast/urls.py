@@ -45,30 +45,42 @@ from oneoffcast import feeds
 # Module
 #
 
-feeds = {
+basic_feeds = {
+    # User's queue
     'rss':feeds.RSSFeed,
+    # Monitor a podcast
+    'monitor':feeds.ProxyFeed,
     }
 
-urlpatterns = patterns(
-    '',
-    # User feed
-    (r'^feed/(?P<url>.*)$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
-    ) + \
-            patterns('oneoffcast.views',
 
+feed_patterns = patterns(
+    'django.contrib.syndication.views',
+    # User feed
+    (r'^feed/(?P<url>.*)$', 'feed', {'feed_dict': basic_feeds}),
+             
+    )
+
+view_patterns = patterns(
+    'oneoffcast.views',
+    
     # Process access to external feeds
     (r'^external/(?P<id>\d+)', 'external'),
-
+    
     # AJAX calls for user page
     (r'^(?P<username>[^/]+)/queue/(?P<id>\d+)/$', 'remove_from_queue'),
     (r'^(?P<username>[^/]+)/queue/$', 'queue'),
 
+    # Links from the monitor feed
+    (r'^(?P<username>[^/]+)/add_to_queue/$', 'add_to_queue'),
+    
     # Subscriptions to podcasts
     (r'^(?P<username>[^/]+)/subscriptions/((?P<feed_id>\d+)/)?$', 'subscriptions'),
-
+    
     # User pages
     (r'^(?P<username>[^/]+)/$', 'user'),
-
+    
     # No user specified, try to determine from the session
     (r'^$', 'user_redirect'),
     )
+
+urlpatterns = feed_patterns + view_patterns
