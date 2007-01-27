@@ -1,5 +1,15 @@
 2007-01-27  Doug Hellmann  <dhellmann@racemi.com>
 
+	* models.py (Podcast.get_monitor_url): Pull the logic for building
+	the monitoring URL out fo as_dict.
+
+	* templates/subscriptions.opml: Use our own monitoring feed for
+	the xmlUrl value, instead of linking directly back to the original
+	feed.
+
+	* views.py (subscriptions): Add url_prefix to the context
+	information so the template can use it to build up the URL.
+
 	* models.py (Podcast.Admin): Show the users who are subscribed to
 	the feed.
 

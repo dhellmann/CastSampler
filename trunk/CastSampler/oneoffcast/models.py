@@ -101,6 +101,10 @@ class Podcast(models.Model):
         """
         return QueueItem.objects.count(podcast=self)
 
+    def get_monitor_url(self, user):
+        "Return a relative URL for monitoring this feed by a user."
+        return '/cast/feed/monitor/%s/%s/' % (user.username, self.id)
+        
     def as_dict(self, user):
         """Return a dictionary of interesting values that the view
         wants, in a form suitable for serializing via JSON.
@@ -108,7 +112,7 @@ class Podcast(models.Model):
         d = { 'name':self.name,
               'home_url':self.home_url,
               'feed_url':self.feed_url,
-              'monitor_url':'/cast/feed/monitor/%s/%s/' % (user.username, self.id),
+              'monitor_url':self.get_monitor_url(user),
               'id':self.id,
               }
         return d

@@ -8,7 +8,7 @@
   </head>
   <body>
 {% for sub in subscriptions %}
-    <outline text="{{sub.name|escape}}" description="{{sub.description|escape}}" xmlUrl="{{sub.feed_url}}" htmlUrl="{{sub.home_url}}" type="rss" />
+    <outline text="{{sub.name|escape}}" description="{{sub.description|escape}}" xmlUrl="{{url_prefix}}/cast/feed/monitor/{{user}}/{{sub.id}}/" htmlUrl="{{sub.home_url}}" type="rss" />
 {% endfor %}
   </body>
 </opml>

@@ -35,6 +35,7 @@
 from django.contrib.auth import LOGIN_URL, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.core import serializers
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
@@ -125,6 +126,7 @@ def subscriptions(request, username=None, feed_id=None):
         t = loader.get_template('subscriptions.opml')
         c = Context({'user':request.user,
                      'subscriptions':subscriptions,
+                     'url_prefix':'http://' + Site.objects.get_current().domain,
                      })
         response.write(t.render(c))
         return response
