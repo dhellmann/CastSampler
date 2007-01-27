@@ -79,9 +79,9 @@ class Podcast(models.Model):
                                           ),
                                'classes':'collapse',
                                }),
-                   #('Users', {'fields':('users',),
-                   #           'classes':'collapse',
-                   #           }),
+                   ('Users', {'fields':('users',),
+                              'classes':'collapse',
+                              }),
                    )
         list_display = ('name', 'feed_url', 'allowed')
         list_filter = ['registration_date']

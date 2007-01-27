@@ -123,6 +123,64 @@ function remove_from_queue_callback(type, data, evt) {
   return false;
 }
 
+/* update the queue */
+function do_show_queue() {
+
+  show_status("Updating queue ...");
+
+  dojo.io.bind({ 
+	url: "queue/",
+	handler: show_queue_callback,
+	method: "GET",
+	});
+  return false;
+}
+
+function show_queue() {
+  if (initial_queue.length == 0) {
+	set_queue_empty();
+  }
+  else {
+	for (var i=0; i < initial_queue.length; i++) {
+	  insert_entry_into_queue(initial_queue[i], 0);
+	}
+  }
+
+  /* show the user feeds */
+  for (i=0; i < initial_subscriptions.length; i++) {
+	insert_feed_into_list(initial_subscriptions[i]);
+  }
+}
+
+/* called when the server responds to a request for the queue contents */
+function show_queue_callback(type, data, evt) {
+  if (type == "load") {
+	
+	payload = dojo.json.evalJson(data);
+
+	if (payload["error"] != "") {
+	  show_error("queue", payload["error"]);
+	}
+
+	/* remember the response */
+	initial_queue = payload['queue'];
+
+	/* clear the current contents */
+	var queue_node = dojo.byId("queue");
+	queue_node.innerHTML = '';
+
+	/* add the contents back */
+	show_queue();
+
+  } else if (type == "error") {
+	dojo.debugShallow(data);
+  }
+
+  clear_status();
+
+  return false;
+}
+
 function summarize_string(/*string*/s, /*number*/len) {
 // summary:
 //	Truncates 'str' after 'len' characters and appends periods as necessary so that it ends with "..."
@@ -446,7 +504,7 @@ function remove_feed_callback(type, data, evt) {
 	  list_node.removeChild(feed_node);
 
 	  /* Update the queue, in case one or more items were removed. */
-	  show_queue();
+	  do_show_queue();
 	}
 	
   } else if (type == "error") {
@@ -615,19 +673,7 @@ function user_onload() {
   var queue_node = dojo.byId("queue");
   queue_node.innerHTML = "";
 
-  if (initial_queue.length == 0) {
-	set_queue_empty();
-  }
-  else {
-	for (var i=0; i < initial_queue.length; i++) {
-	  insert_entry_into_queue(initial_queue[i], 0);
-	}
-  }
-
-  /* show the user feeds */
-  for (i=0; i < initial_subscriptions.length; i++) {
-	insert_feed_into_list(initial_subscriptions[i]);
-  }
+  show_queue();
 
   hide_feed_viewer();
   clear_feed_viewer();

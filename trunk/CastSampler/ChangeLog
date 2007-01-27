@@ -1,3 +1,12 @@
+2007-01-27  Doug Hellmann  <dhellmann@racemi.com>
+
+	* static/js/oneoffcast/user.js (do_show_queue): Initiate ajax
+	update of entire queue.
+	(show_queue): Once the queue is available, update the display.
+	(show_queue_callback): Ajax callback to update the entire queue.
+	(remove_feed_callback): Once the feed is removed, update the queue
+	display in case the queue contained items from that feed.
+
 2007-01-22  Doug Hellmann  <dhellmann@racemi.com>
 
 	* static/js/oneoffcast/user.js (switch_to_subscriptions): Rename
