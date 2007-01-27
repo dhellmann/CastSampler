@@ -115,3 +115,5 @@ INSTALLED_APPS = (
     'CastSampler.oneoffcast',
     'CastSampler.registration',
 )
+
+ONEOFFCAST_CACHE_DIR = '/Users/dhellmann/Devel/CastSampler/src/trunk/CastSampler/cache'
