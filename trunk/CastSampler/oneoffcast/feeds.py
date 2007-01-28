@@ -186,9 +186,9 @@ class ProxyFeed(Feed):
             url_args['author_name'] = author_detail['name'].encode('UTF-8')
             url_args['author_email'] = author_detail['email'].encode('UTF-8')
         else:
-            author_name = entry['author']
-            url_args['author_name'] = author_name
+            author_name = entry.get('author')
             if author_name:
+                url_args['author_name'] = author_name
                 url_args['author_email'] = 'n/a'
             else:
                 url_args['author_name'] = ''
