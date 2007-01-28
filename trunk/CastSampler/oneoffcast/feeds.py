@@ -194,7 +194,7 @@ class ProxyFeed(Feed):
                 url_args['author_name'] = ''
                 url_args['author_email'] = ''
 
-        if entry['link']:
+        if entry.get('link'):
             url_args['link'] = entry['link'].encode('UTF-8')
         elif enclosure:
             url_args['link'] = enclosure['href'].encode('UTF-8')
