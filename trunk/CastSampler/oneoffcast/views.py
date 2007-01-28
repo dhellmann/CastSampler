@@ -146,11 +146,6 @@ def change_subscriptions(request, username=None, feed_id=None):
     logging.debug('change_subscriptions %s' % request.method)
     
     if request.method == 'POST':
-        if not request.user.is_authenticated():
-            return HttpResponseRedirect('%s?%s=%s' % (LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
-        if request.user.username != username:
-            raise RuntimeError('You are not allowed to add subscriptions for another user.')
-        
         #
         # Process the form input and check for errors
         #

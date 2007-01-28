@@ -1,3 +1,11 @@
+2007-01-28  Doug Hellmann  <dhellmann@racemi.com>
+
+	* views.py (change_subscriptions): Error conditions are checked in
+	the decorators now, so do not check them in the view.
+
+	* util.py (same_user_only): If the current user is not the same as
+	the required user, redirect to the login page.
+
 2007-01-27  Doug Hellmann  <dhellmann@racemi.com>
 
 	* models.py (Podcast.get_monitor_url): Pull the logic for building

@@ -32,6 +32,7 @@
 #
 # Import system modules
 #
+from django.contrib.auth import LOGIN_URL, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.core import serializers
 from django.utils import simplejson
@@ -121,7 +122,8 @@ def same_user_only():
 
         def newfunc(request, username, *args, **kw):
             if request.user.username != username:
-                raise RuntimeError('You are not allowed to see this page')
+                from urllib import quote
+                return HttpResponseRedirect('%s?%s=%s' % (LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
             output = func(request, username, *args, **kw)
             return output
         
