@@ -136,6 +136,12 @@ def retrieve_feed(feed_url):
             
         if cache_age > CACHE_TTL_SECS:
             need_to_fetch = True
+            
+        # Now look at the contents of the file.  If there was an
+        # error, we should always try to fetch again.
+        if cached_result.bozo_exception:
+            logging.debug('  cache includes error: %s' % str(cached_result.bozo_exception))
+            need_to_fetch = True
 
     except (OSError, IOError):
         if settings.DEBUG: logging.debug('  No cache file')
@@ -155,7 +161,11 @@ def retrieve_feed(feed_url):
         #
         # Figure out if we got new data
         #
-        if parsed_result.status == 304:
+        try:
+            status = parsed_result.status
+        except AttributeError:
+            status = None
+        if status == 304:
             #
             # No new data, but we need to update the mtime
             # on the cache file so we do not repull on
