@@ -139,9 +139,12 @@ def retrieve_feed(feed_url):
             
         # Now look at the contents of the file.  If there was an
         # error, we should always try to fetch again.
-        if cached_result.bozo_exception:
-            logging.debug('  cache includes error: %s' % str(cached_result.bozo_exception))
-            need_to_fetch = True
+        try:
+            if cached_result.bozo_exception:
+                logging.debug('  cache includes error: %s' % str(cached_result.bozo_exception))
+                need_to_fetch = True
+        except AttributeError:
+            pass
 
     except (OSError, IOError):
         if settings.DEBUG: logging.debug('  No cache file')
