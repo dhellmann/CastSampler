@@ -53,7 +53,7 @@ function get_mimetype_icon(mimetype) {
   if (mimetype.match("^audio/")) {
 	icon.setAttribute('src', '/static/images/sound.png');
   } 
-  else if (mimetype.match('^video/')) {
+  else if (mimetype.match('^video/') || mimetype.match('shockwave') || mimetype.match('flash') )  {
 	icon.setAttribute('src', '/static/images/film.png');
   } 
   else {
@@ -246,8 +246,10 @@ function insert_entry_into_queue(entry, atFront) {
   enclosure_link.setAttribute('href', entry['enclosure_url']);
   
   play_icon = get_mimetype_icon(entry['enclosure_mimetype']);
-  play_icon.setAttribute('alt', 'Play now');
-  play_icon.setAttribute('title', 'Play now');
+  if (play_icon) {
+    play_icon.setAttribute('alt', 'Play now');
+    play_icon.setAttribute('title', 'Play now');
+  }
   enclosure_link.appendChild(play_icon);
   new_item.appendChild(enclosure_link);
   
