@@ -1,5 +1,8 @@
 2007-05-28  Doug Hellmann  <doug.hellmann@gmail.com>
 
+	* feeds.py (MonitorFeed.items): We might not always have an
+	updated date value for an entry.
+
 	* models.py (Podcast.as_dict): Remove the monitor_feed info, since
 	we no longer want to use a single monitor feed for each original
 	feed.

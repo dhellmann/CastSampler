@@ -173,7 +173,11 @@ class MonitorFeed(Feed):
                 #self.logger.debug('  ENTRY: %s %s', entry.updated, entry.summary)
                 entry.podcast = podcast
                 #all_entries.append(entry)
-                bisect.insort(all_entries, (entry.updated_parsed, entry))
+                try:
+                    sort_key = entry.updated_parsed
+                except AttributeError:
+                    sort_key = None
+                bisect.insort(all_entries, (sort_key, entry))
         all_entries.reverse()
         return [ e[1] for e in all_entries ]
     
