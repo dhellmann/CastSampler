@@ -12,7 +12,7 @@ if DEBUG:
 else:
     level = logging.INFO
 logging.basicConfig(level=level,
-                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    format='%(asctime)s %(levelname)-8s %(name)s %(message)s',
                     )
 
 #

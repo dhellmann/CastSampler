@@ -33,7 +33,6 @@
 # Import system modules
 #
 from django.conf import settings
-import feedparser
 import logging
 import md5
 import os
@@ -41,16 +40,21 @@ try:
     import cPickle as pickle
 except:
     import pickle
+import sys
 import time
 
 #
 # Import Local modules
 #
+from oneoffcast import feedparser
 
 
 #
 # Module
 #
+
+# Our logger
+logger = logging.getLogger('oneoffcast.download_cache')
 
 # How long do we want contents of the cache to live?
 CACHE_TTL_SECS = getattr(settings, 'ONEOFFCAST_CACHE_TTL_SECS', 60*5)
@@ -75,10 +79,9 @@ def retrieve_feed(feed_url):
     feed_hash = m.hexdigest()
     cache_file = os.path.join(CACHE_DIR, feed_hash)
 
-    if settings.DEBUG:
-        logging.debug('URL: %s' % feed_url)
-        logging.debug('  TTL: %s' % CACHE_TTL_SECS)
-        logging.debug('  FILE: %s' % cache_file)
+    logger.debug('URL: %s', feed_url)
+    logger.debug('  TTL: %s', CACHE_TTL_SECS)
+    logger.debug('  FILE: %s', cache_file)
 
     #
     # Initialize some fetch arguments
@@ -91,7 +94,7 @@ def retrieve_feed(feed_url):
     # Look for the data in the cache
     #
     now = time.time()
-    if settings.DEBUG: logging.debug('  now: %s' % now)
+    logger.debug('  now: %s', now)
     try:
         #
         # Start by trying to load data from the cache.
@@ -100,8 +103,13 @@ def retrieve_feed(feed_url):
         #
         f = open(cache_file, 'rb')
         try:
-            if settings.DEBUG: logging.debug('  Found cache file')
-            cached_result = pickle.load(f)
+            logger.debug('  Found cache file')
+            try:
+                cached_result = pickle.load(f)
+                logger.debug('  Read cache file')
+            except Exception, err:
+                logger.debug('  Could not read cache file %s', err)
+                cached_result = None
         finally:
             f.close()
 
@@ -118,9 +126,8 @@ def retrieve_feed(feed_url):
             etag = cached_result.etag
         except AttributeError:
             pass
-        if settings.DEBUG:
-            logging.debug('  cache modified: %s' % str(modified))
-            logging.debug('  cache etag: %s' % etag)
+        logger.debug('  cache modified: %s', str(modified))
+        logger.debug('  cache etag: %s', etag)
             
         #
         # Next we look at the modification time on
@@ -130,9 +137,8 @@ def retrieve_feed(feed_url):
         cache_mtime = statinfo.st_mtime
         cache_age = now - cache_mtime
 
-        if settings.DEBUG:
-            logging.debug('  cache_mtime: %s' % str(cache_mtime))
-            logging.debug('  cache_age: %s' % cache_age)
+        logger.debug('  cache_mtime: %s', str(cache_mtime))
+        logger.debug('  cache_age: %s', cache_age)
             
         if cache_age > CACHE_TTL_SECS:
             need_to_fetch = True
@@ -141,25 +147,32 @@ def retrieve_feed(feed_url):
         # error, we should always try to fetch again.
         try:
             if cached_result.bozo_exception:
-                logging.debug('  cache includes error: %s' % str(cached_result.bozo_exception))
+                logger.debug('  cache includes error: %s', str(cached_result.bozo_exception))
                 need_to_fetch = True
         except AttributeError:
             pass
 
     except (OSError, IOError):
-        if settings.DEBUG: logging.debug('  No cache file')
+        logger.debug('  No cache file')
         need_to_fetch = True
+        cached_result = None
 
     #
     # Now, do we need to update the cache?
     #
     if need_to_fetch:
-        if settings.DEBUG: logging.debug('  fetching')
-        parsed_result = feedparser.parse(feed_url,
-                                         agent='CastSampler.com',
-                                         modified=modified,
-                                         etag=etag,
-                                         )
+        logger.debug('  fetching')
+        try:
+            parsed_result = feedparser.parse(feed_url,
+                                             agent='CastSampler.com',
+                                             modified=modified,
+                                             etag=etag,
+                                             )
+        except Exception, err:
+            logger.debug('  ERROR: feedparser.parse raised %s', err)
+            raise
+        else:
+            logger.debug('  done fetching')
 
         #
         # Figure out if we got new data
@@ -175,7 +188,7 @@ def retrieve_feed(feed_url):
             # every access now.  We rewrite the *CACHED*
             # results to the cache file.
             #
-            if settings.DEBUG: logging.debug('  updating cache mtime')
+            logger.debug('  updating cache mtime')
             f = open(cache_file, 'wb')
             try:
                 pickle.dump(cached_result, f)
@@ -187,19 +200,20 @@ def retrieve_feed(feed_url):
             # We found new contents, so write them
             # to the cache file.
             #
-            if settings.DEBUG: logging.debug('  updating cache contents')
+            logger.debug('  updating cache contents')
             cache_ok = True
             try:
                 f = open(cache_file, 'wb')
             except IOError:
                 # Cannot create the cache.
-                logging.debug('Could not write cache to %s' % cache_file)
+                logger.debug('Could not write cache to %s' % cache_file)
+                cache_ok = False
             else:
                 try:
                     try:
                         pickle.dump(parsed_result, f)
                     except Exception, err:
-                        logging.debug('Error writing cache: %s' % str(err))
+                        logger.debug('Error writing cache: %s' % str(err))
                         cache_ok = False
                 finally:
                     f.close()

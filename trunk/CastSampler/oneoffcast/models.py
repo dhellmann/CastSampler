@@ -46,6 +46,9 @@ from oneoffcast.download_cache import retrieve_feed
 # Module
 #
 
+# Our logger
+logger = logging.getLogger('oneoffcast.models')
+
 class Podcast(models.Model):
     """A pointer to a podcast feed.
     """
@@ -94,17 +97,15 @@ class Podcast(models.Model):
     def get_current_feed_contents(self):
         """Return the parsed feed data.
         """
-        return retrieve_feed(self.feed_url)
+        contents = retrieve_feed(self.feed_url)
+        logger.debug('returning contents')
+        return contents
 
     def get_use_count(self):
         """Returns the number of QueueItems referencing this podcast.
         """
         return QueueItem.objects.count(podcast=self)
 
-    def get_monitor_url(self, user):
-        "Return a relative URL for monitoring this feed by a user."
-        return '/cast/feed/monitor/%s/%s/' % (user.username, self.id)
-        
     def as_dict(self, user):
         """Return a dictionary of interesting values that the view
         wants, in a form suitable for serializing via JSON.
@@ -112,7 +113,6 @@ class Podcast(models.Model):
         d = { 'name':self.name,
               'home_url':self.home_url,
               'feed_url':self.feed_url,
-              'monitor_url':self.get_monitor_url(user),
               'id':self.id,
               }
         return d
@@ -126,23 +126,23 @@ def find_or_create_podcast(feed_url, user=None):
     #
     # Do we already know about the feed?
     #
-    logging.debug('checking for existing podcast')
+    logger.debug('checking for existing podcast')
     existing_casts = Podcast.objects.filter(feed_url=feed_url)
     if existing_casts.count() > 0:
         podcast = existing_casts[0]
-        logging.debug('found existing podcast')
+        logger.debug('found existing podcast')
         data = podcast.get_current_feed_contents()
 
     else:
-        logging.debug('creating podcast from feed %s' % feed_url)
+        logger.debug('creating podcast from feed %s', feed_url)
         data = retrieve_feed(feed_url)
-        #logging.debug(data)
+        #logger.debug(data)
 
         try:
             name = data.feed.title.encode('utf-8', 'replace')
         except AttributeError, err:
-            logging.debug('data is a %s' % data.__class__.__name__)
-            logging.debug(data)
+            logger.debug('data is a %s', data.__class__.__name__)
+            logger.debug(data)
             raise RuntimeError('Could not parse %s: %s' % (feed_url, 'no title'))
         try:
             description = data.feed.description.encode('utf-8', 'replace')

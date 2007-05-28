@@ -32,6 +32,8 @@
 #
 # Import system modules
 #
+import bisect
+
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.syndication.feeds import Feed, add_domain
@@ -50,6 +52,9 @@ from oneoffcast.util import *
 #
 # Module
 #
+
+# Our logger
+logger = logging.getLogger('oneoffcast.feeds')
 
 class UserFeed(Feed):
 
@@ -118,18 +123,7 @@ class RSSFeed(UserFeed):
 
 
 
-class ProxyFeedArgs:
-    "Container for ProxyFeed arguments"
-
-    def __init__(self, username, podcastid):
-        self.user = User.objects.get(username=username)
-        self.podcast = models.Podcast.objects.get(id=podcastid)
-        return
-
-    def get_absolute_url(self):
-        return 
-
-class ProxyFeed(Feed):
+class MonitorFeed(Feed):
     """This feed uses item links which add the episode to the user's queue
     instead of linking to the real site.
     """
@@ -137,6 +131,7 @@ class ProxyFeed(Feed):
 
     title_template = 'monitor_title.html'
     description_template = 'monitor_description.html'
+    logger = logging.getLogger('oneoffcast.feeds.MonitorFeed')
 
     def __init__(self, slug, feed_url):
         Feed.__init__(self, slug, feed_url)
@@ -144,34 +139,51 @@ class ProxyFeed(Feed):
         return
 
     def get_object(self, bits):
-        try:
-            self.__args = ProxyFeedArgs(bits[0], bits[1])
-        except IndexError:
-            raise ValueError('Invalid URL.  Specify username/podcastid')
-        return self.__args
+        self.__user = User.objects.get(username=bits[0])
+        return self.__user
     
     def title(self, obj):
-        return 'CastSampler Monitor Feed: %s' % obj.podcast.name
+        return 'CastSampler Monitor Feed for %s' % obj.username
     
     def link(self, obj):
         # FIXME - Should point to a view of the feed on CastSampler site
-        return obj.podcast.home_url
+        #return obj.podcast.home_url
+        return '/cast/%s' % str(obj)
 
     def items(self, obj):
-        logging.debug('Fetching podcast contents...')
-        parsed_feed = obj.podcast.get_current_feed_contents()
-        logging.debug('Found %d entries' % len(parsed_feed['entries']))
-        for entry in parsed_feed['entries']:
-            entry.podcast = self.__args.podcast
-        return parsed_feed['entries']
+        self.logger.debug('Fetching podcast contents...')
+        all_entries = []
+        podcasts = obj.podcast_set.filter(allowed=True).order_by('name')
+        for podcast in podcasts:
+            parsed_feed = podcast.get_current_feed_contents()
+            if parsed_feed:
+                self.logger.debug('  have feed contents')
+                entries = parsed_feed['entries']
+            else:
+                entries = []
+            self.logger.debug('Found %d entries', len(entries))
+            for entry in entries:
+                # Skip entries without enclosures
+                try:
+                    if not entry['enclosures']:
+                        continue
+                except KeyError:
+                    continue
+
+                #self.logger.debug('  ENTRY: %s %s', entry.updated, entry.summary)
+                entry.podcast = podcast
+                #all_entries.append(entry)
+                bisect.insort(all_entries, (entry.updated_parsed, entry))
+        all_entries.reverse()
+        return [ e[1] for e in all_entries ]
     
     def item_link(self, entry):
         """Replace the real link to the item with one to add
         the item to the user's queue.
         """
-        logging.debug('ProxyFeed.item_link(%s)' % entry)
+        self.logger.debug('item_link(%s)', entry)
 
-        url_args = { 'podcast':self.__args.podcast.id,
+        url_args = { 'podcast':entry.podcast.id,
                      'title':entry['title'].encode('UTF-8'),
                      'summary':entry['summary'].encode('UTF-8'),
                      }
@@ -206,8 +218,8 @@ class ProxyFeed(Feed):
             url_args['item_enclosure_mime_type'] = enclosure['type'].encode('UTF-8')
             url_args['item_enclosure_length'] = enclosure['length'].encode('UTF-8')
 
-        logging.debug('url_args = %s' % str(url_args))
+        #self.logger.debug('url_args = %s', str(url_args))
         encoded_args = urllib.urlencode(url_args)
-        logging.debug('encoded_args = %s' % encoded_args.encode('UTF-8'))
+        #self.logger.debug('encoded_args = %s', encoded_args.encode('UTF-8'))
 
-        return ('/cast/%s/add_to_queue?' % self.__args.user.username) + encoded_args
+        return ('/cast/%s/add_to_queue?' % self.__user.username) + encoded_args

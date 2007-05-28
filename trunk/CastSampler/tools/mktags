@@ -5,7 +5,7 @@
 # Script to run etags against the source tree.
 #
 
-DJANGO_SRC=~/Devel/CastSampler/django_src/django
+DJANGO_SRC=~/Devel/django_src/django
 
 rm -f TAGS
 

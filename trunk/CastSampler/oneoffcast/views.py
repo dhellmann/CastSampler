@@ -57,6 +57,9 @@ from oneoffcast.util import *
 # Module
 #
 
+# Our logger
+logger = logging.getLogger('oneoffcast.views')
+
 
 @login_required
 def user_redirect(request, urlBase='/cast'):
@@ -109,7 +112,7 @@ def user(request, username):
 def subscriptions(request, username=None, feed_id=None):
     """Do something with the user's subscription list.
     """
-    logging.debug('subscriptions %s' % request.method)
+    logger.debug('subscriptions %s', request.method)
 
     if request.method == 'GET':
         #
@@ -143,7 +146,7 @@ def change_subscriptions(request, username=None, feed_id=None):
     """Modify the user's subscription list.
     """
     response = {}
-    logging.debug('change_subscriptions %s' % request.method)
+    logger.debug('change_subscriptions %s', request.method)
     
     if request.method == 'POST':
         #
@@ -164,13 +167,13 @@ def change_subscriptions(request, username=None, feed_id=None):
         # can find a single feed from the URL.
         #
         url = new_data['url']
-        logging.debug('Checking %s for a feed' % url)
+        logger.debug('Checking %s for a feed', url)
         feed_guesses = feedfinder.feeds(url)
-        logging.debug('Found %s feed urls' % str(feed_guesses))
+        logger.debug('Found %s feed urls', str(feed_guesses))
         if url not in feed_guesses:
             if feed_guesses:
                 new_data['url'] = feed_guesses[0]
-                logging.debug('Using %s instead' % new_data['url'])
+                logger.debug('Using %s instead',  new_data['url'])
 
         #
         # We are ready to save the feed info to the database
@@ -186,7 +189,7 @@ def change_subscriptions(request, username=None, feed_id=None):
         if request.user.username != username:
             raise RuntimeError('You are not allowed to remove subscriptions for another user.')
 
-        logging.debug('Deleting %s' % feed_id)
+        logger.debug('Deleting %s', feed_id)
 
         #
         # Remove the podcast from the user's subscriptions
@@ -213,7 +216,7 @@ def _do_add_to_queue(user, data):
     new_data = data.copy()
     new_data['user'] = user.id
 
-    logging.debug('_do_add_to_queue(%s)' % str(data))
+    logger.debug('_do_add_to_queue(%s)', str(data))
 
     # Fix up the length in case it is invalid
     length = new_data.get('item_enclosure_length', 0)
@@ -235,7 +238,7 @@ def _do_add_to_queue(user, data):
 def queue(request, username):
     """Returns JSON package of current queue contents for the user.
     """
-    logging.debug('queue(%s) %s' % (username, request.method))
+    logger.debug('queue(%s) %s', (username, request.method))
 
     response = {}
     
@@ -251,15 +254,15 @@ def queue(request, username):
         response['queue'] = [ qi.as_dict()
                               for qi in queued_items
                               ]
-    #logging.debug(response)
+    #logger.debug(response)
     return response
 
 
 @same_user_only()
 @login_required
 def add_to_queue(request, username):
-    logging.debug('add_to_queue(%s)' % username)
-    logging.debug(str(request.GET))
+    logger.debug('add_to_queue(%s)', username)
+    logger.debug(str(request.GET))
     
     # Add the new item
     _do_add_to_queue(request.user, request.GET)
@@ -274,7 +277,7 @@ def add_to_queue(request, username):
 def remove_from_queue(request, username, id):
     """Remove id from the queue.
     """
-    logging.debug('remove_from_queue(%s, %s) %s' % (username, id, request.method))
+    logger.debug('remove_from_queue(%s, %s) %s', (username, id, request.method))
 
     removed = []
     response = {'remove_from_queue':removed,
@@ -285,7 +288,7 @@ def remove_from_queue(request, username, id):
         item.delete()
         removed.append(id)
 
-    #logging.debug(response)
+    #logger.debug(response)
     return response
 
 
@@ -295,7 +298,7 @@ def external(request, id):
     """Returns JSON package of podcast entries for the
     specified podcast.
     """
-    logging.debug('looking for %s' % id)
+    logger.debug('looking for %s', id)
     podcast = Podcast.objects.get(id=id)
     parsed_feed = podcast.get_current_feed_contents()
     response = {}

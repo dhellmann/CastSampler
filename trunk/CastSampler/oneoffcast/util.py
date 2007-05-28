@@ -50,6 +50,9 @@ import time
 # Module
 #
 
+# Our logger
+logger = logging.getLogger('oneoffcast.util')
+
 def ajaxErrorHandling():
     """Simple decorator to log and return error messages.
     """
@@ -59,7 +62,7 @@ def ajaxErrorHandling():
             try:
                 output = func(*args, **kw)
             except Exception, err:
-                logging.exception(err)
+                logger.exception(err)
                 return HttpResponse('<div class="error">%s</div>' % err)
             return output
         
@@ -80,7 +83,7 @@ def jsonView():
                 if not 'error' in output:
                     output['error'] = ''
             except Exception, err:
-                logging.exception(err)
+                logger.exception(err)
                 output = { 'error':str(err) }
             json_response = simplejson.dumps(output)
             return HttpResponse(json_response)
@@ -100,7 +103,7 @@ def jsonQuery():
             try:
                 results = func(*args, **kw)
             except Exception, err:
-                logging.exception(err)
+                logger.exception(err)
                 output = { 'error':str(err),
                            }
                 json_response = simplejson.dumps(output)
@@ -157,7 +160,7 @@ def convert_feed_to_entries(parsed_feed):
              
         if new_entry.get('enclosures'):
             entries.append(new_entry)
-        #logging.debug(new_entry)
+        #logger.debug(new_entry)
     return entries
 
 

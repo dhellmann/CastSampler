@@ -1,3 +1,27 @@
+2007-05-28  Doug Hellmann  <doug.hellmann@gmail.com>
+
+	* models.py (Podcast.as_dict): Remove the monitor_feed info, since
+	we no longer want to use a single monitor feed for each original
+	feed.
+
+	* views.py: Use a local, named, logger.
+
+	* util.py: Use a local, named, logger.
+
+	* urls.py: Change rss link to queue to be more clear.  Change
+	definition of the monitor feed.
+
+	* templates/user.html: Add links to the queue and monitor RSS
+	feeds.
+
+	* models.py: Use a local, named logger.
+
+	* feeds.py (MonitorFeed): Convert ProxyFeed to MonitorFeed and
+	include all of the user's podcasts in a single feed.
+
+	* download_cache.py: Use a local, named, logger.  Use a private
+	copy of feedparser.
+
 2007-01-28  Doug Hellmann  <dhellmann@racemi.com>
 
 	* views.py (change_subscriptions): Error conditions are checked in

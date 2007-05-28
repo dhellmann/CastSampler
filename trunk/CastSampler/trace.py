@@ -84,10 +84,12 @@ import time
 # Module
 #
 
+logger = logging.getLogger('trace')
+
 class LogOutput:
 
     def write(self, msg):
-        logging.debug(msg.rstrip('\n'))
+        logger.debug(msg.rstrip('\n'))
         return
     
 

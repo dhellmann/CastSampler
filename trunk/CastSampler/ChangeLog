@@ -1,3 +1,16 @@
+2007-05-28  Doug Hellmann  <doug.hellmann@gmail.com>
+
+	* static/js/oneoffcast/user.js (insert_feed_into_list): Display
+	the original feed instead of the monitor feed.
+
+	* trace.py (LogOutput.write): Use a local, named, logger.
+
+	* tools/mktags (DJANGO_SRC): Moved the django source tree on my
+	dev box.
+
+	* settings.py: Include the name of the logger in the logging
+	format string.
+
 2007-01-27  Doug Hellmann  <dhellmann@racemi.com>
 
 	* static/js/oneoffcast/user.js (do_show_queue): Initiate ajax

@@ -47,9 +47,10 @@ from oneoffcast import feeds
 
 basic_feeds = {
     # User's queue
-    'rss':feeds.RSSFeed,
+    'rss':feeds.RSSFeed, # backwards-compatibility
+    'queue':feeds.RSSFeed,
     # Monitor a podcast
-    'monitor':feeds.ProxyFeed,
+    'monitor':feeds.MonitorFeed,
     }
 
 

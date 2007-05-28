@@ -388,10 +388,10 @@ function insert_feed_into_list(feed_info) {
 	new_item.appendChild(new_link);
 
 	monitor_icon = document.createElement('a');
-	monitor_icon.setAttribute('href', feed_info['monitor_url']);
+	monitor_icon.setAttribute('href', feed_info['feed_url']);
 	monitor_icon.setAttribute('target', '_blank');
-	monitor_icon.setAttribute('alt', 'Monitor feed');
-	monitor_icon.setAttribute('title', 'Monitor feed');
+	monitor_icon.setAttribute('alt', 'Original feed');
+	monitor_icon.setAttribute('title', 'Original feed');
 	monitor_icon.innerHTML = '<img src="/static/images/feed.png" />';
 	new_item.appendChild(monitor_icon);
 
