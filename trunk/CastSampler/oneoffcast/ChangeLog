@@ -1,5 +1,7 @@
 2007-05-28  Doug Hellmann  <doug.hellmann@gmail.com>
 
+	* templates/user.html: Fix feed URLs to not redirect.
+
 	* feeds.py (MonitorFeed.items): We might not always have an
 	updated date value for an entry.
 	(MonitorFeed.item_link): Might not always have title or summary,
