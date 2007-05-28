@@ -421,11 +421,19 @@ div.title {
 
 .queue_wrapper { 
   background-color: white;
-  border: 1px solid DARK2;
+  border: 1px solid #664D22;
   margin: 1em 1em 1em 0;
 }
 
-.queue {
+#queue_feeds { 
+  margin: 0.5em 0.5em 0.5em 2em;
+}
+
+.queue_feed a { 
+  text-decoration: none;
+}
+
+#queue {
   margin-left: 0.5em;
 }
 
