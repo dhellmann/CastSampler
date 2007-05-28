@@ -43,6 +43,8 @@ import logging
 
 import urllib
 
+import time
+
 #
 # Import Local modules
 #
@@ -151,7 +153,8 @@ class MonitorFeed(Feed):
         return '/cast/%s' % str(obj)
 
     def items(self, obj):
-        self.logger.debug('Fetching podcast contents...')
+        yesterday = time.time() - (24*60*60)
+        self.logger.debug('Fetching podcast contents since %s...', yesterday)
         all_entries = []
         podcasts = obj.podcast_set.filter(allowed=True).order_by('name')
         for podcast in podcasts:
@@ -170,14 +173,17 @@ class MonitorFeed(Feed):
                 except KeyError:
                     continue
 
-                #self.logger.debug('  ENTRY: %s %s', entry.updated, entry.summary)
+                # Remember which podcast the entry goes with
                 entry.podcast = podcast
-                #all_entries.append(entry)
+
+                # Only include entries which are relatively new
                 try:
-                    sort_key = entry.updated_parsed
+                    updated = entry.updated_parsed
                 except AttributeError:
-                    sort_key = None
-                bisect.insort(all_entries, (sort_key, entry))
+                    updated = yesterday
+                if updated >= yesterday:
+                    bisect.insort(all_entries, (updated, entry))
+
         all_entries.reverse()
         return [ e[1] for e in all_entries ]
     

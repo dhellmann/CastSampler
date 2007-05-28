@@ -4,6 +4,8 @@
 	updated date value for an entry.
 	(MonitorFeed.item_link): Might not always have title or summary,
 	either.
+	(MonitorFeed.items): Only include items which have been updated in
+	the last 24 hours.
 
 	* models.py (Podcast.as_dict): Remove the monitor_feed info, since
 	we no longer want to use a single monitor feed for each original
