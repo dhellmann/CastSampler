@@ -188,8 +188,8 @@ class MonitorFeed(Feed):
         self.logger.debug('item_link(%s)', entry)
 
         url_args = { 'podcast':entry.podcast.id,
-                     'title':entry['title'].encode('UTF-8'),
-                     'summary':entry['summary'].encode('UTF-8'),
+                     'title':entry.get('title', '').encode('UTF-8'),
+                     'summary':entry.get('summary', '').encode('UTF-8'),
                      }
 
         try:
