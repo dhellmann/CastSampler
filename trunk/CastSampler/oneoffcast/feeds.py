@@ -165,7 +165,7 @@ class MonitorFeed(Feed):
             else:
                 entries = []
             self.logger.debug('Found %d entries', len(entries))
-            for entry in entries:
+            for entry in entries[-10:]: # only most recent 10 entries
                 # Skip entries without enclosures
                 try:
                     if not entry['enclosures']:
@@ -182,10 +182,12 @@ class MonitorFeed(Feed):
                 except AttributeError:
                     updated = yesterday
                 if updated >= yesterday:
-                    bisect.insort(all_entries, (updated, entry))
+                    #bisect.insort(all_entries, (updated, entry))
+                    all_entries.append(entry)
 
-        all_entries.reverse()
-        return [ e[1] for e in all_entries ]
+        #all_entries.reverse()
+        #return [ e[1] for e in all_entries ]
+        return all_entries
     
     def item_link(self, entry):
         """Replace the real link to the item with one to add

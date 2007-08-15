@@ -3,7 +3,7 @@
 # $Id$
 #
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 import logging
