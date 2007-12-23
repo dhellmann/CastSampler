@@ -3,7 +3,7 @@
 # $Id$
 #
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 import logging
@@ -110,3 +110,5 @@ INSTALLED_APPS = (
 
 ONEOFFCAST_CACHE_DIR = '/home/castsampler/FeedCache'
 ONEOFFCAST_CACHE_TTL_SECS = 60*15 # 15 minutes
+
+LOGIN_URL = '/accounts/login'

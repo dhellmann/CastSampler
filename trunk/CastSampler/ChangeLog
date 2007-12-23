@@ -1,3 +1,11 @@
+2007-12-23  Doug Hellmann  <doug.hellmann@gmail.com>
+
+	* prod_settings.py: Add LOGIN_URL.
+
+	* settings.py: Add LOGIN_URL.
+
+	* runserver: Remove --verbosity argument.
+
 2007-05-28  Doug Hellmann  <doug.hellmann@gmail.com>
 
 	* static/js/oneoffcast/user.js (insert_feed_into_list): Display

@@ -55,7 +55,7 @@ class Podcast(models.Model):
     
     # These are the public fields which we will expose to the
     # end user in some way.
-    name = models.CharField(maxlength=256)
+    name = models.CharField(max_length=256)
     description = models.TextField(blank=True)
     home_url = models.URLField(blank=True)
     feed_url = models.URLField()
@@ -67,8 +67,8 @@ class Podcast(models.Model):
     # These fields are only visible in the admin screens
     # and are used to control whether or not the feed
     # should be ignored so users cannot add items from it.
-    contact_name = models.CharField(maxlength=128, blank=True)
-    contact_email = models.EmailField(maxlength=128, blank=True)
+    contact_name = models.CharField(max_length=128, blank=True)
+    contact_email = models.EmailField(max_length=128, blank=True)
     notes = models.TextField(blank=True)
     allowed = models.BooleanField(default=True, blank=True)
     
@@ -174,15 +174,15 @@ class QueueItem(models.Model):
     """
     user = models.ForeignKey(User)
     podcast = models.ForeignKey(Podcast)
-    title = models.CharField(maxlength=512, blank=True)
+    title = models.CharField(max_length=512, blank=True)
     summary = models.TextField(blank=True)
     link = models.URLField(verify_exists=False)
     item_enclosure_url = models.URLField(verify_exists=False)
     item_enclosure_length = models.IntegerField()
-    item_enclosure_mime_type = models.CharField(maxlength=200)
+    item_enclosure_mime_type = models.CharField(max_length=200)
     add_date = models.DateTimeField('date added', auto_now_add=True)
-    author_name = models.CharField(maxlength=128, blank=True)
-    author_email = models.EmailField(maxlength=128, blank=True)
+    author_name = models.CharField(max_length=128, blank=True)
+    author_email = models.EmailField(max_length=128, blank=True)
 
     class Admin:
         fields = ( ('Owner', {'fields':('user', 'add_date'),

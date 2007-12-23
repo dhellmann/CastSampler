@@ -14,8 +14,8 @@
     src="/static/js/oneoffcast/user.js"></script>
 
   <script type="text/javascript">
-    var initial_queue = {{ queue }};
-    var initial_subscriptions = {{ subscriptions }};
+    var initial_queue = {{ queue|safe }};
+    var initial_subscriptions = {{ subscriptions|safe }};
 
     dojo.event.connect(window, "onload", user_onload);
   </script>

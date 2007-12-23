@@ -32,7 +32,7 @@
 #
 # Import system modules
 #
-from django.contrib.auth import LOGIN_URL, REDIRECT_FIELD_NAME
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.core import serializers
 from django.utils import simplejson
@@ -45,6 +45,7 @@ import time
 #
 # Import Local modules
 #
+import settings
 
 #
 # Module
@@ -66,7 +67,6 @@ def ajaxErrorHandling():
                 return HttpResponse('<div class="error">%s</div>' % err)
             return output
         
-        newfunc.func_name = func.func_name
         newfunc.exposed = True
         return newfunc
 
@@ -88,7 +88,6 @@ def jsonView():
             json_response = simplejson.dumps(output)
             return HttpResponse(json_response)
         
-        newfunc.func_name = func.func_name
         newfunc.exposed = True
         return newfunc
 
@@ -111,7 +110,6 @@ def jsonQuery():
                 json_response = serializers.serialize('json', results)
             return HttpResponse(json_response)
         
-        newfunc.func_name = func.func_name
         newfunc.exposed = True
         return newfunc
 
@@ -126,11 +124,10 @@ def same_user_only():
         def newfunc(request, username, *args, **kw):
             if request.user.username != username:
                 from urllib import quote
-                return HttpResponseRedirect('%s?%s=%s' % (LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
+                return HttpResponseRedirect('%s?%s=%s' % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
             output = func(request, username, *args, **kw)
             return output
         
-        newfunc.func_name = func.func_name
         newfunc.exposed = True
         return newfunc
 

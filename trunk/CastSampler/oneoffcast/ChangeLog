@@ -1,3 +1,19 @@
+2007-12-23  Doug Hellmann  <doug.hellmann@gmail.com>
+
+	* views.py: LOGIN_URL is now set in settings.py.
+	(queue): Fix logger arguments.
+	(remove_from_queue): Fix logger arguments.
+
+	* util.py: LOGIN_URL is now set in settings.py.
+	(ajaxErrorHandling.decorator): Do not set func_name.
+	(jsonView.decorator): Do not set func_name.
+	(jsonQuery.decorator): Do not set func_name.
+	(same_user_only.decorator): Do not set func_name.
+
+	* templates/user.html: Add safe filter where appropriate.
+
+	* models.py: Change maxlength to max_length.
+
 2007-05-28  Doug Hellmann  <doug.hellmann@gmail.com>
 
 	* templates/user.html: Fix feed URLs to not redirect.

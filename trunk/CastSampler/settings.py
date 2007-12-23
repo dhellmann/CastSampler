@@ -115,3 +115,5 @@ INSTALLED_APPS = (
 )
 
 ONEOFFCAST_CACHE_DIR = '/Users/dhellmann/Devel/CastSampler/src/trunk/CastSampler/cache'
+
+LOGIN_URL = '/accounts/login'

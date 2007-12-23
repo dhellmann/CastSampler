@@ -1,3 +1,7 @@
+2007-12-23  Doug Hellmann  <doug.hellmann@gmail.com>
+
+	* models.py (UserProfile): Change maxlength to max_length.
+
 2006-11-11  Doug Hellmann  <dhellmann@racemi.com>
 
 	* templates/login.html: Replace the submit button with a nice dojo

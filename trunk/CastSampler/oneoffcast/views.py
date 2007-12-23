@@ -32,7 +32,7 @@
 #
 # Import system modules
 #
-from django.contrib.auth import LOGIN_URL, REDIRECT_FIELD_NAME
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -52,6 +52,8 @@ import logging
 from oneoffcast.models import Podcast, QueueItem
 from oneoffcast.forms import AddFeedForm
 from oneoffcast.util import *
+
+import settings
 
 #
 # Module
@@ -185,7 +187,7 @@ def change_subscriptions(request, username=None, feed_id=None):
 
     elif request.method == 'DELETE':
         if not request.user.is_authenticated():
-            return HttpResponseRedirect('%s?%s=%s' % (LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
+            return HttpResponseRedirect('%s?%s=%s' % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path())))
         if request.user.username != username:
             raise RuntimeError('You are not allowed to remove subscriptions for another user.')
 
@@ -238,7 +240,7 @@ def _do_add_to_queue(user, data):
 def queue(request, username):
     """Returns JSON package of current queue contents for the user.
     """
-    logger.debug('queue(%s) %s', (username, request.method))
+    logger.debug('queue(%s) %s', username, request.method)
 
     response = {}
     
@@ -277,7 +279,7 @@ def add_to_queue(request, username):
 def remove_from_queue(request, username, id):
     """Remove id from the queue.
     """
-    logger.debug('remove_from_queue(%s, %s) %s', (username, id, request.method))
+    logger.debug('remove_from_queue(%s, %s) %s', username, id, request.method)
 
     removed = []
     response = {'remove_from_queue':removed,
