@@ -228,7 +228,10 @@ class MonitorFeed(Feed):
         if enclosure:
             url_args['item_enclosure_url'] = enclosure['href'].encode('UTF-8')
             url_args['item_enclosure_mime_type'] = enclosure['type'].encode('UTF-8')
-            url_args['item_enclosure_length'] = enclosure['length'].encode('UTF-8')
+            try:
+              url_args['item_enclosure_length'] = enclosure['length'].encode('UTF-8')
+            except KeyError:
+              pass
 
         #self.logger.debug('url_args = %s', str(url_args))
         encoded_args = urllib.urlencode(url_args)
